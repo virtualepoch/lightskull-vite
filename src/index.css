@@ -32,17 +32,18 @@ body {
   pointer-events: none;
   display: flex;
   align-items: flex-start;
-  justify-content: left;
+  justify-content: center;
 }
 
 .game-title {
-  font: 100 33px sans;
+  font: 100 25px times;
   color: #00ffff;
   text-shadow: -2px 0 3px crimson;
   border-radius: 100%;
   margin: 10px 0 0 10px;
   box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5),
     inset 0 0 10px 1px rgba(155, 255, 255, 0.5);
+  /* animation: blink 2s linear infinite; */
 }
 
 #root {

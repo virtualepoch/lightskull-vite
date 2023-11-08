@@ -4,9 +4,19 @@ import { Map } from "./Map";
 import { useEffect, useState } from "react";
 import { Joystick, insertCoin, myPlayer, onPlayerJoin } from "playroomkit";
 import { CharacterController } from "./CharacterController";
+import { Bullet } from "./Bullet";
 
 export const Experience = () => {
   const [players, setPlayers] = useState([]);
+  const [bullets, setBullets] = useState([]);
+
+  const onFire = (bullet) => {
+    setBullets((bullets) => [...bullets, bullet]);
+  };
+
+  const onHit = (bulletId) => {
+    setBullets((bullets) => bullets.filter((b) => b.id !== bulletId));
+  };
 
   const start = async () => {
     // Show Playroom UI, let it handle players joining etc and wait for host to tap "Launch"
@@ -39,17 +49,22 @@ export const Experience = () => {
   return (
     <>
       <Map />
-      {players.map(({ state, joystick }, idx) => {
-        return (
-          <CharacterController
-            key={state.id}
-            position-x={idx * 2}
-            state={state}
-            joystick={joystick}
-            userPlayer={state.id === myPlayer()?.id}
-          />
-        );
-      })}
+
+      {players.map(({ state, joystick }, idx) => (
+        <CharacterController
+          key={state.id}
+          position-x={idx * 2}
+          state={state}
+          joystick={joystick}
+          userPlayer={state.id === myPlayer()?.id}
+          onFire={onFire}
+        />
+      ))}
+
+      {bullets.map((bullet) => (
+        <Bullet key={bullet.id} {...bullet} onHit={() => onHit(bullet.id)} />
+      ))}
+
       <directionalLight
         position={[25, 18, -25]}
         intensity={1}

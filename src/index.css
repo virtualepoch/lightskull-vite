@@ -17,16 +17,37 @@
 
 body {
   margin: 0;
-  padding: 10px;
   border-radius: 10px;
-  box-shadow: inset 0 0 10px 3px crimson;
+}
+
+.canvas-overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 111;
+  border-radius: 5px;
+  box-shadow: inset 0 0 10px 2px #00ffff;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: left;
+}
+
+.game-title {
+  font: 100 33px sans;
+  color: #00ffff;
+  text-shadow: -2px 0 3px crimson;
+  border-radius: 100%;
+  margin: 10px 0 0 10px;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5),
+    inset 0 0 10px 1px rgba(155, 255, 255, 0.5);
 }
 
 #root {
-  /* width: 100; */
-  height: calc(100vh - 20px);
-  border: 2px solid rgb(104, 226, 226);
+  height: 100vh;
+  border: 1px solid #00ffff;
   border-radius: 5px;
   box-sizing: border-box;
-  box-shadow: 0 0 10px 3px aqua;
 }

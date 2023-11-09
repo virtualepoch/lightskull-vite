@@ -1,7 +1,7 @@
 /* DEFAULT VITE STYLING ===VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV */
 @font-face {
-  font-family: threed;
-  src: url(../public/fonts/moderne-3d-schwabacher.ttf);
+  font-family: Ailerons;
+  src: url(../public/fonts/Ailerons-TrialVersion.otf);
 }
 
 :root {
@@ -41,23 +41,33 @@ body {
 }
 
 .game-title {
-  font: 100 18px threed;
-  color: #aa0000;
-  text-shadow: 0 0 3px crimson;
+  font: 100 21px Ailerons;
+  color: white;
+  text-shadow: 0 0 2px crimson;
   border-radius: 100%;
   margin: 10px 10px 0 0;
-  padding: 7px;
-  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5),
-    inset 0 0 10px 1px rgba(155, 255, 255, 0.5);
-  /* animation: blink 2s linear infinite; */
+  box-shadow: 0 0 3px 1px rgba(255, 0, 0, 0.3),
+    inset 0 0 10px 1px rgba(155, 255, 255, 0.2);
   background: radial-gradient(
     ellipse at 50% 50%,
-    rgba(255, 255, 255, 0.5),
-    rgba(0, 255, 255, 0.5) 50%,
-    aqua 80%
+    rgba(255, 255, 255, 0.2),
+    rgba(0, 255, 255, 0.2) 50%,
+    rgba(0, 255, 255, 0.5) 80%
   );
-  letter-spacing: 4px;
-  filter: drop-shadow(0 0 5px white);
+  animation: glow 4s linear infinite;
+}
+
+@keyframes glow {
+  0% {
+    filter: none;
+  }
+  50% {
+    filter: drop-shadow(0 0 5px aqua);
+    text-shadow: aqua;
+  }
+  100% {
+    filter: none;
+  }
 }
 
 #root {

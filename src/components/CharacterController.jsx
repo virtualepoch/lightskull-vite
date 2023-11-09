@@ -3,7 +3,7 @@ import { CharacterSoldier } from "./CharacterSoldier";
 import { CapsuleCollider, RigidBody, vec3 } from "@react-three/rapier";
 import { useFrame, useThree } from "@react-three/fiber";
 import { isHost } from "playroomkit";
-import { CameraControls } from "@react-three/drei";
+import { Billboard, CameraControls, Text } from "@react-three/drei";
 
 const MOVEMENT_SPEED = 200;
 const FIRE_RATE = 380;
@@ -45,13 +45,17 @@ export const CharacterController = ({
     rigidbody.current.setTranslation(spawnPos);
   };
 
-  // useEffect(() => {
-  //   if (isHost()) {
-  //     spawnRandomly();
-  //   }
-  // });
+  useEffect(() => {
+    if (isHost()) {
+      spawnRandomly();
+    }
+  }, []);
 
   useFrame((_, delta) => {
+    if (!rigidbody.current) {
+      return;
+    }
+
     // CAMERA FOLLOW
     if (controls.current) {
       const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
@@ -66,6 +70,11 @@ export const CharacterController = ({
         playerWorldPos.z,
         true
       );
+    }
+
+    if (state.state.dead) {
+      setAnimation("Death");
+      return;
     }
 
     // Update player position based on joystick state
@@ -151,6 +160,7 @@ export const CharacterController = ({
           }
         }}
       >
+        <PlayerInfo state={state.state} />
         <group ref={character}>
           <CharacterSoldier
             color={state.state.profile?.color}
@@ -199,5 +209,27 @@ const Crosshair = (props) => {
         <meshBasicMaterial color="aqua" opacity={0.2} transparent />
       </mesh>
     </group>
+  );
+};
+
+const PlayerInfo = ({ state }) => {
+  const health = state.health;
+  const name = state.profile.name;
+
+  return (
+    <Billboard position-y={2.5}>
+      <Text position-y={0.36} fontSize={0.4}>
+        {name}
+        <meshBasicMaterial color={state.profile.color} />
+      </Text>
+      <mesh position-z={-0.1}>
+        <planeGeometry args={[1, 0.2]} />
+        <meshBasicMaterial color="black" transparent opacity={0.5} />
+      </mesh>
+      <mesh scale-x={health / 100} position-x={-0.5 * (1 - health / 100)}>
+        <planeGeometry args={[1, 0.2]} />
+        <meshBasicMaterial color="red" />
+      </mesh>
+    </Billboard>
   );
 };

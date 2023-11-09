@@ -1,7 +1,10 @@
-/* DEFAULT VITE STYLING ===VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
   font-family: Ailerons;
-  src: url(../public/fonts/Ailerons-TrialVersion.otf);
+  src: url(/fonts/Ailerons-TrialVersion.otf);
 }
 
 :root {
@@ -54,10 +57,11 @@ body {
     rgba(0, 255, 255, 0.2) 50%,
     rgba(0, 255, 255, 0.5) 80%
   );
-  animation: glow 4s linear infinite;
+  /* animation: glow 4s linear infinite; */
+  filter: drop-shadow(0 0 5px aqua);
 }
 
-@keyframes glow {
+/* @keyframes glow {
   0% {
     filter: none;
   }
@@ -68,6 +72,14 @@ body {
   100% {
     filter: none;
   }
+} */
+
+.cross-symbol {
+  border: 1px dotted rgba(0, 255, 255, 0.7);
+  border-radius: 100%;
+  margin-right: -1px;
+  box-shadow: 0 0 5px 1px cyan;
+  background: radial-gradient(circle at 50% 50%, white 10%, transparent 50%);
 }
 
 #root {

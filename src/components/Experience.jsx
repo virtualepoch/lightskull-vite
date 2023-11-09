@@ -2,13 +2,24 @@ import { Environment, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { Map } from "./Map";
 import { useEffect, useState } from "react";
-import { Joystick, insertCoin, myPlayer, onPlayerJoin } from "playroomkit";
+import {
+  Joystick,
+  insertCoin,
+  isHost,
+  myPlayer,
+  onPlayerJoin,
+  useMultiplayerState,
+} from "playroomkit";
 import { CharacterController } from "./CharacterController";
 import { Bullet } from "./Bullet";
 
 export const Experience = () => {
   const [players, setPlayers] = useState([]);
   const [bullets, setBullets] = useState([]);
+  const [networkBullets, setNetworkBullets] = useMultiplayerState(
+    "bullets",
+    []
+  );
 
   const onFire = (bullet) => {
     setBullets((bullets) => [...bullets, bullet]);
@@ -17,6 +28,10 @@ export const Experience = () => {
   const onHit = (bulletId) => {
     setBullets((bullets) => bullets.filter((b) => b.id !== bulletId));
   };
+
+  useEffect(() => {
+    setNetworkBullets(bullets);
+  }, [bullets]);
 
   const start = async () => {
     // Show Playroom UI, let it handle players joining etc and wait for host to tap "Launch"
@@ -53,15 +68,14 @@ export const Experience = () => {
       {players.map(({ state, joystick }, idx) => (
         <CharacterController
           key={state.id}
-          position-x={idx * 2}
           state={state}
-          joystick={joystick}
           userPlayer={state.id === myPlayer()?.id}
+          joystick={joystick}
           onFire={onFire}
         />
       ))}
 
-      {bullets.map((bullet) => (
+      {(isHost() ? bullets : networkBullets).map((bullet) => (
         <Bullet key={bullet.id} {...bullet} onHit={() => onHit(bullet.id)} />
       ))}
 

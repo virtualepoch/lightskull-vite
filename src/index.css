@@ -1,4 +1,9 @@
 /* DEFAULT VITE STYLING ===VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV */
+@font-face {
+  font-family: threed;
+  src: url(../public/fonts/moderne-3d-schwabacher.ttf);
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -36,14 +41,23 @@ body {
 }
 
 .game-title {
-  font: 100 20px times;
-  color: #00ffff;
-  text-shadow: -2px 0 3px crimson;
+  font: 100 18px threed;
+  color: #aa0000;
+  text-shadow: 0 0 3px crimson;
   border-radius: 100%;
   margin: 10px 10px 0 0;
+  padding: 7px;
   box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5),
     inset 0 0 10px 1px rgba(155, 255, 255, 0.5);
   /* animation: blink 2s linear infinite; */
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(255, 255, 255, 0.5),
+    rgba(0, 255, 255, 0.5) 50%,
+    aqua 80%
+  );
+  letter-spacing: 4px;
+  filter: drop-shadow(0 0 5px white);
 }
 
 #root {

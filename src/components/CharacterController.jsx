@@ -54,8 +54,8 @@ export const CharacterController = ({
   useFrame((_, delta) => {
     // CAMERA FOLLOW
     if (controls.current) {
-      const cameraDistanceY = window.innerWidth < 1024 ? 20 : 24;
-      const cameraDistanceZ = window.innerWidth < 1024 ? 16 : 20;
+      const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
+      const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;
       const playerWorldPos = vec3(rigidbody.current.translation());
       controls.current.setLookAt(
         playerWorldPos.x,
@@ -116,6 +116,7 @@ export const CharacterController = ({
   return (
     <group ref={group} {...props}>
       {userPlayer && <CameraControls ref={controls} />}
+
       <RigidBody
         ref={rigidbody}
         colliders={false}
@@ -135,12 +136,14 @@ export const CharacterController = ({
               state.setState("dead", true);
               state.setState("health", 0);
               rigidbody.current.setEnabled(false);
+
               setTimeout(() => {
                 spawnRandomly();
                 rigidbody.current.setEnabled(true);
                 state.setState("health", 100);
                 state.setState("dead", false);
               }, 2000);
+
               onKilled(state.id, other.rigidBody.userData.player);
             } else {
               state.setState("health", newHealth);
@@ -170,30 +173,30 @@ const Crosshair = (props) => {
     <group {...props}>
       <mesh position-z={1}>
         <boxGeometry args={[0.05, 0.05, 0.05]} />
-        <meshBasicMaterial color="black" transparent opacity={0.9} />
+        <meshBasicMaterial color="aqua" transparent opacity={0.9} />
       </mesh>
       <mesh position-z={2}>
         <boxGeometry args={[0.05, 0.05, 0.05]} />
-        <meshBasicMaterial color="black" transparent opacity={0.85} />
+        <meshBasicMaterial color="aqua" transparent opacity={0.85} />
       </mesh>
       <mesh position-z={3}>
         <boxGeometry args={[0.05, 0.05, 0.05]} />
-        <meshBasicMaterial color="black" transparent opacity={0.8} />
+        <meshBasicMaterial color="aqua" transparent opacity={0.8} />
       </mesh>
 
       <mesh position-z={4.5}>
         <boxGeometry args={[0.05, 0.05, 0.05]} />
-        <meshBasicMaterial color="black" opacity={0.7} transparent />
+        <meshBasicMaterial color="aqua" opacity={0.7} transparent />
       </mesh>
 
       <mesh position-z={6.5}>
         <boxGeometry args={[0.05, 0.05, 0.05]} />
-        <meshBasicMaterial color="black" opacity={0.6} transparent />
+        <meshBasicMaterial color="aqua" opacity={0.6} transparent />
       </mesh>
 
       <mesh position-z={9}>
         <boxGeometry args={[0.05, 0.05, 0.05]} />
-        <meshBasicMaterial color="black" opacity={0.2} transparent />
+        <meshBasicMaterial color="aqua" opacity={0.2} transparent />
       </mesh>
     </group>
   );

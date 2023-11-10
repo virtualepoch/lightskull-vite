@@ -7,7 +7,7 @@ Source: https://sketchfab.com/3d-models/gayeti-hellhound-f7906538199e4cc9bf65aaa
 Title: Gayeti HellHound
 */
 
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 
 export function Hellhound(props) {
@@ -17,12 +17,11 @@ export function Hellhound(props) {
   );
   const { actions, mixer } = useAnimations(animations, group);
 
-  useEffect(() => {
-    actions["drakee"].play();
-    mixer.timeScale = 1;
-  }, [actions, mixer]);
+  // useEffect(() => {
+  //   actions["drakee"].play();
+  //   mixer.timeScale = 1;
+  // }, [actions, mixer]);
 
-  console.log(actions);
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Sketchfab_Scene">

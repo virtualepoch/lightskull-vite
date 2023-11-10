@@ -4,6 +4,7 @@ import { CapsuleCollider, RigidBody, vec3 } from "@react-three/rapier";
 import { useFrame, useThree } from "@react-three/fiber";
 import { isHost } from "playroomkit";
 import { Billboard, CameraControls, Text } from "@react-three/drei";
+import { CharacterSimple } from "./CharacterSimple";
 
 const MOVEMENT_SPEED = 200;
 const FIRE_RATE = 380;
@@ -57,23 +58,23 @@ export const CharacterController = ({
     }
 
     // CAMERA FOLLOW
-    // if (controls.current) {
-    //   const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
-    //   const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;
-    //   const playerWorldPos = vec3(rigidbody.current.translation());
-    //   controls.current.setLookAt(
-    //     playerWorldPos.x,
-    //     playerWorldPos.y + (state.state.dead ? 12 : cameraDistanceY),
-    //     playerWorldPos.z + (state.state.dead ? 2 : cameraDistanceZ),
-    //     playerWorldPos.x,
-    //     playerWorldPos.y + 1.5,
-    //     playerWorldPos.z,
-    //     true
-    //   );
-    // }
+    if (controls.current) {
+      const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
+      const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;
+      const playerWorldPos = vec3(rigidbody.current.translation());
+      controls.current.setLookAt(
+        playerWorldPos.x,
+        playerWorldPos.y + (state.state.dead ? 12 : cameraDistanceY),
+        playerWorldPos.z + (state.state.dead ? 2 : cameraDistanceZ),
+        playerWorldPos.x,
+        playerWorldPos.y + 1.5,
+        playerWorldPos.z,
+        true
+      );
+    }
 
     if (state.state.dead) {
-      setAnimation("Death");
+      setAnimation("Idle");
       return;
     }
 
@@ -106,7 +107,7 @@ export const CharacterController = ({
     // Check if fire button is pressed
     if (joystick.isPressed("fire")) {
       // fire
-      setAnimation("Idle_Shoot");
+      setAnimation("Idle");
       if (isHost()) {
         if (Date.now() - lastShoot.current > FIRE_RATE) {
           lastShoot.current = Date.now();
@@ -162,7 +163,7 @@ export const CharacterController = ({
       >
         <PlayerInfo state={state.state} />
         <group ref={character}>
-          <CharacterSoldier
+          <CharacterSimple
             color={state.state.profile?.color}
             animation={animation}
           />
@@ -217,7 +218,7 @@ const PlayerInfo = ({ state }) => {
   const name = state.profile.name;
 
   return (
-    <Billboard position-y={2.5}>
+    <Billboard position-y={3.2}>
       <Text position-y={0.36} fontSize={0.4}>
         {name}
         <meshBasicMaterial color={state.profile.color} />

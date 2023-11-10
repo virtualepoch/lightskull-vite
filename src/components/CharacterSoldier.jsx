@@ -5,9 +5,10 @@ Command: npx gltfjsx@6.2.14 public/models/Character_Soldier.gltf
 
 import { useGLTF, useAnimations } from "@react-three/drei";
 import { useGraph } from "@react-three/fiber";
-import React, { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Color, LoopOnce, MeshStandardMaterial } from "three";
 import { SkeletonUtils } from "three-stdlib";
+
 const WEAPONS = [
   "GrenadeLauncher",
   "AK",
@@ -32,9 +33,11 @@ export function CharacterSoldier({
   ...props
 }) {
   const group = useRef();
+
   const { scene, materials, animations } = useGLTF(
     "/models/Character_Soldier.gltf"
   );
+
   // Skinned meshes cannot be re-used in threejs without cloning them
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
   // useGraph creates two flat object collections for nodes and materials
@@ -91,7 +94,7 @@ export function CharacterSoldier({
     });
   }, [nodes, clone]);
 
-  // console.log(actions);
+
 
   return (
     <group {...props} dispose={null} ref={group}>

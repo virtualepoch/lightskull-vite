@@ -4,7 +4,7 @@ import { isHost } from "playroomkit";
 import { MeshBasicMaterial } from "three";
 import { WEAPON_OFFSET } from "./CharacterController";
 
-const BULLET_SPEED = 20;
+const BULLET_SPEED = 30;
 
 const bulletMaterial = new MeshBasicMaterial({
   color: "cyan",
@@ -24,7 +24,7 @@ export const Bullet = ({ player, angle, position, onHit }) => {
     };
     rigidbody.current.setLinvel(velocity, true);
 
-    const audio = new Audio("/audios/rifle.mp3");
+    const audio = new Audio("/audios/beam-40.mp3");
     audio.play();
   }, []);
 

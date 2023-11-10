@@ -1,6 +1,11 @@
 import { Canvas } from "@react-three/fiber";
 import { Experience } from "./components/Experience";
-import { Loader, PerformanceMonitor, SoftShadows } from "@react-three/drei";
+import {
+  Loader,
+  OrbitControls,
+  PerformanceMonitor,
+  SoftShadows,
+} from "@react-three/drei";
 import { Suspense, useState } from "react";
 import { Physics } from "@react-three/rapier";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
@@ -18,6 +23,7 @@ function App() {
       <Loader />
       <Leaderboard />
       <Canvas shadows camera={{ position: [0, 30, 0], fov: 30, near: 2 }}>
+        <OrbitControls />
         <color attach="background" args={["#00ffff"]} />
         <SoftShadows size={42} />
         <PerformanceMonitor

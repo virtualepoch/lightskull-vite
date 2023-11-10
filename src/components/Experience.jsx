@@ -13,6 +13,8 @@ import {
 import { CharacterController } from "./CharacterController";
 import { Bullet } from "./Bullet";
 import { BulletHit } from "./BulletHit";
+import { Titan } from "../../Titan";
+import { Hellhound } from "./Hellhound";
 
 export const Experience = () => {
   const [players, setPlayers] = useState([]);
@@ -82,6 +84,10 @@ export const Experience = () => {
   return (
     <>
       <Map />
+
+      {/* Map Statues / Bots */}
+      <Titan position={[15.2, 6.5, -15.6]} rotation={[0, -1, 0]} />
+      <Hellhound scale={4} position={[-15, 0, 15]} rotation-y={2} />
 
       {players.map(({ state, joystick }, idx) => (
         <CharacterController

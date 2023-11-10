@@ -23,18 +23,19 @@ function App() {
       <Loader />
       <Leaderboard />
       <Canvas shadows camera={{ position: [0, 30, 0], fov: 30, near: 2 }}>
-        <OrbitControls />
+        {/* <OrbitControls /> */}
         <color attach="background" args={["#00ffff"]} />
         <SoftShadows size={42} />
         <PerformanceMonitor
           // Detect low performance devices
           onDecline={(fps) => {
-            setDowngradedPerformance(true);
+            setDowngradedPerformance(false);
           }}
         />
         <Suspense>
-          <Physics>
-            {/* NOTE: add 'debug' prop above to '<Physics>' to add a wireframe to the rigid bodies */}
+          <Physics
+          // NOTE: add 'debug' prop here to add a wireframe to the rigid bodies
+          >
             <Experience />
           </Physics>
         </Suspense>

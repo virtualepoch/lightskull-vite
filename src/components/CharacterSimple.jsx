@@ -63,8 +63,6 @@ export function CharacterSimple({
     });
   }, [nodes, clone]);
 
-  console.log(nodes);
-
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Sketchfab_Scene">
@@ -80,7 +78,7 @@ export function CharacterSimple({
               <skinnedMesh
                 name="Cube_0"
                 geometry={nodes.Cube_0.geometry}
-                material={materials.Material}
+                material={playerColorMaterial}
                 skeleton={nodes.Cube_0.skeleton}
               />
             </group>

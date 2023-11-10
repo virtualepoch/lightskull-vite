@@ -10,9 +10,9 @@ const MOVEMENT_SPEED = 200;
 const FIRE_RATE = 380;
 
 export const WEAPON_OFFSET = {
-  x: -0.2,
-  y: 1.4,
-  z: 0.8,
+  x: 0,
+  y: 2.6,
+  z: 0,
 };
 
 export const CharacterController = ({
@@ -58,6 +58,7 @@ export const CharacterController = ({
     }
 
     // CAMERA FOLLOW
+
     if (controls.current) {
       const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
       const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;

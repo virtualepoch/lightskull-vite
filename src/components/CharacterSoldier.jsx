@@ -94,8 +94,6 @@ export function CharacterSoldier({
     });
   }, [nodes, clone]);
 
-
-
   return (
     <group {...props} dispose={null} ref={group}>
       <group name="Scene">
@@ -127,7 +125,6 @@ export function CharacterSoldier({
               name="Cube004_3"
               geometry={nodes.Cube004_3.geometry}
               material={materials.Character_Main}
-              // material={playerColorMaterial}
               skeleton={nodes.Cube004_3.skeleton}
               castShadow
             />

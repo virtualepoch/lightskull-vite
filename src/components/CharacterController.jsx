@@ -6,7 +6,7 @@ import { isHost } from "playroomkit";
 import { Billboard, CameraControls, Text } from "@react-three/drei";
 import { CharacterSimple } from "./CharacterSimple";
 
-const MOVEMENT_SPEED = 200;
+const MOVEMENT_SPEED = 300;
 const FIRE_RATE = 380;
 
 export const WEAPON_OFFSET = {
@@ -76,6 +76,8 @@ export const CharacterController = ({
 
     if (state.state.dead) {
       setAnimation("Idle");
+      const audio = new Audio("/audios/dead.mp3");
+      audio.play();
       return;
     }
 
@@ -174,7 +176,7 @@ export const CharacterController = ({
             />
           )}
         </group>
-        <CapsuleCollider args={[0.7, 0.6]} position={[0, 1.28, 0]} />
+        <CapsuleCollider args={[1.5, 0.6]} position={[0, 1.4, 0]} />
       </RigidBody>
     </group>
   );

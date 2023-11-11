@@ -13,6 +13,8 @@ import { useEffect, useMemo, useRef } from "react";
 import { Color, LoopOnce, MeshStandardMaterial } from "three";
 import { SkeletonUtils } from "three-stdlib";
 
+import { CyberSkull } from "./CyberSkull";
+
 export function CharacterSimple({
   color = "black",
   animation = "Idle",
@@ -66,6 +68,7 @@ export function CharacterSimple({
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Sketchfab_Scene">
+        <CyberSkull scale={0.7} position={[0, 2.8, 0.1]} />
         <group
           name="Sketchfab_model"
           rotation={[-Math.PI / 2, 0, 0]}

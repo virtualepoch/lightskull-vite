@@ -1,5 +1,4 @@
 import { Environment, OrbitControls } from "@react-three/drei";
-import * as THREE from "three";
 import { Map } from "./Map";
 import { useEffect, useState } from "react";
 import {
@@ -13,7 +12,6 @@ import {
 import { CharacterController } from "./CharacterController";
 import { Bullet } from "./Bullet";
 import { BulletHit } from "./BulletHit";
-import { Titan } from "../../Titan";
 import { Hellhound } from "./Hellhound";
 // import { CharacterSimple } from "./CharacterSimple";
 
@@ -87,7 +85,7 @@ export const Experience = () => {
       <Map />
 
       <Hellhound scale={2.4} position={[9.5, 6.4, 9.7]} rotation-y={3.14} />
-     
+
       {players.map(({ state, joystick }, idx) => (
         <CharacterController
           key={state.id}

@@ -11,7 +11,7 @@ const bulletMaterial = new MeshBasicMaterial({
   toneMapped: false,
 });
 
-bulletMaterial.color.multiplyScalar(42);
+bulletMaterial.color.multiplyScalar(22);
 
 export const Bullet = ({ player, angle, position, onHit }) => {
   const rigidbody = useRef();

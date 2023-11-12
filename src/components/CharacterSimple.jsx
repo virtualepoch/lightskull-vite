@@ -7,13 +7,11 @@ Source: https://sketchfab.com/3d-models/character-f7a1b4c4f57b4f68ae172ed2449547
 Title: Character
 */
 
-import { useGLTF, useAnimations } from "@react-three/drei";
-import { useGraph } from "@react-three/fiber";
-import { useEffect, useMemo, useRef } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import { Color, LoopOnce, MeshStandardMaterial } from "three";
+import { useGraph } from "@react-three/fiber";
+import { useGLTF, useAnimations } from "@react-three/drei";
 import { SkeletonUtils } from "three-stdlib";
-
-import { CyberSkull } from "./CyberSkull";
 
 export function CharacterSimple({
   color = "black",
@@ -68,7 +66,6 @@ export function CharacterSimple({
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Sketchfab_Scene">
-        <CyberSkull scale={0.7} position={[0, 2.8, 0.1]} />
         <group
           name="Sketchfab_model"
           rotation={[-Math.PI / 2, 0, 0]}

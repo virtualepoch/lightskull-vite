@@ -23,7 +23,7 @@ function App() {
       <Loader />
       <Leaderboard />
       <Canvas shadows camera={{ position: [0, 30, 0], fov: 30, near: 2 }}>
-        {/* <OrbitControls /> */}
+        <OrbitControls />
         <color attach="background" args={["#00ffff"]} />
         <SoftShadows size={42} />
         <PerformanceMonitor

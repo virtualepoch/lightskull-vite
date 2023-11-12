@@ -1,4 +1,4 @@
-import { Environment, OrbitControls } from "@react-three/drei";
+import { Environment } from "@react-three/drei";
 import { Map } from "./Map";
 import { useEffect, useState } from "react";
 import {
@@ -12,8 +12,8 @@ import {
 import { CharacterController } from "./CharacterController";
 import { Bullet } from "./Bullet";
 import { BulletHit } from "./BulletHit";
-import { Hellhound } from "./Hellhound";
-// import { CharacterSimple } from "./CharacterSimple";
+
+import { Cyber } from "./Cyber";
 
 export const Experience = () => {
   const [players, setPlayers] = useState([]);
@@ -84,7 +84,7 @@ export const Experience = () => {
     <>
       <Map />
 
-      <Hellhound scale={2.4} position={[9.5, 6.4, 9.7]} rotation-y={3.14} />
+      <Cyber />
 
       {players.map(({ state, joystick }, idx) => (
         <CharacterController

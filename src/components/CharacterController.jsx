@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { CharacterSoldier } from "./CharacterSoldier";
 import { CapsuleCollider, RigidBody, vec3 } from "@react-three/rapier";
 import { useFrame, useThree } from "@react-three/fiber";
 import { isHost } from "playroomkit";
@@ -75,7 +74,7 @@ export const CharacterController = ({
     }
 
     if (state.state.dead) {
-      setAnimation("Idle");
+      setAnimation("Run");
       const audio = new Audio("/audios/dead.mp3");
       audio.play();
       return;
@@ -95,7 +94,7 @@ export const CharacterController = ({
       };
       rigidbody.current.applyImpulse(impulse, true);
     } else {
-      setAnimation("Idle");
+      setAnimation("Run");
     }
 
     if (isHost()) {
@@ -110,7 +109,7 @@ export const CharacterController = ({
     // Check if fire button is pressed
     if (joystick.isPressed("fire")) {
       // fire
-      setAnimation("Idle");
+      setAnimation("Run");
       if (isHost()) {
         if (Date.now() - lastShoot.current > FIRE_RATE) {
           lastShoot.current = Date.now();
@@ -176,7 +175,7 @@ export const CharacterController = ({
             />
           )}
         </group>
-        <CapsuleCollider args={[1.5, 0.6]} position={[0, 1.4, 0]} />
+        <CapsuleCollider args={[1.5, 1]} position={[0, 1.4, 0]} />
       </RigidBody>
     </group>
   );
@@ -232,7 +231,7 @@ const PlayerInfo = ({ state }) => {
       </mesh>
       <mesh scale-x={health / 100} position-x={-0.5 * (1 - health / 100)}>
         <planeGeometry args={[1, 0.2]} />
-        <meshBasicMaterial color="red" />
+        <meshBasicMaterial color="#00ff00" />
       </mesh>
     </Billboard>
   );

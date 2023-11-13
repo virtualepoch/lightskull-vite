@@ -12,7 +12,6 @@ import {
 import { CharacterController } from "./CharacterController";
 import { Bullet } from "./Bullet";
 import { BulletHit } from "./BulletHit";
-import { Character } from "./Character";
 
 export const Experience = () => {
   const [players, setPlayers] = useState([]);

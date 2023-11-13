@@ -59,8 +59,10 @@ export const CharacterController = ({
     // CAMERA FOLLOW
 
     if (controls.current) {
-      const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
-      const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;
+      // const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
+      // const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;
+      const cameraDistanceY = 40;
+      const cameraDistanceZ = 20;
       const playerWorldPos = vec3(rigidbody.current.translation());
       controls.current.setLookAt(
         playerWorldPos.x,
@@ -74,7 +76,7 @@ export const CharacterController = ({
     }
 
     if (state.state.dead) {
-      setAnimation("CharacterArmature|Idle");
+      setAnimation("CharacterArmature|Death");
       const audio = new Audio("/audios/dead.mp3");
       audio.play();
       return;
@@ -109,7 +111,7 @@ export const CharacterController = ({
     // Check if fire button is pressed
     if (joystick.isPressed("fire")) {
       // fire
-      setAnimation("CharacterArmature|Idle");
+      setAnimation("CharacterArmature|HitRecieve_2");
       if (isHost()) {
         if (Date.now() - lastShoot.current > FIRE_RATE) {
           lastShoot.current = Date.now();

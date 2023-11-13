@@ -21,7 +21,7 @@ const AnimatedBox = ({ scale, target, speed }) => {
   return <Instance ref={ref} scale={scale} position={[0, 0, 0]} />;
 };
 
-export const BulletHit = ({ nb = 100, position, onEnded }) => {
+export const BulletHit = ({ nb = 50, position, onEnded }) => {
   const boxes = useMemo(
     () =>
       Array.from({ length: nb }, () => ({
@@ -45,7 +45,7 @@ export const BulletHit = ({ nb = 100, position, onEnded }) => {
   }, []);
 
   return (
-    <group position={[position.x, position.y, position.z]} scale={3}>
+    <group position={[position.x, position.y, position.z]} scale={4}>
       <Instances>
         <boxGeometry />
         <meshStandardMaterial toneMapped={false} color={bulletHitcolor} />

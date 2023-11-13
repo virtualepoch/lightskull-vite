@@ -3,9 +3,9 @@ import { CapsuleCollider, RigidBody, vec3 } from "@react-three/rapier";
 import { useFrame, useThree } from "@react-three/fiber";
 import { isHost } from "playroomkit";
 import { Billboard, CameraControls, Text } from "@react-three/drei";
-import { CharacterSimple } from "./CharacterSimple";
+import { Character } from "./Character";
 
-const MOVEMENT_SPEED = 300;
+const MOVEMENT_SPEED = 12;
 const FIRE_RATE = 380;
 
 export const WEAPON_OFFSET = {
@@ -27,7 +27,7 @@ export const CharacterController = ({
   const rigidbody = useRef();
   const controls = useRef();
   const lastShoot = useRef(0);
-  const [animation, setAnimation] = useState("Idle");
+  const [animation, setAnimation] = useState("CharacterArmature|Idle");
 
   const scene = useThree((state) => state.scene);
 
@@ -74,7 +74,7 @@ export const CharacterController = ({
     }
 
     if (state.state.dead) {
-      setAnimation("Run");
+      setAnimation("CharacterArmature|Idle");
       const audio = new Audio("/audios/dead.mp3");
       audio.play();
       return;
@@ -83,18 +83,18 @@ export const CharacterController = ({
     // Update player position based on joystick state
     const angle = joystick.angle();
     if (joystick.isJoystickPressed() && angle) {
-      setAnimation("Run");
+      setAnimation("CharacterArmature|Run");
       character.current.rotation.y = angle;
 
       // Move character in right direction
       const impulse = {
-        x: Math.sin(angle) * MOVEMENT_SPEED * delta,
+        x: Math.sin(angle) * MOVEMENT_SPEED * delta * 100,
         y: 0,
-        z: Math.cos(angle) * MOVEMENT_SPEED * delta,
+        z: Math.cos(angle) * MOVEMENT_SPEED * delta * 100,
       };
       rigidbody.current.applyImpulse(impulse, true);
     } else {
-      setAnimation("Run");
+      setAnimation("CharacterArmature|Idle");
     }
 
     if (isHost()) {
@@ -109,7 +109,7 @@ export const CharacterController = ({
     // Check if fire button is pressed
     if (joystick.isPressed("fire")) {
       // fire
-      setAnimation("Run");
+      setAnimation("CharacterArmature|Idle");
       if (isHost()) {
         if (Date.now() - lastShoot.current > FIRE_RATE) {
           lastShoot.current = Date.now();
@@ -165,9 +165,11 @@ export const CharacterController = ({
       >
         <PlayerInfo state={state.state} />
         <group ref={character}>
-          <CharacterSimple
+          <Character
             color={state.state.profile?.color}
             animation={animation}
+            scale={[2.5, 2, 2.2]}
+            position={[0, -0.7, 0]}
           />
           {userPlayer && (
             <Crosshair
@@ -175,7 +177,7 @@ export const CharacterController = ({
             />
           )}
         </group>
-        <CapsuleCollider args={[1.5, 1]} position={[0, 1.4, 0]} />
+        <CapsuleCollider args={[1.5, 1]} position={[0, 1.8, 0]} />
       </RigidBody>
     </group>
   );

@@ -12,8 +12,7 @@ import {
 import { CharacterController } from "./CharacterController";
 import { Bullet } from "./Bullet";
 import { BulletHit } from "./BulletHit";
-
-import { Cyber } from "./Cyber";
+import { Character } from "./Character";
 
 export const Experience = () => {
   const [players, setPlayers] = useState([]);
@@ -84,12 +83,9 @@ export const Experience = () => {
     <>
       <Map />
 
-      <Cyber />
-
       {players.map(({ state, joystick }, idx) => (
         <CharacterController
           key={state.id}
-          // position-x={idx * 2}
           state={state}
           joystick={joystick}
           userPlayer={state.id === myPlayer()?.id}

@@ -7,11 +7,11 @@ import { WEAPON_OFFSET } from "./CharacterController";
 const BULLET_SPEED = 30;
 
 const bulletMaterial = new MeshBasicMaterial({
-  color: "purple",
+  color: "aqua",
   toneMapped: false,
 });
 
-bulletMaterial.color.multiplyScalar(22);
+bulletMaterial.color.multiplyScalar(11);
 
 export const Bullet = ({ player, angle, position, onHit }) => {
   const rigidbody = useRef();
@@ -52,12 +52,12 @@ export const Bullet = ({ player, angle, position, onHit }) => {
           }}
         >
           <mesh
-            position-z={2.5}
+            position-z={2.3}
             material={bulletMaterial}
             castShadow
             rotation={[Math.PI / 2, 0, 0]}
           >
-            <capsuleGeometry args={[0.4, 1.5, 0.5, 4]} />
+            <capsuleGeometry args={[0.2, 1.5, 2, 6]} />
           </mesh>
         </RigidBody>
       </group>

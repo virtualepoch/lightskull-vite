@@ -107,8 +107,8 @@ export const Experience = () => {
       ))}
 
       <directionalLight
-        position={[25, 18, -25]}
-        intensity={1}
+        position={[3, 8, -5]}
+        intensity={0.5}
         castShadow
         shadow-camera-near={0}
         shadow-camera-far={80}

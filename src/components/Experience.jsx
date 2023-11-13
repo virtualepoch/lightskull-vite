@@ -1,5 +1,6 @@
 import { Environment } from "@react-three/drei";
-import { Map } from "./Map";
+import { Map } from "./maps/Map";
+import { Map2 } from "./maps/Map2";
 import { useEffect, useState } from "react";
 import {
   Joystick,
@@ -80,7 +81,7 @@ export const Experience = () => {
 
   return (
     <>
-      <Map />
+      <Map2 />
 
       {players.map(({ state, joystick }, idx) => (
         <CharacterController

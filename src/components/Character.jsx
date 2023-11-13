@@ -39,8 +39,6 @@ export function Character({
 
   playerFaceAndOutline.color.multiplyScalar(2);
 
-  console.log(actions);
-
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Root_Scene">
@@ -62,12 +60,14 @@ export function Character({
               geometry={nodes.SpaceSuit_Feet_1.geometry}
               material={playerColorMaterial}
               skeleton={nodes.SpaceSuit_Feet_1.skeleton}
+              castShadow
             />
             <skinnedMesh
               name="SpaceSuit_Feet_2"
               geometry={nodes.SpaceSuit_Feet_2.geometry}
               material={playerFaceAndOutline}
               skeleton={nodes.SpaceSuit_Feet_2.skeleton}
+              castShadow
             />
           </group>
           <group
@@ -80,24 +80,28 @@ export function Character({
               geometry={nodes.SpaceSuit_Legs_1.geometry}
               material={playerFaceAndOutline}
               skeleton={nodes.SpaceSuit_Legs_1.skeleton}
+              castShadow
             />
             <skinnedMesh
               name="SpaceSuit_Legs_2"
               geometry={nodes.SpaceSuit_Legs_2.geometry}
               material={playerColorMaterial}
               skeleton={nodes.SpaceSuit_Legs_2.skeleton}
+              castShadow
             />
             <skinnedMesh
               name="SpaceSuit_Legs_3"
               geometry={nodes.SpaceSuit_Legs_3.geometry}
               material={playerColorMaterial}
               skeleton={nodes.SpaceSuit_Legs_3.skeleton}
+              castShadow
             />
             <skinnedMesh
               name="SpaceSuit_Legs_4"
               geometry={nodes.SpaceSuit_Legs_4.geometry}
               material={playerColorMaterial}
               skeleton={nodes.SpaceSuit_Legs_4.skeleton}
+              castShadow
             />
           </group>
           <group
@@ -110,24 +114,28 @@ export function Character({
               geometry={nodes.SpaceSuit_Body_1.geometry}
               material={playerFaceAndOutline}
               skeleton={nodes.SpaceSuit_Body_1.skeleton}
+              castShadow
             />
             <skinnedMesh
               name="SpaceSuit_Body_2"
               geometry={nodes.SpaceSuit_Body_2.geometry}
               material={playerColorMaterial}
               skeleton={nodes.SpaceSuit_Body_2.skeleton}
+              castShadow
             />
             <skinnedMesh
               name="SpaceSuit_Body_3"
               geometry={nodes.SpaceSuit_Body_3.geometry}
               material={playerColorMaterial}
               skeleton={nodes.SpaceSuit_Body_3.skeleton}
+              castShadow
             />
             <skinnedMesh
               name="SpaceSuit_Body_4"
               geometry={nodes.SpaceSuit_Body_4.geometry}
               material={playerColorMaterial}
               skeleton={nodes.SpaceSuit_Body_4.skeleton}
+              castShadow
             />
           </group>
           <group
@@ -140,18 +148,21 @@ export function Character({
               geometry={nodes.SpaceSuit_Head_1.geometry}
               material={playerColorMaterial}
               skeleton={nodes.SpaceSuit_Head_1.skeleton}
+              castShadow
             />
             <skinnedMesh
               name="SpaceSuit_Head_2"
               geometry={nodes.SpaceSuit_Head_2.geometry}
               material={playerColorMaterial}
               skeleton={nodes.SpaceSuit_Head_2.skeleton}
+              castShadow
             />
             <skinnedMesh
               name="SpaceSuit_Head_3"
               geometry={nodes.SpaceSuit_Head_3.geometry}
               material={playerFaceAndOutline}
               skeleton={nodes.SpaceSuit_Head_3.skeleton}
+              castShadow
             />
           </group>
         </group>

@@ -4,8 +4,8 @@ import { isHost } from "playroomkit";
 import { useEffect, useMemo, useRef } from "react";
 import { Color, MathUtils, Vector3 } from "three";
 
-const bulletHitcolor = new Color("white");
-bulletHitcolor.multiplyScalar(12);
+const bulletHitcolor = new Color("#64ffff");
+bulletHitcolor.multiplyScalar(2);
 
 const AnimatedBox = ({ scale, target, speed }) => {
   const ref = useRef();
@@ -45,7 +45,7 @@ export const BulletHit = ({ nb = 100, position, onEnded }) => {
   }, []);
 
   return (
-    <group position={[position.x, position.y, position.z]}>
+    <group position={[position.x, position.y, position.z]} scale={3}>
       <Instances>
         <boxGeometry />
         <meshStandardMaterial toneMapped={false} color={bulletHitcolor} />

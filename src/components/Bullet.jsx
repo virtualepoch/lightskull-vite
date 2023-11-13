@@ -4,14 +4,14 @@ import { isHost } from "playroomkit";
 import { MeshBasicMaterial } from "three";
 import { WEAPON_OFFSET } from "./CharacterController";
 
-const BULLET_SPEED = 30;
+const BULLET_SPEED = 40;
 
 const bulletMaterial = new MeshBasicMaterial({
   color: "aqua",
   toneMapped: false,
 });
 
-bulletMaterial.color.multiplyScalar(11);
+bulletMaterial.color.multiplyScalar(7);
 
 export const Bullet = ({ player, angle, position, onHit }) => {
   const rigidbody = useRef();
@@ -52,12 +52,12 @@ export const Bullet = ({ player, angle, position, onHit }) => {
           }}
         >
           <mesh
-            position-z={2.3}
+            position-z={1.3}
             material={bulletMaterial}
             castShadow
-            rotation={[Math.PI / 2, 0, 0]}
+            rotation={[Math.PI / -2, 0, 0]}
           >
-            <capsuleGeometry args={[0.2, 1.5, 2, 6]} />
+            <coneGeometry args={[0.8, 1.9, 6]} />
           </mesh>
         </RigidBody>
       </group>

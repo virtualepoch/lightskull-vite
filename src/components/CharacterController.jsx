@@ -5,7 +5,7 @@ import { isHost } from "playroomkit";
 import { Billboard, CameraControls, Text } from "@react-three/drei";
 import { Character } from "./Character";
 
-const MOVEMENT_SPEED = 12;
+const MOVEMENT_SPEED = 7;
 const FIRE_RATE = 380;
 
 export const WEAPON_OFFSET = {
@@ -168,8 +168,8 @@ export const CharacterController = ({
           <Character
             color={state.state.profile?.color}
             animation={animation}
-            scale={[2.5, 2, 2.2]}
-            position={[0, -0.7, 0]}
+            scale={[2.5, 2, 2.9]}
+            position={[0, -0.4, 0]}
           />
           {userPlayer && (
             <Crosshair
@@ -177,7 +177,7 @@ export const CharacterController = ({
             />
           )}
         </group>
-        <CapsuleCollider args={[1.5, 1]} position={[0, 1.8, 0]} />
+        <CapsuleCollider args={[1.4, 0.8]} position={[0, 1.8, 0]} />
       </RigidBody>
     </group>
   );
@@ -222,7 +222,7 @@ const PlayerInfo = ({ state }) => {
   const name = state.profile.name;
 
   return (
-    <Billboard position-y={3.2}>
+    <Billboard position-y={3.7}>
       <Text position-y={0.36} fontSize={0.4}>
         {name}
         <meshBasicMaterial color={state.profile.color} />

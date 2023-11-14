@@ -9,36 +9,39 @@ export const Leaderboard = () => {
         {players.map((player) => (
           <div
             key={player.id}
-            className={`flex items-center rounded-full gap-2 min-w-[140px]`}
+            className={`flex items-center rounded-b-2xl gap-2 min-w-[140px]`}
             style={{
               color: player.state.profile?.color,
-              border: "2px solid",
-              borderColor: player.state.profile?.color,
-              textShadow: "0 0 3px cyan",
-              boxShadow:
-                "0 0 10px 2px rgba(0, 100, 100), inset 0 0 5px 1px cyan",
+              textShadow: "0 0 2px cyan",
+              // boxShadow:
+              //   "0 5px 10px 10px rgb(" +
+              //   player.state.profile?.color +
+              //   "), inset 0 0 5px 1px rgba(" +
+              //   player.state.profile?.color +
+              //   ", 0.8)",
+              boxShadow: "0 2px 4px 1px rgba(0, 0, 0, 0.4)",
               paddingRight: "15px",
             }}
           >
             <img
               src={
-                player.state.profile?.photo || "/images/leaderboard-logo.png"
+                // player.state.profile?.photo ||
+                "/images/leaderboard-logo.png"
               }
-              className="w-10 h-10 rounded-full m-1"
+              className="w-5 h-5 rounded-full m-1"
               style={{
                 background: player.state.profile?.color,
                 filter: "drop-shadow(0 0 5px cyan)",
               }}
             />
 
-            <div className="flex-grow">
-              <h2 className={`font-bold text-sm`}>
-                {player.state.profile?.name}
-              </h2>
-              <div className="flex text-sm items-center gap-4">
-                <p>🔫 {player.state.kills}</p>
-                <p>💀 {player.state.deaths}</p>
-              </div>
+            <h2 className={`font-bold text-sm`}>
+              {player.state.profile?.name}
+            </h2>
+
+            <div className="flex text-sm items-center gap-4">
+              <p>🔫 {player.state.kills}</p>
+              <p>💀 {player.state.deaths}</p>
             </div>
           </div>
         ))}

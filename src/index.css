@@ -50,6 +50,12 @@ body {
   justify-content: center;
 }
 
+@media (orientation: landscape){
+  .canvas-overlay{
+    align-items: flex-end;
+  }
+}
+
 .game-title {
   font: 100 21px Ailerons;
   color: white;

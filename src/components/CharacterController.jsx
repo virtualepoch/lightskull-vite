@@ -235,7 +235,7 @@ const PlayerInfo = ({ state }) => {
       </mesh>
       <mesh scale-x={health / 100} position-x={-0.5 * (1 - health / 100)}>
         <planeGeometry args={[1, 0.2]} />
-        <meshBasicMaterial color="#00ff00" />
+        <meshBasicMaterial color={health < 51 ? "#ff0000" : "#00ff00"} />
       </mesh>
     </Billboard>
   );

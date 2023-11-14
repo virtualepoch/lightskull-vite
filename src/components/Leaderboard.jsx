@@ -5,14 +5,17 @@ export const Leaderboard = () => {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 p-1 flex z-10 gap-4">
+      <div className="fixed top-0 left-0 right-0 px-1 flex z-10 gap-1">
         {players.map((player) => (
           <div
             key={player.id}
-            className={`flex items-center rounded-b-2xl gap-2 min-w-[140px]`}
+            className={`flex items-center gap-2 min-w-[140px]`}
             style={{
               color: player.state.profile?.color,
               textShadow: "-1px 1px 2px black",
+              border: "1px solid",
+              borderTop: "none",
+              borderBottom: "none",
               // boxShadow:
               //   "0 5px 10px 10px rgb(" +
               //   player.state.profile?.color +

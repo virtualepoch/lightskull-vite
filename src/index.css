@@ -43,8 +43,6 @@ body {
   left: 0;
   z-index: 111;
   border: 1px inset aqua;
-  border-radius: 10px;
-  box-shadow: inset 0 0 3px 1px rgba(0, 255, 255);
   pointer-events: none;
   display: flex;
   align-items: flex-start;
@@ -58,7 +56,8 @@ body {
 }
 
 .game-title {
-  font: 100 21px Ailerons;
+  font: 100 21px Ailerons, sans-serif;
+  text-transform: uppercase;
   color: white;
   text-shadow: 0 0 2px crimson;
   border-radius: 100%;

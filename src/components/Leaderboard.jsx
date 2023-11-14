@@ -12,7 +12,7 @@ export const Leaderboard = () => {
             className={`flex items-center rounded-b-2xl gap-2 min-w-[140px]`}
             style={{
               color: player.state.profile?.color,
-              textShadow: "0 0 2px cyan",
+              textShadow: "-1px 1px 2px black",
               // boxShadow:
               //   "0 5px 10px 10px rgb(" +
               //   player.state.profile?.color +
@@ -61,7 +61,7 @@ export const Leaderboard = () => {
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          strokeWidth={2}
+          strokeWidth={1}
           stroke="currentColor"
           className="w-6 h-6"
         >

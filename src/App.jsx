@@ -20,6 +20,7 @@ function App() {
         <h1 className="game-title">
           Light<span className="cross-symbol">⁜</span>Skull
         </h1>
+        {/* <div className="logo"></div> */}
       </div>
       <Leaderboard />
       <Canvas shadows camera={{ position: [0, 10, 0], fov: 30, near: 2 }}>

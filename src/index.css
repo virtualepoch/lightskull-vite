@@ -42,16 +42,17 @@ body {
   top: 0;
   left: 0;
   z-index: 111;
-  border-radius: 5px;
-  box-shadow: inset 0 0 5px 1px rgba(0, 255, 255, 0.5);
+  border: 1px inset aqua;
+  border-radius: 10px;
+  box-shadow: inset 0 0 3px 1px rgba(0, 255, 255);
   pointer-events: none;
   display: flex;
   align-items: flex-start;
   justify-content: center;
 }
 
-@media (orientation: landscape){
-  .canvas-overlay{
+@media (orientation: landscape) {
+  .canvas-overlay {
     align-items: flex-end;
   }
 }
@@ -107,7 +108,10 @@ body {
   background: radial-gradient(circle at 50% 50%, white 10%, transparent 50%);
 }
 
-.btn-full-screen {
-  border: solid red;
-}
-
+/* .logo {
+  width: 100%;
+  height: 100%;
+  background: url(../public/images/logo-transparent-bg.png) center no-repeat,
+    radial-gradient(ellipse at 50% 50%, cyan 20%, blue);
+  position: fixed;
+} */

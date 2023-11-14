@@ -4,7 +4,12 @@ Command: npx gltfjsx@6.2.15 public/models/Astronaut.glb
 */
 
 import { useRef, useEffect, useMemo } from "react";
-import { Color, MeshBasicMaterial, MeshStandardMaterial } from "three";
+import {
+  Color,
+  LoopOnce,
+  MeshBasicMaterial,
+  MeshStandardMaterial,
+} from "three";
 import { useGraph } from "@react-three/fiber";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import { SkeletonUtils } from "three-stdlib";
@@ -25,6 +30,11 @@ export function Character({
 
   const { actions } = useAnimations(animations, group);
 
+  if (actions["CharacterArmature|Death"]) {
+    actions["CharacterArmature|Death"].loop = LoopOnce;
+    actions["CharacterArmature|Death"].clampWhenFinished = true;
+  }
+
   useEffect(() => {
     actions[animation].reset().fadeIn(0.2).play();
     return () => actions[animation]?.fadeOut(0.2);
@@ -38,6 +48,33 @@ export function Character({
   const playerFaceAndOutline = new MeshBasicMaterial({ color: "#64ffff" });
 
   playerFaceAndOutline.color.multiplyScalar(2);
+
+  useEffect(() => {
+    // ASSIGNING CHARACTER COLOR
+    nodes.Body.traverse((child) => {
+      if (child.isMesh && child.material.name === ("SciFi_Light" || "Grey")) {
+        child.material = playerFaceAndOutline;
+      } else {
+        child.material = playerColorMaterial;
+      }
+      if (child.isMesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
+
+    clone.traverse((child) => {
+      if (child.isMesh && child.material.name === ("SciFi_Light" || "Grey")) {
+        child.material = playerFaceAndOutline;
+      } else {
+        child.material = playerColorMaterial;
+      }
+      if (child.isMesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
+  }, [nodes, clone]);
 
   return (
     <group ref={group} {...props} dispose={null}>

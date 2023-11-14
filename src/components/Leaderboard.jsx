@@ -5,17 +5,29 @@ export const Leaderboard = () => {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 p-4 flex z-10 gap-4">
+      <div className="fixed top-0 left-0 right-0 p-1 flex z-10 gap-4">
         {players.map((player) => (
           <div
             key={player.id}
-            className={`bg-white bg-opacity-60 backdrop-blur-sm flex items-center rounded-lg gap-2 min-w-[140px]`}
+            className={`flex items-center rounded-full gap-2 min-w-[140px]`}
+            style={{
+              color: player.state.profile?.color,
+              border: "2px solid",
+              borderColor: player.state.profile?.color,
+              textShadow: "0 0 3px cyan",
+              boxShadow:
+                "0 0 10px 2px rgba(0, 100, 100), inset 0 0 5px 1px cyan",
+              paddingRight: "15px",
+            }}
           >
             <img
-              src={player.getState.profile?.photo || ""}
-              className="w-10 h-10 border-2 rounded-full"
+              src={
+                player.state.profile?.photo || "/images/leaderboard-logo.png"
+              }
+              className="w-10 h-10 rounded-full m-1"
               style={{
-                borderColor: player.state.profile?.color,
+                background: player.state.profile?.color,
+                filter: "drop-shadow(0 0 5px cyan)",
               }}
             />
 
@@ -32,7 +44,7 @@ export const Leaderboard = () => {
         ))}
       </div>
       <button
-        className="fixed top-4 right-4 z-10 text-white"
+        className="fixed top-0 right-0 z-10 text-white p-3"
         onClick={() => {
           // toggle fullscreen
           if (document.fullscreenElement) {
@@ -46,7 +58,7 @@ export const Leaderboard = () => {
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          strokeWidth={1.5}
+          strokeWidth={2}
           stroke="currentColor"
           className="w-6 h-6"
         >

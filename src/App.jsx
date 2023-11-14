@@ -15,7 +15,6 @@ function App() {
   const [downgradedPerformance, setDowngradedPerformance] = useState(false);
   return (
     <>
-      {/* <OrbitControls /> */}
       <Loader />
       <div className="canvas-overlay">
         <h1 className="game-title">
@@ -24,6 +23,7 @@ function App() {
       </div>
       <Leaderboard />
       <Canvas shadows camera={{ position: [0, 10, 0], fov: 30, near: 2 }}>
+        {/* <OrbitControls /> */}
         <color attach="background" args={["#000"]} />
         {/* <SoftShadows size={42} /> */}
         {/* <PerformanceMonitor

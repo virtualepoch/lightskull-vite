@@ -6,7 +6,7 @@ import { MeshStandardMaterial } from "three";
 export const Map2 = () => {
   const map = useGLTF("models/map3.glb");
 
-  const mapColor = new MeshStandardMaterial({ color: "#222" });
+  const mapColor = new MeshStandardMaterial({ color: "#6d6058" });
 
   useEffect(() => {
     map.scene.traverse((child) => {

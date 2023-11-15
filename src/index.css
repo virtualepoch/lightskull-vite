@@ -25,13 +25,10 @@
 
 body {
   margin: 0;
-  border-radius: 10px;
 }
 
 #root {
   height: 100vh;
-  border: 1px solid #00ffff;
-  border-radius: 5px;
   box-sizing: border-box;
 }
 
@@ -42,7 +39,7 @@ body {
   top: 0;
   left: 0;
   z-index: 111;
-  border: 1px inset aqua;
+  border-bottom: 1px solid aqua;
   pointer-events: none;
   display: flex;
   align-items: flex-start;
@@ -114,3 +111,12 @@ body {
     radial-gradient(ellipse at 50% 50%, cyan 20%, blue);
   position: fixed;
 } */
+
+.leader-cell {
+  text-shadow: -1px 1px 2px black;
+  border-left: 2px solid;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  padding-right: 20px;
+  box-shadow: -3px 3px 5px 1px rgba(0, 0, 0, 0.2);
+}

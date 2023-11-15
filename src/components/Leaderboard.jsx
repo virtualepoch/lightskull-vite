@@ -5,25 +5,14 @@ export const Leaderboard = () => {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 px-1 flex z-10 gap-1">
+      <div className="fixed top-0 left-0 right-0 px-2 flex z-10">
         {players.map((player) => (
           <div
             key={player.id}
-            className={`flex items-center gap-2 min-w-[140px]`}
+            className={`leader-cell flex items-center gap-1 min-w-[140px]`}
             style={{
               color: player.state.profile?.color,
-              textShadow: "-1px 1px 2px black",
-              border: "1px solid",
-              borderTop: "none",
-              borderBottom: "none",
-              // boxShadow:
-              //   "0 5px 10px 10px rgb(" +
-              //   player.state.profile?.color +
-              //   "), inset 0 0 5px 1px rgba(" +
-              //   player.state.profile?.color +
-              //   ", 0.8)",
-              boxShadow: "0 2px 4px 1px rgba(0, 0, 0, 0.4)",
-              paddingRight: "15px",
+              borderColor: player.state.profile?.color,
             }}
           >
             <img
@@ -42,7 +31,7 @@ export const Leaderboard = () => {
               {player.state.profile?.name}
             </h2>
 
-            <div className="flex text-sm items-center gap-4">
+            <div className="flex text-sm items-center gap-2">
               <p>🔫 {player.state.kills}</p>
               <p>💀 {player.state.deaths}</p>
             </div>

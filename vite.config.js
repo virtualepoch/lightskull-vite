@@ -9,7 +9,7 @@ const manifestForPlugIn = {
     name: "LIGHT⁜SKULL",
     short_name: "Lightskull",
     description:
-      "Lightskull is a third-person multiplayer shooter game that's playable on any device.",
+      "Lightskull is a third-person multiplayer webapp shooter game that's playable on any device with browser access (works best with Chrome).",
     icons: [
       {
         src: "/logo192.png",

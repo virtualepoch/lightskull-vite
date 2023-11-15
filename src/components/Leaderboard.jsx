@@ -5,7 +5,7 @@ export const Leaderboard = () => {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 px-2 flex z-10">
+      <div className="fixed top-0 left-0 right-0 px-2 flex gap-1 z-10">
         {players.map((player) => (
           <div
             key={player.id}
@@ -13,6 +13,8 @@ export const Leaderboard = () => {
             style={{
               color: player.state.profile?.color,
               borderColor: player.state.profile?.color,
+              boxShadow: `-2px 4px 4px 1px rgba(0, 0, 0, 0.1),
+    inset -1px 1px 4px .1px ${player.state.profile?.color}`,
             }}
           >
             <img
@@ -20,7 +22,7 @@ export const Leaderboard = () => {
                 // player.state.profile?.photo ||
                 "/images/leaderboard-logo.png"
               }
-              className="w-5 h-5 rounded-full m-1"
+              className="leader-cell-img w-5 h-5 rounded-full m-1"
               style={{
                 background: player.state.profile?.color,
                 filter: "drop-shadow(0 0 5px cyan)",

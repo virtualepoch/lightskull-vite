@@ -103,6 +103,11 @@ body {
   border-right: 1px solid;
   border-radius: 15px;
   padding-right: 10px;
-  box-shadow: -2px 4px 4px 1px rgba(0, 0, 0, 0.1),
-    inset -2px 2px 4px 1px rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 1000px) {
+  .leader-cell-img {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
 }

@@ -16,12 +16,10 @@ function App() {
   return (
     <>
       <Loader />
-      <div className="canvas-overlay">
-        <h1 className="game-title">
-          Light<span className="cross-symbol">⁜</span>Skull
-        </h1>
-        {/* <div className="logo"></div> */}
-      </div>
+      <h1 className="game-title">
+        Light<span className="cross-symbol">⁜</span>Skull
+      </h1>
+      {/* <div className="logo"></div> */}
       <Leaderboard />
       <Canvas shadows camera={{ position: [0, 10, 0], fov: 30, near: 2 }}>
         {/* <OrbitControls /> */}

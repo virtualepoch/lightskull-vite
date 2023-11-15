@@ -5,11 +5,11 @@ export const Leaderboard = () => {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 px-2 flex gap-1 z-10">
+      <div className="leaderboard">
         {players.map((player) => (
           <div
             key={player.id}
-            className={`leader-cell flex items-center gap-1 min-w-[140px]`}
+            className={`player-info`}
             style={{
               color: player.state.profile?.color,
               borderColor: player.state.profile?.color,
@@ -18,30 +18,19 @@ export const Leaderboard = () => {
             }}
           >
             <img
-              src={
-                // player.state.profile?.photo ||
-                "/images/leaderboard-logo.png"
-              }
-              className="leader-cell-img w-5 h-5 rounded-full m-1"
-              style={{
-                background: player.state.profile?.color,
-                filter: "drop-shadow(0 0 5px cyan)",
-              }}
+              src={"/images/leaderboard-logo.png"}
+              style={{ background: player.state.profile?.color }}
             />
 
-            <h2 className={`font-bold text-sm`}>
-              {player.state.profile?.name}
-            </h2>
+            <h2>{player.state.profile?.name}</h2>
 
-            <div className="flex text-sm items-center gap-2">
-              <p>🔫 {player.state.kills}</p>
-              <p>💀 {player.state.deaths}</p>
-            </div>
+            <p>※{player.state.kills}</p>
+            {/* <p>{player.state.deaths}</p> */}
           </div>
         ))}
       </div>
       <button
-        className="fixed top-0 right-0 z-10 text-white p-3"
+        className="btn-fullscreen"
         onClick={() => {
           // toggle fullscreen
           if (document.fullscreenElement) {
@@ -57,7 +46,7 @@ export const Leaderboard = () => {
           viewBox="0 0 24 24"
           strokeWidth={1}
           stroke="currentColor"
-          className="w-6 h-6"
+          className="svg-fullscreen"
         >
           <path
             strokeLinecap="round"

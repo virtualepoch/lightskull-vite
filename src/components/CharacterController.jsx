@@ -15,12 +15,13 @@ export const WEAPON_OFFSET = {
 };
 
 export const CharacterController = ({
-  perspective,
   state,
   joystick,
   userPlayer,
   onFire,
   onKilled,
+  cameraRotate,
+  setCameraRotate,
   ...props
 }) => {
   const group = useRef();
@@ -29,9 +30,8 @@ export const CharacterController = ({
   const controls = useRef();
   const lastShoot = useRef(0);
   const [animation, setAnimation] = useState("CharacterArmature|Idle");
-  const [cameraRotate, setCameraRotate] = useState(false);
-  const [cameraDistanceZ, setCameraDistanceZ] = useState(15);
-  const [cameraDistanceY, setCameraDistanceY] = useState(30);
+  const [cameraDistanceZ, setCameraDistanceZ] = useState(30);
+  const [cameraDistanceY, setCameraDistanceY] = useState(40);
 
   const scene = useThree((state) => state.scene);
 
@@ -71,9 +71,28 @@ export const CharacterController = ({
         setCameraRotate(!cameraRotate);
       }
 
-      if (joystick.isPressed("camZoom")) {
-        setCameraDistanceZ(-15);
+      if (joystick.isPressed("camZoomIn")) {
+        if (cameraRotate && cameraDistanceY > 8 && cameraDistanceZ < -4) {
+          setCameraDistanceZ(cameraDistanceZ + 1);
+          setCameraDistanceY(cameraDistanceY - 2);
+        }
+        if (!cameraRotate && cameraDistanceY > 8 && cameraDistanceZ > 4) {
+          setCameraDistanceZ(cameraDistanceZ - 1);
+          setCameraDistanceY(cameraDistanceY - 2);
+        }
       }
+
+      if (joystick.isPressed("camZoomOut")) {
+        if (cameraRotate && cameraDistanceY < 40 && cameraDistanceZ > -30) {
+          setCameraDistanceZ(cameraDistanceZ - 1);
+          setCameraDistanceY(cameraDistanceY + 2);
+        }
+        if (!cameraRotate && cameraDistanceY < 40 && cameraDistanceZ < 30) {
+          setCameraDistanceZ(cameraDistanceZ + 1);
+          setCameraDistanceY(cameraDistanceY + 2);
+        }
+      }
+
       const playerWorldPos = vec3(rigidbody.current.translation());
       controls.current.setLookAt(
         playerWorldPos.x,

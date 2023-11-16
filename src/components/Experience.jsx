@@ -17,6 +17,7 @@ import { BulletHit } from "./BulletHit";
 export const Experience = () => {
   const [players, setPlayers] = useState([]);
   const [bullets, setBullets] = useState([]);
+  const [cameraRotate, setCameraRotate] = useState(false);
   const [networkBullets, setNetworkBullets] = useMultiplayerState(
     "bullets",
     []
@@ -62,9 +63,9 @@ export const Experience = () => {
         type: "angular",
         buttons: [
           { id: "fire", label: "BOLT" },
-          { id: "fire", label: "BEAM" },
-          { id: "camRotate", label: "↑CAM" },
-          { id: "camZoom", label: "ZOOM" },
+          { id: "camRotate", label: "↕CAM" },
+          { id: "camZoomOut", label: "ZOOM-" },
+          { id: "camZoomIn", label: "ZOOM+" },
         ],
       });
       const newPlayer = { state, joystick };
@@ -96,6 +97,8 @@ export const Experience = () => {
           userPlayer={state.id === myPlayer()?.id}
           onFire={onFire}
           onKilled={onKilled}
+          cameraRotate={cameraRotate}
+          setCameraRotate={setCameraRotate}
         />
       ))}
 
@@ -104,6 +107,8 @@ export const Experience = () => {
           key={bullet.id}
           {...bullet}
           onHit={(position) => onHit(bullet.id, position)}
+          cameraRotate={cameraRotate}
+          setCameraRotate={setCameraRotate}
         />
       ))}
 

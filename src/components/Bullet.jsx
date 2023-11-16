@@ -13,8 +13,9 @@ const bulletMaterial = new MeshBasicMaterial({
 
 bulletMaterial.color.multiplyScalar(7);
 
-export const Bullet = ({ player, angle, position, onHit }) => {
+export const Bullet = ({ player, angle, position, onHit, cameraRotate }) => {
   const rigidbody = useRef();
+  const angleReverse = angle + Math.PI;
 
   useEffect(() => {
     const velocity = {
@@ -22,14 +23,26 @@ export const Bullet = ({ player, angle, position, onHit }) => {
       y: 0,
       z: Math.cos(angle) * BULLET_SPEED,
     };
-    rigidbody.current.setLinvel(velocity, true);
+
+    const velocityReverse = {
+      x: Math.sin(angleReverse) * BULLET_SPEED,
+      y: 0,
+      z: Math.cos(angleReverse) * BULLET_SPEED,
+    };
+    rigidbody.current.setLinvel(
+      cameraRotate ? velocityReverse : velocity,
+      true
+    );
 
     const audio = new Audio("/audios/beam-40.mp3");
     audio.play();
   }, []);
 
   return (
-    <group position={[position.x, position.y, position.z]} rotation-y={angle}>
+    <group
+      position={[position.x, position.y, position.z]}
+      rotation-y={cameraRotate ? angleReverse : angle}
+    >
       <group
         position-x={WEAPON_OFFSET.x}
         position-y={WEAPON_OFFSET.y}
@@ -52,10 +65,10 @@ export const Bullet = ({ player, angle, position, onHit }) => {
           }}
         >
           <mesh
-            position-z={1.3}
+            position-z={1.5}
             material={bulletMaterial}
             castShadow
-            rotation={[Math.PI / -2, 0, 0]}
+            rotation={[-Math.PI / 2, 0, 0]}
           >
             <coneGeometry args={[0.8, 1.9, 6]} />
           </mesh>

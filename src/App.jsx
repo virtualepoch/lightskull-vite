@@ -13,6 +13,7 @@ import { Leaderboard } from "./components/Leaderboard";
 
 function App() {
   // const [downgradedPerformance, setDowngradedPerformance] = useState(false);
+  
   return (
     <>
       <Loader />

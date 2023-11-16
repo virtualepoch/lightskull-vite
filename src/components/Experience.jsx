@@ -60,7 +60,12 @@ export const Experience = () => {
       // For others, it will only sync their state
       const joystick = new Joystick(state, {
         type: "angular",
-        buttons: [{ id: "fire", label: "Fire" }],
+        buttons: [
+          { id: "fire", label: "BOLT" },
+          { id: "fire", label: "BEAM" },
+          { id: "camRotate", label: "↑CAM" },
+          { id: "camZoom", label: "ZOOM" },
+        ],
       });
       const newPlayer = { state, joystick };
       state.setState("health", 100);

@@ -15,6 +15,7 @@ export const WEAPON_OFFSET = {
 };
 
 export const CharacterController = ({
+  perspective,
   state,
   joystick,
   userPlayer,
@@ -28,6 +29,9 @@ export const CharacterController = ({
   const controls = useRef();
   const lastShoot = useRef(0);
   const [animation, setAnimation] = useState("CharacterArmature|Idle");
+  const [cameraRotate, setCameraRotate] = useState(false);
+  const [cameraDistanceZ, setCameraDistanceZ] = useState(15);
+  const [cameraDistanceY, setCameraDistanceY] = useState(30);
 
   const scene = useThree((state) => state.scene);
 
@@ -61,8 +65,15 @@ export const CharacterController = ({
     if (controls.current) {
       // const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
       // const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;
-      const cameraDistanceY = 40;
-      const cameraDistanceZ = 0;
+
+      if (joystick.isPressed("camRotate")) {
+        setCameraDistanceZ(-cameraDistanceZ);
+        setCameraRotate(!cameraRotate);
+      }
+
+      if (joystick.isPressed("camZoom")) {
+        setCameraDistanceZ(-15);
+      }
       const playerWorldPos = vec3(rigidbody.current.translation());
       controls.current.setLookAt(
         playerWorldPos.x,
@@ -84,9 +95,16 @@ export const CharacterController = ({
 
     // Update player position based on joystick state
     const angle = joystick.angle();
+    const angleReverse = angle + Math.PI;
+
     if (joystick.isJoystickPressed() && angle) {
       setAnimation("CharacterArmature|Run");
-      character.current.rotation.y = angle;
+
+      if (cameraRotate) {
+        character.current.rotation.y = angleReverse;
+      } else {
+        character.current.rotation.y = angle;
+      }
 
       // Move character in right direction
       const impulse = {
@@ -94,7 +112,15 @@ export const CharacterController = ({
         y: 0,
         z: Math.cos(angle) * MOVEMENT_SPEED * delta * 100,
       };
-      rigidbody.current.applyImpulse(impulse, true);
+      const impulseReverse = {
+        x: Math.sin(angleReverse) * MOVEMENT_SPEED * delta * 100,
+        y: 0,
+        z: Math.cos(angleReverse) * MOVEMENT_SPEED * delta * 100,
+      };
+      rigidbody.current.applyImpulse(
+        cameraRotate ? impulseReverse : impulse,
+        true
+      );
     } else {
       setAnimation("CharacterArmature|Idle");
     }

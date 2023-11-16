@@ -34,7 +34,7 @@ export const Bullet = ({ player, angle, position, onHit, cameraRotate }) => {
       true
     );
 
-    const audio = new Audio("/audios/beam-40.mp3");
+    const audio = new Audio("/audios/light-bolt.mp3");
     audio.play();
   }, []);
 

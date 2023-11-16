@@ -50,10 +50,14 @@ export const Experience = () => {
   const start = async () => {
     // Show Playroom UI, let it handle players joining etc and wait for host to tap "Launch"
     await insertCoin();
-    const audio = new Audio("/audios/punk.mp3");
+    const audio = new Audio("/audios/lucky-punk.mp3");
     audio.play();
-    const audio2 = new Audio("/audios/cyber.mp3");
+    const audio2 = new Audio("/audios/bg-cyber.mp3");
     audio2.play();
+    audio2.addEventListener("ended", () => {
+      audio2.currentTime = 0;
+      audio2.play();
+    });
   };
 
   useEffect(() => {

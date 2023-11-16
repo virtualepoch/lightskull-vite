@@ -55,6 +55,14 @@ export const CharacterController = ({
     }
   }, []);
 
+  useEffect(() => {
+    if (state.state.dead) {
+      const audio = new Audio("/audios/doh.mp3");
+      audio.volume = 1;
+      audio.play();
+    }
+  }, [state.state.dead]);
+
   useFrame((_, delta) => {
     if (!rigidbody.current) {
       return;
@@ -107,8 +115,6 @@ export const CharacterController = ({
 
     if (state.state.dead) {
       setAnimation("CharacterArmature|Death");
-      const audio = new Audio("/audios/dead.mp3");
-      audio.play();
       return;
     }
 

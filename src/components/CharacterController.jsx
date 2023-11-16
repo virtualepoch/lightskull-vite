@@ -64,10 +64,6 @@ export const CharacterController = ({
   }, [state.state.dead]);
 
   useFrame((_, delta) => {
-    if (!rigidbody.current) {
-      return;
-    }
-
     // CAMERA FOLLOW
 
     if (controls.current) {
@@ -80,11 +76,11 @@ export const CharacterController = ({
       }
 
       if (joystick.isPressed("camZoomIn")) {
-        if (cameraRotate && cameraDistanceY > 8 && cameraDistanceZ < -4) {
+        if (cameraRotate && cameraDistanceY > 5 && cameraDistanceZ < -4) {
           setCameraDistanceZ(cameraDistanceZ + 1);
           setCameraDistanceY(cameraDistanceY - 2);
         }
-        if (!cameraRotate && cameraDistanceY > 8 && cameraDistanceZ > 4) {
+        if (!cameraRotate && cameraDistanceY > 5 && cameraDistanceZ > 4) {
           setCameraDistanceZ(cameraDistanceZ - 1);
           setCameraDistanceY(cameraDistanceY - 2);
         }
@@ -105,7 +101,7 @@ export const CharacterController = ({
       controls.current.setLookAt(
         playerWorldPos.x,
         playerWorldPos.y + (state.state.dead ? 12 : cameraDistanceY),
-        playerWorldPos.z + (state.state.dead ? 2 : cameraDistanceZ),
+        playerWorldPos.z + (state.state.dead ? 3 : cameraDistanceZ),
         playerWorldPos.x,
         playerWorldPos.y + 1.5,
         playerWorldPos.z,
@@ -120,7 +116,7 @@ export const CharacterController = ({
 
     // Update player position based on joystick state
     const angle = joystick.angle();
-    const angleReverse = angle + Math.PI;
+    const angleReverse = joystick.angle() + Math.PI;
 
     if (joystick.isJoystickPressed() && angle) {
       setAnimation("CharacterArmature|Run");
@@ -162,7 +158,11 @@ export const CharacterController = ({
     // Check if fire button is pressed
     if (joystick.isPressed("fire")) {
       // fire
-      setAnimation("CharacterArmature|HitRecieve_2");
+      if (joystick.isJoystickPressed() && angle) {
+        setAnimation("CharacterArmature|Run");
+      } else {
+        setAnimation("CharacterArmature|HitRecieve_2");
+      }
       if (isHost()) {
         if (Date.now() - lastShoot.current > FIRE_RATE) {
           lastShoot.current = Date.now();
@@ -170,6 +170,7 @@ export const CharacterController = ({
             id: state.id + "-" + +new Date(),
             position: vec3(rigidbody.current.translation()),
             angle,
+            angleReverse,
             player: state.id,
           };
           onFire(newBullet);

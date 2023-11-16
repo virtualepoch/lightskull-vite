@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { MeshStandardMaterial } from "three";
 
 export const Map2 = () => {
-  const map = useGLTF("models/map3.glb");
+  const map = useGLTF("models/map4.glb");
 
   const mapColor = new MeshStandardMaterial({ color: "#6d6058" });
 
@@ -24,4 +24,4 @@ export const Map2 = () => {
     </RigidBody>
   );
 };
-useGLTF.preload("models/map3.glb");
+useGLTF.preload("models/map4.glb");

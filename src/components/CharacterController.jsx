@@ -20,8 +20,8 @@ export const CharacterController = ({
   userPlayer,
   onFire,
   onKilled,
-  cameraRotate,
-  setCameraRotate,
+  cameraDistanceZ,
+  setCameraDistanceZ,
   ...props
 }) => {
   const group = useRef();
@@ -30,7 +30,6 @@ export const CharacterController = ({
   const controls = useRef();
   const lastShoot = useRef(0);
   const [animation, setAnimation] = useState("CharacterArmature|Idle");
-  const [cameraDistanceZ, setCameraDistanceZ] = useState(30);
   const [cameraDistanceY, setCameraDistanceY] = useState(40);
 
   const scene = useThree((state) => state.scene);
@@ -57,7 +56,7 @@ export const CharacterController = ({
 
   useEffect(() => {
     if (state.state.dead) {
-      const audio = new Audio("/audios/doh.mp3");
+      const audio = new Audio("/audios/terminated.mp3");
       audio.volume = 1;
       audio.play();
     }
@@ -70,31 +69,25 @@ export const CharacterController = ({
       // const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
       // const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;
 
+      // ROTATE CAMERA
       if (joystick.isPressed("camRotate")) {
         setCameraDistanceZ(-cameraDistanceZ);
-        setCameraRotate(!cameraRotate);
       }
 
-      if (joystick.isPressed("camZoomIn")) {
-        if (cameraRotate && cameraDistanceY > 5 && cameraDistanceZ < -4) {
-          setCameraDistanceZ(cameraDistanceZ + 1);
-          setCameraDistanceY(cameraDistanceY - 2);
-        }
-        if (!cameraRotate && cameraDistanceY > 5 && cameraDistanceZ > 4) {
-          setCameraDistanceZ(cameraDistanceZ - 1);
-          setCameraDistanceY(cameraDistanceY - 2);
-        }
+      // ZOOM IN
+      if (joystick.isPressed("camZoomIn") && cameraDistanceY > 5) {
+        setCameraDistanceY(cameraDistanceY - 2);
+        setCameraDistanceZ(
+          cameraDistanceZ < 0 ? cameraDistanceZ + 1 : cameraDistanceZ - 1
+        );
       }
 
-      if (joystick.isPressed("camZoomOut")) {
-        if (cameraRotate && cameraDistanceY < 40 && cameraDistanceZ > -30) {
-          setCameraDistanceZ(cameraDistanceZ - 1);
-          setCameraDistanceY(cameraDistanceY + 2);
-        }
-        if (!cameraRotate && cameraDistanceY < 40 && cameraDistanceZ < 30) {
-          setCameraDistanceZ(cameraDistanceZ + 1);
-          setCameraDistanceY(cameraDistanceY + 2);
-        }
+      // ZOOM OUT
+      if (joystick.isPressed("camZoomOut") && cameraDistanceY < 40) {
+        setCameraDistanceY(cameraDistanceY + 2);
+        setCameraDistanceZ(
+          cameraDistanceZ > 0 ? cameraDistanceZ + 1 : cameraDistanceZ - 1
+        );
       }
 
       const playerWorldPos = vec3(rigidbody.current.translation());
@@ -121,27 +114,24 @@ export const CharacterController = ({
     if (joystick.isJoystickPressed() && angle) {
       setAnimation("CharacterArmature|Run");
 
-      if (cameraRotate) {
-        character.current.rotation.y = angleReverse;
-      } else {
-        character.current.rotation.y = angle;
-      }
+      character.current.rotation.y = cameraDistanceZ < 0 ? angleReverse : angle;
 
       // Move character in right direction
       const impulse = {
-        x: Math.sin(angle) * MOVEMENT_SPEED * delta * 100,
+        x:
+          Math.sin(cameraDistanceZ < 0 ? angleReverse : angle) *
+          MOVEMENT_SPEED *
+          delta *
+          100,
         y: 0,
-        z: Math.cos(angle) * MOVEMENT_SPEED * delta * 100,
+        z:
+          Math.cos(cameraDistanceZ < 0 ? angleReverse : angle) *
+          MOVEMENT_SPEED *
+          delta *
+          100,
       };
-      const impulseReverse = {
-        x: Math.sin(angleReverse) * MOVEMENT_SPEED * delta * 100,
-        y: 0,
-        z: Math.cos(angleReverse) * MOVEMENT_SPEED * delta * 100,
-      };
-      rigidbody.current.applyImpulse(
-        cameraRotate ? impulseReverse : impulse,
-        true
-      );
+
+      rigidbody.current.applyImpulse(impulse, true);
     } else {
       setAnimation("CharacterArmature|Idle");
     }

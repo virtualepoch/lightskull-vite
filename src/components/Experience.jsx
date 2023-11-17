@@ -17,14 +17,13 @@ import { BulletHit } from "./BulletHit";
 export const Experience = () => {
   const [players, setPlayers] = useState([]);
   const [bullets, setBullets] = useState([]);
-  const [cameraRotate, setCameraRotate] = useState(false);
+  const [hits, setHits] = useState([]);
   const [networkBullets, setNetworkBullets] = useMultiplayerState(
     "bullets",
     []
   );
-
-  const [hits, setHits] = useState([]);
   const [networkHits, setNetworkHits] = useMultiplayerState("hits", []);
+  const [cameraDistanceZ, setCameraDistanceZ] = useState(30);
 
   const onFire = (bullet) => {
     setBullets((bullets) => [...bullets, bullet]);
@@ -105,8 +104,8 @@ export const Experience = () => {
           userPlayer={state.id === myPlayer()?.id}
           onFire={onFire}
           onKilled={onKilled}
-          cameraRotate={cameraRotate}
-          setCameraRotate={setCameraRotate}
+          cameraDistanceZ={cameraDistanceZ}
+          setCameraDistanceZ={setCameraDistanceZ}
         />
       ))}
 
@@ -115,8 +114,8 @@ export const Experience = () => {
           key={bullet.id}
           {...bullet}
           onHit={(position) => onHit(bullet.id, position)}
-          cameraRotate={cameraRotate}
-          setCameraRotate={setCameraRotate}
+          cameraDistanceZ={cameraDistanceZ}
+          setCameraDistanceZ={setCameraDistanceZ}
         />
       ))}
 

@@ -13,7 +13,7 @@ const bulletMaterial = new MeshBasicMaterial({
 
 bulletMaterial.color.multiplyScalar(7);
 
-export const Bullet = ({ player, angle, position, onHit, cameraRotate }) => {
+export const Bullet = ({ player, angle, position, onHit, cameraDistanceZ }) => {
   const rigidbody = useRef();
   const angleReverse = angle + Math.PI;
 
@@ -30,7 +30,7 @@ export const Bullet = ({ player, angle, position, onHit, cameraRotate }) => {
       z: Math.cos(angleReverse) * BULLET_SPEED,
     };
     rigidbody.current.setLinvel(
-      cameraRotate ? velocityReverse : velocity,
+      cameraDistanceZ < 0 ? velocityReverse : velocity,
       true
     );
 
@@ -41,7 +41,7 @@ export const Bullet = ({ player, angle, position, onHit, cameraRotate }) => {
   return (
     <group
       position={[position.x, position.y, position.z]}
-      rotation-y={cameraRotate ? angleReverse : angle}
+      rotation-y={cameraDistanceZ < 0 ? angleReverse : angle}
     >
       <group
         position-x={WEAPON_OFFSET.x}

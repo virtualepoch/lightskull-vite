@@ -20,8 +20,6 @@ export const CharacterController = ({
   userPlayer,
   onFire,
   onKilled,
-  cameraDistanceZ,
-  setCameraDistanceZ,
   ...props
 }) => {
   const group = useRef();
@@ -30,8 +28,6 @@ export const CharacterController = ({
   const controls = useRef();
   const lastShoot = useRef(0);
   const [animation, setAnimation] = useState("CharacterArmature|Idle");
-  const [cameraDistanceY, setCameraDistanceY] = useState(40);
-
   const scene = useThree((state) => state.scene);
 
   const spawnRandomly = () => {
@@ -62,9 +58,10 @@ export const CharacterController = ({
     }
   }, [state.state.dead]);
 
+  const [cameraDistanceZ, setCameraDistanceZ] = useState(30);
+  const [cameraDistanceY, setCameraDistanceY] = useState(40);
   useFrame((_, delta) => {
     // CAMERA FOLLOW
-
     if (controls.current) {
       // const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
       // const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;
@@ -108,27 +105,19 @@ export const CharacterController = ({
     }
 
     // Update player position based on joystick state
-    const angle = joystick.angle();
-    const angleReverse = joystick.angle() + Math.PI;
+    const angle =
+      cameraDistanceZ < 0 ? joystick.angle() + Math.PI : joystick.angle();
 
     if (joystick.isJoystickPressed() && angle) {
       setAnimation("CharacterArmature|Run");
 
-      character.current.rotation.y = cameraDistanceZ < 0 ? angleReverse : angle;
+      character.current.rotation.y = angle;
 
       // Move character in right direction
       const impulse = {
-        x:
-          Math.sin(cameraDistanceZ < 0 ? angleReverse : angle) *
-          MOVEMENT_SPEED *
-          delta *
-          100,
+        x: Math.sin(angle) * MOVEMENT_SPEED * delta * 100,
         y: 0,
-        z:
-          Math.cos(cameraDistanceZ < 0 ? angleReverse : angle) *
-          MOVEMENT_SPEED *
-          delta *
-          100,
+        z: Math.cos(angle) * MOVEMENT_SPEED * delta * 100,
       };
 
       rigidbody.current.applyImpulse(impulse, true);
@@ -160,7 +149,6 @@ export const CharacterController = ({
             id: state.id + "-" + +new Date(),
             position: vec3(rigidbody.current.translation()),
             angle,
-            angleReverse,
             player: state.id,
           };
           onFire(newBullet);

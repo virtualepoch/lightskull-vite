@@ -12,7 +12,7 @@ import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { Leaderboard } from "./components/Leaderboard";
 
 function App() {
-  // const [downgradedPerformance, setDowngradedPerformance] = useState(false);
+  const [downgradedPerformance, setDowngradedPerformance] = useState(false);
 
   return (
     <>
@@ -22,15 +22,15 @@ function App() {
       </h1>
       {/* <div className="logo"></div> */}
       <Leaderboard />
-      <Canvas shadows camera={{ position: [0, 10, 0], fov: 30, near: 2 }}>
+      <Canvas shadows camera={{ position: [0, 30, 0], fov: 30, near: 2 }}>
         {/* <OrbitControls /> */}
         <color attach="background" args={["#000"]} />
         {/* <SoftShadows size={42} /> */}
-        {/* <PerformanceMonitor
+        <PerformanceMonitor
           onDecline={(fps) => {
             setDowngradedPerformance(true);
           }}
-        /> */}
+        />
 
         <Suspense>
           <Physics>
@@ -39,12 +39,12 @@ function App() {
           </Physics>
         </Suspense>
 
-        {/* {!downgradedPerformance && ( */}
-        {/* // disable the postprocessing on low-end devices */}
+        {!downgradedPerformance && (
+        // disable the postprocessing on low-end devices
         <EffectComposer disableNormalPass>
           <Bloom luminanceThreshold={1} intensity={1.5} mipmapBlur />
         </EffectComposer>
-        {/* )} */}
+        )}
       </Canvas>
     </>
   );

@@ -23,7 +23,6 @@ export const Experience = () => {
     []
   );
   const [networkHits, setNetworkHits] = useMultiplayerState("hits", []);
-  const [cameraDistanceZ, setCameraDistanceZ] = useState(30);
 
   const onFire = (bullet) => {
     setBullets((bullets) => [...bullets, bullet]);
@@ -48,10 +47,11 @@ export const Experience = () => {
 
   const start = async () => {
     // Show Playroom UI, let it handle players joining etc and wait for host to tap "Launch"
-    await insertCoin({ streamMode: true, allowGamepads: true });
+    await insertCoin();
     const audio = new Audio("/audios/lucky-punk.mp3");
     audio.play();
     const audio2 = new Audio("/audios/bg-cyber.mp3");
+    audio2.volume = 0.5;
     audio2.play();
     audio2.addEventListener("ended", () => {
       audio2.currentTime = 0;
@@ -104,8 +104,6 @@ export const Experience = () => {
           userPlayer={state.id === myPlayer()?.id}
           onFire={onFire}
           onKilled={onKilled}
-          cameraDistanceZ={cameraDistanceZ}
-          setCameraDistanceZ={setCameraDistanceZ}
         />
       ))}
 
@@ -114,8 +112,6 @@ export const Experience = () => {
           key={bullet.id}
           {...bullet}
           onHit={(position) => onHit(bullet.id, position)}
-          cameraDistanceZ={cameraDistanceZ}
-          setCameraDistanceZ={setCameraDistanceZ}
         />
       ))}
 

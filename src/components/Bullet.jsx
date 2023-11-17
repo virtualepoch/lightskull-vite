@@ -13,9 +13,8 @@ const bulletMaterial = new MeshBasicMaterial({
 
 bulletMaterial.color.multiplyScalar(7);
 
-export const Bullet = ({ player, angle, position, onHit, cameraDistanceZ }) => {
+export const Bullet = ({ player, angle, position, onHit }) => {
   const rigidbody = useRef();
-  const angleReverse = angle + Math.PI;
 
   useEffect(() => {
     const velocity = {
@@ -24,25 +23,14 @@ export const Bullet = ({ player, angle, position, onHit, cameraDistanceZ }) => {
       z: Math.cos(angle) * BULLET_SPEED,
     };
 
-    const velocityReverse = {
-      x: Math.sin(angleReverse) * BULLET_SPEED,
-      y: 0,
-      z: Math.cos(angleReverse) * BULLET_SPEED,
-    };
-    rigidbody.current.setLinvel(
-      cameraDistanceZ < 0 ? velocityReverse : velocity,
-      true
-    );
+    rigidbody.current.setLinvel(velocity, true);
 
     const audio = new Audio("/audios/light-bolt.mp3");
     audio.play();
   }, []);
 
   return (
-    <group
-      position={[position.x, position.y, position.z]}
-      rotation-y={cameraDistanceZ < 0 ? angleReverse : angle}
-    >
+    <group position={[position.x, position.y, position.z]} rotation-y={angle}>
       <group
         position-x={WEAPON_OFFSET.x}
         position-y={WEAPON_OFFSET.y}

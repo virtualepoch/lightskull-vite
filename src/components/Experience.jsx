@@ -70,7 +70,7 @@ export const Experience = () => {
         type: "angular",
         buttons: [
           { id: "fire", label: "BOLT" },
-          { id: "camRotate", label: "↕CAM" },
+          { id: "camRotate", label: "JUMP" },
           { id: "camZoomOut", label: "ZOOM-" },
           { id: "camZoomIn", label: "ZOOM+" },
         ],

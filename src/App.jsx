@@ -10,6 +10,7 @@ import { Suspense, useState } from "react";
 import { Physics } from "@react-three/rapier";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { Leaderboard } from "./components/Leaderboard";
+import { CamControls } from "./components/CamControls";
 
 function App() {
   const [downgradedPerformance, setDowngradedPerformance] = useState(false);
@@ -20,6 +21,7 @@ function App() {
       <h1 className="game-title">
         Light<span className="cross-symbol">⁜</span>Skull
       </h1>
+      <CamControls />
       {/* <div className="logo"></div> */}
       <Leaderboard />
       <Canvas shadows camera={{ position: [0, 30, 0], fov: 30, near: 2 }}>
@@ -40,10 +42,10 @@ function App() {
         </Suspense>
 
         {!downgradedPerformance && (
-        // disable the postprocessing on low-end devices
-        <EffectComposer disableNormalPass>
-          <Bloom luminanceThreshold={1} intensity={1.5} mipmapBlur />
-        </EffectComposer>
+          // disable the postprocessing on low-end devices
+          <EffectComposer disableNormalPass>
+            <Bloom luminanceThreshold={1} intensity={1.5} mipmapBlur />
+          </EffectComposer>
         )}
       </Canvas>
     </>

@@ -7,7 +7,6 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   font-synthesis: none;
@@ -20,11 +19,11 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 #root {
   height: 100vh;
-  box-sizing: border-box;
 }
 
 button {
@@ -134,4 +133,35 @@ button {
     width: 20px;
     height: 20px;
   }
+}
+
+/* CAMERA CONTROLS /////////////////////////////////////////////////////////// */
+
+.cam-controls {
+  position: fixed;
+  bottom: 20px;
+  right: 90px;
+  z-index: 11;
+  display: flex;
+  gap: 10px;
+}
+
+.cam-controls::after {
+  content: "";
+  width: 30px;
+  height: 20px;
+  position: absolute;
+  left: calc(50% - 15px);
+  bottom: -20px;
+  background: url(/images/video-solid.svg) 50% 50% / 70% 70% no-repeat;
+  opacity: 0.3;
+}
+
+.cam-controls button {
+  width: 60px;
+  height: 60px;
+  border: 1px solid rgb(200, 200, 200);
+  border-radius: 10px;
+  opacity: 0.3;
+  font-size: 20px;
 }

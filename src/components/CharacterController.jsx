@@ -60,7 +60,7 @@ export const CharacterController = ({
 
   const [cameraDistanceZ, setCameraDistanceZ] = useState(30);
   const [cameraDistanceY, setCameraDistanceY] = useState(40);
-  
+
   useFrame((_, delta) => {
     // CAMERA FOLLOW
     if (controls.current) {

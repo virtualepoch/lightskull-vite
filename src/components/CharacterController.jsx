@@ -150,52 +150,86 @@ export const CharacterController = ({
     }
 
     // Update player position based on joystick state
-    const dpad = joystick.dpad();
 
-    if (dpad.y === "up") {
+    const joystickAngle = joystick.angle();
+    const joystickPressed = joystick.isJoystickPressed();
+
+    if (
+      (joystickPressed &&
+        joystickAngle >= Math.PI * 0.75 &&
+        joystickAngle <= Math.PI * 1.25) ||
+      forwardKeyPressed
+    ) {
       setAnimation("CharacterArmature|Run");
 
-      // Move character in right direction
-      const impulse = {
+      // Move character forward
+      const impulseForward = {
         x: Math.sin(azimuthAngle + Math.PI) * MOVEMENT_SPEED * delta * 100,
         y: 0,
         z: Math.cos(azimuthAngle + Math.PI) * MOVEMENT_SPEED * delta * 100,
       };
 
-      rigidbody.current.applyImpulse(impulse, true);
-    } else if (dpad.y === "down") {
-      setAnimation("CharacterArmature|Run");
+      rigidbody.current.applyImpulse(impulseForward, true);
+    } else if (
+      (joystickPressed &&
+        joystickAngle >= Math.PI * -0.25 &&
+        joystickAngle <= Math.PI * 0.25) ||
+      backKeyPressed
+    ) {
+      setAnimation("CharacterArmature|Run_Back");
 
-      // Move character in right direction
-      const impulse = {
+      // Move character back
+      const impulseBack = {
         x: Math.sin(azimuthAngle) * MOVEMENT_SPEED * delta * 100,
         y: 0,
         z: Math.cos(azimuthAngle) * MOVEMENT_SPEED * delta * 100,
       };
 
-      rigidbody.current.applyImpulse(impulse, true);
+      rigidbody.current.applyImpulse(impulseBack, true);
+    } else if (
+      (joystickPressed &&
+        joystickAngle >= Math.PI * 1.25 &&
+        joystickAngle <= Math.PI * 1.5) ||
+      (joystickPressed &&
+        joystickAngle >= Math.PI * -0.5 &&
+        joystickAngle <= Math.PI * -0.25) ||
+      leftKeyPressed
+    ) {
+      setAnimation("CharacterArmature|Run_Left");
+
+      // Srafe character left
+      const impulseLeft = {
+        x: Math.sin(azimuthAngle - Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
+        y: 0,
+        z: Math.cos(azimuthAngle - Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
+      };
+
+      rigidbody.current.applyImpulse(impulseLeft, true);
+    } else if (
+      (joystickPressed &&
+        joystickAngle >= Math.PI * 0.25 &&
+        joystickAngle <= Math.PI * 0.75) ||
+      rightKeyPressed
+    ) {
+      setAnimation("CharacterArmature|Run_Right");
+
+      // Srafe character right
+      const impulseRight = {
+        x: Math.sin(azimuthAngle + Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
+        y: 0,
+        z: Math.cos(azimuthAngle + Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
+      };
+
+      rigidbody.current.applyImpulse(impulseRight, true);
     } else {
       setAnimation("CharacterArmature|Idle");
       character.current.rotation.y = azimuthAngle + Math.PI;
     }
 
-    if (isHost()) {
-      state.setState("pos", rigidbody.current.translation());
-    } else {
-      const pos = state.getState("pos");
-      if (pos) {
-        rigidbody.current.setTranslation(pos);
-      }
-    }
-
     // Check if fire button is pressed
     if (joystick.isPressed("fire") || fireKeyPressed) {
       // fire
-      if (joystick.isJoystickPressed() && angle) {
-        setAnimation("CharacterArmature|Run");
-      } else {
-        setAnimation("CharacterArmature|HitRecieve_2");
-      }
+
       if (isHost()) {
         if (Date.now() - lastShoot.current > FIRE_RATE) {
           lastShoot.current = Date.now();
@@ -207,6 +241,15 @@ export const CharacterController = ({
           };
           onFire(newBullet);
         }
+      }
+    }
+
+    if (isHost()) {
+      state.setState("pos", rigidbody.current.translation());
+    } else {
+      const pos = state.getState("pos");
+      if (pos) {
+        rigidbody.current.setTranslation(pos);
       }
     }
   });

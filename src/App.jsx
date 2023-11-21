@@ -76,18 +76,18 @@ function App() {
               <EffectComposer disableNormalPass>
                 <Bloom luminanceThreshold={1} intensity={1.5} mipmapBlur />
               </EffectComposer>
+              <Sparkles
+                count={5000}
+                speed={0.5}
+                opacity={1.5}
+                color={50}
+                size={5}
+                scale={[34, 10, 100]}
+                noise={0.5}
+                position={[1.6, 6, -20]}
+              />
             </>
           )}
-          <Sparkles
-            count={5000}
-            speed={0.5}
-            opacity={1.5}
-            color={50}
-            size={5}
-            scale={[34, 10, 100]}
-            noise={0.5}
-            position={[1.6, 6, -20]}
-          />
         </Canvas>
       </KeyboardControls>
     </>

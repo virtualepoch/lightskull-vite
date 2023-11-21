@@ -13,14 +13,14 @@ const bulletMaterial = new MeshBasicMaterial({
 
 bulletMaterial.color.multiplyScalar(7);
 
-export const Bullet = ({ player, angle, position, onHit }) => {
+export const Bullet = ({ player, angle, keyboardAngle, position, onHit }) => {
   const rigidbody = useRef();
 
   useEffect(() => {
     const velocity = {
-      x: Math.sin(angle) * BULLET_SPEED,
+      x: Math.sin(angle || keyboardAngle) * BULLET_SPEED,
       y: 0,
-      z: Math.cos(angle) * BULLET_SPEED,
+      z: Math.cos(angle || keyboardAngle) * BULLET_SPEED,
     };
 
     rigidbody.current.setLinvel(velocity, true);

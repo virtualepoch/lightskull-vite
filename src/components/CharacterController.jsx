@@ -2,8 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { CapsuleCollider, RigidBody, vec3 } from "@react-three/rapier";
 import { useFrame, useThree } from "@react-three/fiber";
 import { isHost } from "playroomkit";
-import { Billboard, CameraControls, Text } from "@react-three/drei";
+import {
+  Billboard,
+  CameraControls,
+  Text,
+  useKeyboardControls,
+} from "@react-three/drei";
 import { Character } from "./Character";
+import { KeyControls } from "../App";
 
 const MOVEMENT_SPEED = 7;
 const FIRE_RATE = 380;
@@ -29,6 +35,31 @@ export const CharacterController = ({
   const lastShoot = useRef(0);
   const [animation, setAnimation] = useState("CharacterArmature|Idle");
   const scene = useThree((state) => state.scene);
+
+  const forwardKeyPressed = useKeyboardControls(
+    (state) => state[KeyControls.forward]
+  );
+  const backKeyPressed = useKeyboardControls(
+    (state) => state[KeyControls.back]
+  );
+  const leftKeyPressed = useKeyboardControls(
+    (state) => state[KeyControls.left]
+  );
+  const rightKeyPressed = useKeyboardControls(
+    (state) => state[KeyControls.right]
+  );
+  const fireKeyPressed = useKeyboardControls(
+    (state) => state[KeyControls.fire]
+  );
+  const zoomInPressed = useKeyboardControls(
+    (state) => state[KeyControls.zoomIn]
+  );
+  const zoomOutPressed = useKeyboardControls(
+    (state) => state[KeyControls.zoomOut]
+  );
+  const rotateKeyPressed = useKeyboardControls(
+    (state) => state[KeyControls.rotateCam]
+  );
 
   const spawnRandomly = () => {
     const spawns = [];
@@ -58,30 +89,41 @@ export const CharacterController = ({
     }
   }, [state.state.dead]);
 
-  const [cameraDistanceZ, setCameraDistanceZ] = useState(30);
-  const [cameraDistanceY, setCameraDistanceY] = useState(40);
+  const [cameraDistanceY, setCameraDistanceY] = useState(15);
+  const [cameraDistanceZ, setCameraDistanceZ] = useState(20);
+  const [azimuthAngle, setAzimuthAngle] = useState(0);
 
   useFrame((_, delta) => {
     // CAMERA FOLLOW
     if (controls.current) {
       // const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
       // const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;
-
+      controls.current.azimuthAngle = azimuthAngle;
       // ROTATE CAMERA
-      if (joystick.isPressed("camRotate")) {
-        setCameraDistanceZ(-cameraDistanceZ);
+      if (joystick.isPressed("camRotateLeft") || rotateKeyPressed) {
+        setAzimuthAngle(azimuthAngle + 0.1);
+      }
+      if (joystick.isPressed("camRotateRight")) {
+        setAzimuthAngle(azimuthAngle - 0.1);
       }
 
       // ZOOM IN
-      if (joystick.isPressed("camZoomIn") && cameraDistanceY > 5) {
+      if (
+        (joystick.isPressed("camZoomIn") || zoomInPressed) &&
+        cameraDistanceY > 5
+      ) {
         setCameraDistanceY(cameraDistanceY - 2);
         setCameraDistanceZ(
           cameraDistanceZ < 0 ? cameraDistanceZ + 1 : cameraDistanceZ - 1
         );
       }
+      if (cameraDistanceY === 5) {
+        setCameraDistanceY(15);
+        setCameraDistanceZ(20);
+      }
 
       // ZOOM OUT
-      if (joystick.isPressed("camZoomOut") && cameraDistanceY < 40) {
+      if (zoomOutPressed && cameraDistanceY < 40) {
         setCameraDistanceY(cameraDistanceY + 2);
         setCameraDistanceZ(
           cameraDistanceZ > 0 ? cameraDistanceZ + 1 : cameraDistanceZ - 1
@@ -108,17 +150,29 @@ export const CharacterController = ({
     // Update player position based on joystick state
     const angle =
       cameraDistanceZ < 0 ? joystick.angle() + Math.PI : joystick.angle();
+    var keyboardAngle = forwardKeyPressed
+      ? Math.PI
+      : backKeyPressed
+      ? Math.PI * 2
+      : leftKeyPressed
+      ? Math.PI * 1.5
+      : rightKeyPressed
+      ? Math.PI * 0.5
+      : forwardKeyPressed && leftKeyPressed
+      ? Math.PI * 1.25
+      : null;
 
-    if (joystick.isJoystickPressed() && angle) {
+    if ((joystick.isJoystickPressed() && angle) || keyboardAngle) {
       setAnimation("CharacterArmature|Run");
 
-      character.current.rotation.y = angle;
+      character.current.rotation.y = angle || keyboardAngle;
+      // const azimuthAngle = angle * 2;
 
       // Move character in right direction
       const impulse = {
-        x: Math.sin(angle) * MOVEMENT_SPEED * delta * 100,
+        x: Math.sin(angle || keyboardAngle) * MOVEMENT_SPEED * delta * 100,
         y: 0,
-        z: Math.cos(angle) * MOVEMENT_SPEED * delta * 100,
+        z: Math.cos(angle || keyboardAngle) * MOVEMENT_SPEED * delta * 100,
       };
 
       rigidbody.current.applyImpulse(impulse, true);
@@ -136,9 +190,9 @@ export const CharacterController = ({
     }
 
     // Check if fire button is pressed
-    if (joystick.isPressed("fire")) {
+    if (joystick.isPressed("fire") || fireKeyPressed) {
       // fire
-      if (joystick.isJoystickPressed() && angle) {
+      if ((joystick.isJoystickPressed() && angle) || keyboardAngle) {
         setAnimation("CharacterArmature|Run");
       } else {
         setAnimation("CharacterArmature|HitRecieve_2");
@@ -150,6 +204,7 @@ export const CharacterController = ({
             id: state.id + "-" + +new Date(),
             position: vec3(rigidbody.current.translation()),
             angle,
+            keyboardAngle,
             player: state.id,
           };
           onFire(newBullet);

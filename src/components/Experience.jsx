@@ -50,13 +50,6 @@ export const Experience = () => {
     await insertCoin();
     const audio = new Audio("/audios/lucky-punk.mp3");
     audio.play();
-    const audio2 = new Audio("/audios/bg-cyber.mp3");
-    audio2.volume = 0.5;
-    audio2.play();
-    audio2.addEventListener("ended", () => {
-      audio2.currentTime = 0;
-      audio2.play();
-    });
   };
 
   useEffect(() => {
@@ -66,13 +59,14 @@ export const Experience = () => {
     onPlayerJoin((state) => {
       // Joystick will only create UI for current player (myPlayer)
       // For others, it will only sync their state
+      // btn symbols ⨂🥽🎥📽▶
       const joystick = new Joystick(state, {
         type: "angular",
         buttons: [
-          { id: "fire", label: "BOLT" },
-          { id: "camRotate", label: "JUMP" },
-          { id: "camZoomOut", label: "ZOOM-" },
-          { id: "camZoomIn", label: "ZOOM+" },
+          { id: "camRotateLeft", label: "◁🎦" },
+          { id: "fire", label: "🎇" },
+          { id: "camRotateRight", label: "🎦▷" },
+          { id: "camZoomIn", label: "+🎦+" },
         ],
       });
       const newPlayer = { state, joystick };

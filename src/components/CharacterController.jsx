@@ -102,9 +102,11 @@ export const CharacterController = ({
       // ROTATE CAMERA
       if (joystick.isPressed("camRotateLeft") || rotateKeyPressed) {
         setAzimuthAngle(azimuthAngle + 0.1);
+        character.current.rotation.y = azimuthAngle + Math.PI;
       }
       if (joystick.isPressed("camRotateRight")) {
         setAzimuthAngle(azimuthAngle - 0.1);
+        character.current.rotation.y = azimuthAngle + Math.PI;
       }
 
       // ZOOM IN
@@ -148,36 +150,33 @@ export const CharacterController = ({
     }
 
     // Update player position based on joystick state
-    const angle =
-      cameraDistanceZ < 0 ? joystick.angle() + Math.PI : joystick.angle();
-    var keyboardAngle = forwardKeyPressed
-      ? Math.PI
-      : backKeyPressed
-      ? Math.PI * 2
-      : leftKeyPressed
-      ? Math.PI * 1.5
-      : rightKeyPressed
-      ? Math.PI * 0.5
-      : forwardKeyPressed && leftKeyPressed
-      ? Math.PI * 1.25
-      : null;
+    const dpad = joystick.dpad();
 
-    if ((joystick.isJoystickPressed() && angle) || keyboardAngle) {
+    if (dpad.y === "up") {
       setAnimation("CharacterArmature|Run");
-
-      character.current.rotation.y = angle || keyboardAngle;
-      // const azimuthAngle = angle * 2;
 
       // Move character in right direction
       const impulse = {
-        x: Math.sin(angle || keyboardAngle) * MOVEMENT_SPEED * delta * 100,
+        x: Math.sin(azimuthAngle + Math.PI) * MOVEMENT_SPEED * delta * 100,
         y: 0,
-        z: Math.cos(angle || keyboardAngle) * MOVEMENT_SPEED * delta * 100,
+        z: Math.cos(azimuthAngle + Math.PI) * MOVEMENT_SPEED * delta * 100,
+      };
+
+      rigidbody.current.applyImpulse(impulse, true);
+    } else if (dpad.y === "down") {
+      setAnimation("CharacterArmature|Run");
+
+      // Move character in right direction
+      const impulse = {
+        x: Math.sin(azimuthAngle) * MOVEMENT_SPEED * delta * 100,
+        y: 0,
+        z: Math.cos(azimuthAngle) * MOVEMENT_SPEED * delta * 100,
       };
 
       rigidbody.current.applyImpulse(impulse, true);
     } else {
       setAnimation("CharacterArmature|Idle");
+      character.current.rotation.y = azimuthAngle + Math.PI;
     }
 
     if (isHost()) {
@@ -192,7 +191,7 @@ export const CharacterController = ({
     // Check if fire button is pressed
     if (joystick.isPressed("fire") || fireKeyPressed) {
       // fire
-      if ((joystick.isJoystickPressed() && angle) || keyboardAngle) {
+      if (joystick.isJoystickPressed() && angle) {
         setAnimation("CharacterArmature|Run");
       } else {
         setAnimation("CharacterArmature|HitRecieve_2");
@@ -203,8 +202,7 @@ export const CharacterController = ({
           const newBullet = {
             id: state.id + "-" + +new Date(),
             position: vec3(rigidbody.current.translation()),
-            angle,
-            keyboardAngle,
+            azimuthAngle,
             player: state.id,
           };
           onFire(newBullet);

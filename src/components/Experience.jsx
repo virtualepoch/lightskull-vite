@@ -61,7 +61,7 @@ export const Experience = () => {
       // For others, it will only sync their state
       // btn symbols ⨂🥽🎥📽▶
       const joystick = new Joystick(state, {
-        type: "angular",
+        type: "dpad",
         buttons: [
           { id: "camRotateLeft", label: "◁🎦" },
           { id: "fire", label: "🎇" },

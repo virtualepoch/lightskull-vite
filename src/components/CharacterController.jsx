@@ -308,7 +308,7 @@ const PlayerInfo = ({ state }) => {
   const name = state.profile.name;
 
   return (
-    <Billboard position-y={3.7}>
+    <Billboard position-y={0}>
       <Text position-y={0.36} fontSize={0.4}>
         {name}
         <meshBasicMaterial color={state.profile.color} />

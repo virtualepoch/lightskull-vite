@@ -25,7 +25,8 @@ export const Leaderboard = () => {
             <h2>{player.state.profile?.name}</h2>
 
             <p>※{player.state.kills}</p>
-            {/* <p>{player.state.deaths}</p> */}
+            <p>※{player.state.deaths}</p>
+            <p>※{player.state.health}</p>
           </div>
         ))}
       </div>

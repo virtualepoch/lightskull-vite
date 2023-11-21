@@ -23,7 +23,8 @@ export const KeyControls = {
   fire: "fire",
   zoomIn: "zoom-in",
   zoomOut: "zoom-out",
-  rotateCam: "rotate-cam",
+  rotateLeft: "rotate-left",
+  rotateRight: "rotate-right",
 };
 
 function App() {
@@ -36,7 +37,8 @@ function App() {
       { name: KeyControls.fire, keys: ["Space"] },
       { name: KeyControls.zoomIn, keys: ["ArrowUp"] },
       { name: KeyControls.zoomOut, keys: ["ArrowDown"] },
-      { name: KeyControls.rotateCam, keys: ["ArrowLeft"] },
+      { name: KeyControls.rotateLeft, keys: ["ArrowLeft"] },
+      { name: KeyControls.rotateRight, keys: ["ArrowRight"] },
     ],
     []
   );
@@ -76,7 +78,7 @@ function App() {
               <EffectComposer disableNormalPass>
                 <Bloom luminanceThreshold={1} intensity={1.5} mipmapBlur />
               </EffectComposer>
-              <Sparkles
+              {/* <Sparkles
                 count={5000}
                 speed={0.5}
                 opacity={1.5}
@@ -85,7 +87,7 @@ function App() {
                 scale={[34, 10, 100]}
                 noise={0.5}
                 position={[1.6, 6, -20]}
-              />
+              /> */}
             </>
           )}
         </Canvas>

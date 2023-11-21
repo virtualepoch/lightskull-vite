@@ -51,14 +51,17 @@ export const CharacterController = ({
   const fireKeyPressed = useKeyboardControls(
     (state) => state[KeyControls.fire]
   );
-  const zoomInPressed = useKeyboardControls(
+  const zoomInKeyPressed = useKeyboardControls(
     (state) => state[KeyControls.zoomIn]
   );
-  const zoomOutPressed = useKeyboardControls(
+  const zoomOutKeyPressed = useKeyboardControls(
     (state) => state[KeyControls.zoomOut]
   );
-  const rotateKeyPressed = useKeyboardControls(
-    (state) => state[KeyControls.rotateCam]
+  const rotateLeftKeyPressed = useKeyboardControls(
+    (state) => state[KeyControls.rotateLeft]
+  );
+  const rotateRightKeyPressed = useKeyboardControls(
+    (state) => state[KeyControls.rotateRight]
   );
 
   const spawnRandomly = () => {
@@ -89,48 +92,18 @@ export const CharacterController = ({
     }
   }, [state.state.dead]);
 
-  const [cameraDistanceY, setCameraDistanceY] = useState(15);
-  const [cameraDistanceZ, setCameraDistanceZ] = useState(20);
+  // const [cameraDistanceY, setCameraDistanceY] = useState(10);
+  // const [cameraDistanceZ, setCameraDistanceZ] = useState(20);
   const [azimuthAngle, setAzimuthAngle] = useState(0);
+  const [zoomPressed, setZoomPressed] = useState(false);
 
   useFrame((_, delta) => {
     // CAMERA FOLLOW
     if (controls.current) {
       // const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
       // const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;
-      controls.current.azimuthAngle = azimuthAngle;
-      // ROTATE CAMERA
-      if (joystick.isPressed("camRotateLeft") || rotateKeyPressed) {
-        setAzimuthAngle(azimuthAngle + 0.1);
-        character.current.rotation.y = azimuthAngle + Math.PI;
-      }
-      if (joystick.isPressed("camRotateRight")) {
-        setAzimuthAngle(azimuthAngle - 0.1);
-        character.current.rotation.y = azimuthAngle + Math.PI;
-      }
-
-      // ZOOM IN
-      if (
-        (joystick.isPressed("camZoomIn") || zoomInPressed) &&
-        cameraDistanceY > 5
-      ) {
-        setCameraDistanceY(cameraDistanceY - 2);
-        setCameraDistanceZ(
-          cameraDistanceZ < 0 ? cameraDistanceZ + 1 : cameraDistanceZ - 1
-        );
-      }
-      if (cameraDistanceY === 5) {
-        setCameraDistanceY(15);
-        setCameraDistanceZ(20);
-      }
-
-      // ZOOM OUT
-      if (zoomOutPressed && cameraDistanceY < 40) {
-        setCameraDistanceY(cameraDistanceY + 2);
-        setCameraDistanceZ(
-          cameraDistanceZ > 0 ? cameraDistanceZ + 1 : cameraDistanceZ - 1
-        );
-      }
+      const cameraDistanceY = zoomPressed ? 4 : 10;
+      const cameraDistanceZ = zoomPressed ? 4 : 20;
 
       const playerWorldPos = vec3(rigidbody.current.translation());
       controls.current.setLookAt(
@@ -138,11 +111,38 @@ export const CharacterController = ({
         playerWorldPos.y + (state.state.dead ? 12 : cameraDistanceY),
         playerWorldPos.z + (state.state.dead ? 3 : cameraDistanceZ),
         playerWorldPos.x,
-        playerWorldPos.y + 1.5,
+        playerWorldPos.y + 3.5,
         playerWorldPos.z,
         true
       );
     }
+
+    controls.current.azimuthAngle = azimuthAngle;
+    // CAMERA ROTATE
+    if (joystick.isPressed("rotateLeft") || rotateLeftKeyPressed) {
+      setAzimuthAngle(azimuthAngle + 0.05);
+      character.current.rotation.y = azimuthAngle + Math.PI;
+    }
+
+    if (joystick.isPressed("rotateRight") || rotateRightKeyPressed) {
+      setAzimuthAngle(azimuthAngle - 0.05);
+      character.current.rotation.y = azimuthAngle + Math.PI;
+    }
+
+    // console.log(azimuthAngle);
+
+    // CAMERA ZOOM IN
+    if (joystick.isPressed("camZoomIn") || zoomInKeyPressed) {
+      setZoomPressed(!zoomPressed);
+    }
+
+    // ZOOM OUT
+    // if (zoomOutKeyPressed && cameraDistanceY < 40) {
+    //   setCameraDistanceY(cameraDistanceY + 2);
+    //   setCameraDistanceZ(
+    //     cameraDistanceZ > 0 ? cameraDistanceZ + 1 : cameraDistanceZ - 1
+    //   );
+    // }
 
     if (state.state.dead) {
       setAnimation("CharacterArmature|Death");

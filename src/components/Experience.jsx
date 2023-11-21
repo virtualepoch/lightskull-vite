@@ -50,6 +50,12 @@ export const Experience = () => {
     await insertCoin();
     const audio = new Audio("/audios/lucky-punk.mp3");
     audio.play();
+    // const audio2 = new Audio("/audios/bg-cyber.mp3");
+    // audio2.volume = 0.5;
+    // audio2.addEventListener("ended", () => {
+    //   audio2.currentTime = 0;
+    //   audio2.play();
+    // });
   };
 
   useEffect(() => {
@@ -63,9 +69,9 @@ export const Experience = () => {
       const joystick = new Joystick(state, {
         type: "dpad",
         buttons: [
-          { id: "camRotateLeft", label: "◁🎦" },
+          { id: "rotateLeft", label: "◁🎦" },
           { id: "fire", label: "🎇" },
-          { id: "camRotateRight", label: "🎦▷" },
+          { id: "rotateRight", label: "🎦▷" },
           { id: "camZoomIn", label: "+🎦+" },
         ],
       });

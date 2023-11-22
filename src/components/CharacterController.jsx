@@ -264,10 +264,14 @@ export const CharacterController = ({
         rigidbody.current.setTranslation(pos);
       }
       if (rot) {
-        character.current.rotation.y = rot;
+        if (character.current) {
+          character.current.rotation.y = rot;
+        }
       }
       if (camRot) {
-        controls.current.azimuthAngle = camRot;
+        if (controls.current) {
+          controls.current.azimuthAngle = camRot;
+        }
       }
     }
   });

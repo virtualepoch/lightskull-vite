@@ -116,7 +116,7 @@ export const CharacterController = ({
         true
       );
     }
-    
+
     if (controls.current) {
       controls.current.azimuthAngle = angle;
     }
@@ -132,7 +132,11 @@ export const CharacterController = ({
     }
 
     // CAMERA ZOOM IN
-    if (joystick.isPressed("camZoomIn") || zoomInKeyPressed) {
+    if (
+      joystick.isPressed("camZoomIn") ||
+      (joystick.isPressed("rotateLeft") && joystick.isPressed("rotateRight")) ||
+      zoomInKeyPressed
+    ) {
       setZoomPressed(!zoomPressed);
     }
 

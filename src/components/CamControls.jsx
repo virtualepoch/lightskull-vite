@@ -1,11 +1,10 @@
 export const CamControls = () => {
   return (
     <div className="cam-controls">
-      <button id="zoomIn" className="zoom-in">
-        +
-      </button>
-      <button className="zoom-out">-</button>
-      <button className="rotate">↕</button>
+      <button className="jump">JUMP</button>
+      <button className="rotate-right"></button>
+      <button className="fire"></button>
+      <button className="rotate-left"></button>
     </div>
   );
 };

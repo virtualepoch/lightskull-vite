@@ -69,10 +69,10 @@ export const Experience = () => {
       const joystick = new Joystick(state, {
         type: "angular",
         buttons: [
-          { id: "rotateLeft", label: "◁🎦" },
-          { id: "fire", label: "🎇" },
-          { id: "rotateRight", label: "🎦▷" },
-          { id: "camZoomIn", label: "+🎦+" },
+          { id: "rotateLeft", label: "" },
+          { id: "fire", label: "" },
+          { id: "rotateRight", label: "" },
+          { id: "camZoomIn", label: "" },
         ],
       });
       const newPlayer = { state, joystick };

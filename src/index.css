@@ -140,28 +140,38 @@ button {
 .cam-controls {
   position: fixed;
   bottom: 20px;
-  right: 90px;
+  right: 18px;
   z-index: 11;
   display: flex;
+  flex-direction: column;
   gap: 10px;
-}
-
-.cam-controls::after {
-  content: "";
-  width: 30px;
-  height: 20px;
-  position: absolute;
-  left: calc(50% - 15px);
-  bottom: -20px;
-  background: url(/images/video-solid.svg) 50% 50% / 70% 70% no-repeat;
-  opacity: 0.3;
+  pointer-events: none;
 }
 
 .cam-controls button {
   width: 60px;
   height: 60px;
-  border: 1px solid rgb(200, 200, 200);
+  border: 1px solid rgb(0, 255, 255);
   border-radius: 10px;
-  opacity: 0.3;
-  font-size: 20px;
+  opacity: 0.2;
+  font-size: 15px;
+  color: red;
+  text-shadow: 0 0 3px cyan;
+  box-shadow: 2px 3px 5px 1px black, inset 2px 2px 4px 2px white,
+    inset -2px -2px 4px 2px black;
+}
+
+.rotate-left,
+.rotate-right {
+  background: url(/images/video-solid.svg) 50% 50% / 40% no-repeat;
+}
+
+button.rotate-left {
+  transform: rotate(180deg);
+  box-shadow: -2px -3px 5px 1px black, inset -2px -2px 4px 2px white,
+    inset 2px 2px 4px 2px black;
+}
+
+button.fire {
+  background: url(/images/bolt-solid.svg) 50% 50% / 40% no-repeat;
 }

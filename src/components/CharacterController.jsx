@@ -251,7 +251,9 @@ export const CharacterController = ({
     if (isHost()) {
       state.setState("pos", rigidbody.current.translation());
       state.setState("rot", character.current.rotation.y);
-      state.setState("cam-rot", controls.current.azimuthAngle);
+      if (controls.current) {
+        state.setState("cam-rot", controls.current.azimuthAngle);
+      }
     } else {
       const pos = state.getState("pos");
       const rot = state.getState("rot");
@@ -263,7 +265,9 @@ export const CharacterController = ({
         character.current.rotation.y = rot;
       }
       if (camRot) {
-        controls.current.azimuthAngle = camRot;
+        if (controls.current) {
+          controls.current.azimuthAngle = camRot;
+        }
       }
     }
   });

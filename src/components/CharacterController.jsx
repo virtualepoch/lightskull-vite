@@ -94,7 +94,7 @@ export const CharacterController = ({
 
   // const [cameraDistanceY, setCameraDistanceY] = useState(10);
   // const [cameraDistanceZ, setCameraDistanceZ] = useState(20);
-  const [angle, setAngle] = useState(0);
+  const [angle, setAngle] = useState(null);
   const [zoomPressed, setZoomPressed] = useState(false);
 
   useFrame((_, delta) => {

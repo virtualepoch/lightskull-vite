@@ -94,7 +94,7 @@ export const CharacterController = ({
 
   // const [cameraDistanceY, setCameraDistanceY] = useState(10);
   // const [cameraDistanceZ, setCameraDistanceZ] = useState(20);
-  const [azimuthAngle, setAzimuthAngle] = useState(0);
+  const [angle, setAngle] = useState(0);
   const [zoomPressed, setZoomPressed] = useState(false);
 
   useFrame((_, delta) => {
@@ -116,20 +116,20 @@ export const CharacterController = ({
         true
       );
     }
+    
+    if (controls.current) {
+      controls.current.azimuthAngle = angle;
+    }
 
-    controls.current.azimuthAngle = azimuthAngle;
+    character.current.rotation.y = angle + Math.PI;
     // CAMERA ROTATE
     if (joystick.isPressed("rotateLeft") || rotateLeftKeyPressed) {
-      setAzimuthAngle(azimuthAngle + 0.05);
-      character.current.rotation.y = azimuthAngle + Math.PI;
+      setAngle(angle + 0.03);
     }
 
     if (joystick.isPressed("rotateRight") || rotateRightKeyPressed) {
-      setAzimuthAngle(azimuthAngle - 0.05);
-      character.current.rotation.y = azimuthAngle + Math.PI;
+      setAngle(angle - 0.03);
     }
-
-    // console.log(azimuthAngle);
 
     // CAMERA ZOOM IN
     if (joystick.isPressed("camZoomIn") || zoomInKeyPressed) {
@@ -164,9 +164,9 @@ export const CharacterController = ({
 
       // Move character forward
       const impulseForward = {
-        x: Math.sin(azimuthAngle + Math.PI) * MOVEMENT_SPEED * delta * 100,
+        x: Math.sin(angle + Math.PI) * MOVEMENT_SPEED * delta * 100,
         y: 0,
-        z: Math.cos(azimuthAngle + Math.PI) * MOVEMENT_SPEED * delta * 100,
+        z: Math.cos(angle + Math.PI) * MOVEMENT_SPEED * delta * 100,
       };
 
       rigidbody.current.applyImpulse(impulseForward, true);
@@ -180,9 +180,9 @@ export const CharacterController = ({
 
       // Move character back
       const impulseBack = {
-        x: Math.sin(azimuthAngle) * MOVEMENT_SPEED * delta * 100,
+        x: Math.sin(angle) * MOVEMENT_SPEED * delta * 100,
         y: 0,
-        z: Math.cos(azimuthAngle) * MOVEMENT_SPEED * delta * 100,
+        z: Math.cos(angle) * MOVEMENT_SPEED * delta * 100,
       };
 
       rigidbody.current.applyImpulse(impulseBack, true);
@@ -199,9 +199,9 @@ export const CharacterController = ({
 
       // Srafe character left
       const impulseLeft = {
-        x: Math.sin(azimuthAngle - Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
+        x: Math.sin(angle - Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
         y: 0,
-        z: Math.cos(azimuthAngle - Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
+        z: Math.cos(angle - Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
       };
 
       rigidbody.current.applyImpulse(impulseLeft, true);
@@ -215,15 +215,15 @@ export const CharacterController = ({
 
       // Srafe character right
       const impulseRight = {
-        x: Math.sin(azimuthAngle + Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
+        x: Math.sin(angle + Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
         y: 0,
-        z: Math.cos(azimuthAngle + Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
+        z: Math.cos(angle + Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
       };
 
       rigidbody.current.applyImpulse(impulseRight, true);
     } else {
       setAnimation("CharacterArmature|Idle");
-      character.current.rotation.y = azimuthAngle + Math.PI;
+      character.current.rotation.y = angle + Math.PI;
     }
 
     // Check if fire button is pressed
@@ -236,7 +236,7 @@ export const CharacterController = ({
           const newBullet = {
             id: state.id + "-" + +new Date(),
             position: vec3(rigidbody.current.translation()),
-            azimuthAngle,
+            angle,
             player: state.id,
           };
           onFire(newBullet);

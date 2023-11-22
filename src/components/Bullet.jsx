@@ -13,14 +13,14 @@ const bulletMaterial = new MeshBasicMaterial({
 
 bulletMaterial.color.multiplyScalar(7);
 
-export const Bullet = ({ player, azimuthAngle, keyboardAngle, position, onHit }) => {
+export const Bullet = ({ player, angle, keyboardAngle, position, onHit }) => {
   const rigidbody = useRef();
 
   useEffect(() => {
     const velocity = {
-      x: Math.sin(azimuthAngle + Math.PI || keyboardAngle) * BULLET_SPEED,
+      x: Math.sin(angle + Math.PI || keyboardAngle) * BULLET_SPEED,
       y: 0,
-      z: Math.cos(azimuthAngle + Math.PI || keyboardAngle) * BULLET_SPEED,
+      z: Math.cos(angle + Math.PI || keyboardAngle) * BULLET_SPEED,
     };
 
     rigidbody.current.setLinvel(velocity, true);
@@ -30,7 +30,10 @@ export const Bullet = ({ player, azimuthAngle, keyboardAngle, position, onHit })
   }, []);
 
   return (
-    <group position={[position.x, position.y, position.z]} rotation-y={azimuthAngle + Math.PI}>
+    <group
+      position={[position.x, position.y, position.z]}
+      rotation-y={angle + Math.PI}
+    >
       <group
         position-x={WEAPON_OFFSET.x}
         position-y={WEAPON_OFFSET.y}

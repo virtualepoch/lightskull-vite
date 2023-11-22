@@ -250,10 +250,15 @@ export const CharacterController = ({
 
     if (isHost()) {
       state.setState("pos", rigidbody.current.translation());
+      state.setState("rot", character.current.rotation.y);
     } else {
       const pos = state.getState("pos");
+      const rot = state.getState("rot");
       if (pos) {
         rigidbody.current.setTranslation(pos);
+      }
+      if (rot) {
+        character.current.rotation.y = rot;
       }
     }
   });

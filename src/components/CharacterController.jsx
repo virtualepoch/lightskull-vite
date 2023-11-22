@@ -11,7 +11,7 @@ import {
 import { Character } from "./Character";
 import { KeyControls } from "../App";
 
-const MOVEMENT_SPEED = 7;
+const MOVEMENT_SPEED = 10;
 const FIRE_RATE = 380;
 
 export const WEAPON_OFFSET = {
@@ -321,7 +321,6 @@ export const CharacterController = ({
             animation={animation}
             scale={[2.5, 2, 2.9]}
             position={[0, -0.4, 0]}
-            rotation-y={0}
           />
           {userPlayer && (
             <Crosshair

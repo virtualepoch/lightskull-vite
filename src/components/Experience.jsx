@@ -17,11 +17,11 @@ import { BulletHit } from "./BulletHit";
 export const Experience = () => {
   const [players, setPlayers] = useState([]);
   const [bullets, setBullets] = useState([]);
-  const [hits, setHits] = useState([]);
   const [networkBullets, setNetworkBullets] = useMultiplayerState(
     "bullets",
     []
   );
+  const [hits, setHits] = useState([]);
   const [networkHits, setNetworkHits] = useMultiplayerState("hits", []);
 
   const onFire = (bullet) => {

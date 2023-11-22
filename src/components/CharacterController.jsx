@@ -201,7 +201,7 @@ export const CharacterController = ({
     ) {
       setAnimation("CharacterArmature|Run_Left");
 
-      // Srafe character left
+      // Strafe character left
       const impulseLeft = {
         x: Math.sin(angle - Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
         y: 0,
@@ -217,7 +217,7 @@ export const CharacterController = ({
     ) {
       setAnimation("CharacterArmature|Run_Right");
 
-      // Srafe character right
+      // Strafe character right
       const impulseRight = {
         x: Math.sin(angle + Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
         y: 0,
@@ -303,6 +303,7 @@ export const CharacterController = ({
             animation={animation}
             scale={[2.5, 2, 2.9]}
             position={[0, -0.4, 0]}
+            rotation-y={0}
           />
           {userPlayer && (
             <Crosshair

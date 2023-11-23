@@ -13,7 +13,7 @@ import { useMemo, Suspense, useState } from "react";
 import { Physics } from "@react-three/rapier";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { Leaderboard } from "./components/Leaderboard";
-import { CamControls } from "./components/CamControls";
+import { ControlsOverlay } from "./components/ControlsOverlay";
 
 export const KeyControls = {
   forward: "forward",
@@ -47,16 +47,15 @@ function App() {
 
   return (
     <>
-      <h1 className="version">v.0.1.11.<span className="test-edit">4</span></h1>
-      <Loader />
+      <h1 className="version">v.0.1.11.<span className="test-edit">5</span></h1>
       <h1 className="game-title">
         Light<span className="cross-symbol">⁜</span>Skull
       </h1>
-      <CamControls />
-      {/* <div className="logo"></div> */}
+      <Loader />
+      <ControlsOverlay />
       <Leaderboard />
       <KeyboardControls map={map}>
-        <Canvas shadows camera={{ position: [0, 30, 0], fov: 30, near: 2 }}>
+        <Canvas shadows camera={{ position: [0, 100, 0], fov: 30, near: 2 }}>
           {/* <OrbitControls /> */}
           <color attach="background" args={["#000"]} />
           {/* <SoftShadows size={42} /> */}

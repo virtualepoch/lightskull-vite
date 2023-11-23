@@ -108,8 +108,8 @@ export const CharacterController = ({
       const playerWorldPos = vec3(rigidbody.current.translation());
       controls.current.setLookAt(
         playerWorldPos.x,
-        playerWorldPos.y + (state.state.dead ? 12 : cameraDistanceY),
-        playerWorldPos.z + (state.state.dead ? 3 : cameraDistanceZ),
+        playerWorldPos.y + (state.state.dead ? 80 : cameraDistanceY),
+        playerWorldPos.z + (state.state.dead ? 0 : cameraDistanceZ),
         playerWorldPos.x,
         playerWorldPos.y + 3.5,
         playerWorldPos.z,

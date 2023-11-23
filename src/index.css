@@ -14,6 +14,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  --box-shadow-light: rgba(0, 0, 0, 0.2);
+  --box-shadow-med: rgba(0, 0, 0, 0.4);
+  --box-shadow-dark: rgba(0, 0, 0, 0.6);
+  --box-glare-light: rgba(255, 255, 255, 0.2);
+  --box-glare-med: rgba(255, 255, 255, 0.4);
+  --box-glare-dark: rgba(255, 255, 255, 0.6);
 }
 
 * {
@@ -47,7 +53,7 @@ button {
 
 .test-edit {
   color: red;
-  text-shadow: 0 0 5px cyan;
+  text-shadow: -4px -2px 2px cyan,-2px -1px 1px cyan, 2px 1px 1px red, 4px 2px 2px red;
   border-radius: 100%;
   padding: 0 10px;
   font: 25px sans-serif;
@@ -173,9 +179,9 @@ button {
   }
 }
 
-/* CAMERA CONTROLS /////////////////////////////////////////////////////////// */
+/* CONTROLS OVERLAY /////////////////////////////////////////////////////////// */
 
-.cam-controls {
+.controls-overlay {
   position: fixed;
   bottom: 20px;
   right: 18px;
@@ -186,30 +192,35 @@ button {
   pointer-events: none;
 }
 
-.cam-controls button {
+.controls-overlay .btn {
   width: 60px;
   height: 60px;
-  border: 1px solid rgb(0, 255, 255);
   border-radius: 10px;
-  opacity: 0.2;
   font-size: 15px;
   color: red;
   text-shadow: 0 0 3px cyan;
-  box-shadow: 2px 3px 5px 1px black, inset 2px 2px 4px 2px white,
-    inset -2px -2px 4px 2px black;
+  box-shadow: 2px 3px 5px 1px var(--box-shadow-light),
+    inset 2px 2px 4px 2px var(--box-glare-med), inset -2px -2px 4px 2px var(--box-shadow-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jump {
+  background: url(/images/chevron-up-solid.svg) center / 40% no-repeat;
 }
 
 .rotate-left,
 .rotate-right {
-  background: url(/images/video-solid.svg) 50% 50% / 40% no-repeat;
+  background: url(/images/video-solid.svg) center / 40% no-repeat;
 }
 
-button.rotate-left {
+.btn.rotate-left {
   transform: rotate(180deg);
-  box-shadow: -2px -3px 5px 1px black, inset -2px -2px 4px 2px white,
-    inset 2px 2px 4px 2px black;
+  box-shadow: -2px -3px 5px 1px var(--box-shadow-light),
+    inset -2px -2px 4px 2px var(--box-glare-med), inset 2px 2px 4px 2px var(--box-shadow-light);
 }
 
-button.fire {
-  background: url(/images/bolt-solid.svg) 50% 50% / 40% no-repeat;
+.fire {
+  background: url(/images/bolt-solid.svg) center / 40% no-repeat;
 }

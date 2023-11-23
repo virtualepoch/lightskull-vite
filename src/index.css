@@ -40,28 +40,34 @@ button {
   right: 90px;
   z-index: 11111;
   font: 100 20px Ailerons;
-}
-
-@media (orientation: portrait) {
-  .version{
-    bottom: 50%;
-    right: null;
-    left: 0;
-    writing-mode: vertical-lr;
-    text-orientation: upright;
-  }
+  letter-spacing: 2px;
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 .test-edit {
   color: red;
   text-shadow: 0 0 5px cyan;
-  border: 1px solid red;
   border-radius: 100%;
-  padding: 5px 15px;
-  margin: 0 10px;
-  font: 30px sans-serif;
+  padding: 0 10px;
+  font: 25px sans-serif;
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.4),
     inset 0 2px 5px 1px rgba(255, 255, 255, 0.3);
+}
+
+@media (orientation: portrait) {
+  .version {
+    bottom: 25%;
+    right: null;
+    left: 0;
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    letter-spacing: 0;
+    line-height: 1px;
+  }
+  .test-edit {
+    padding: 10px 0;
+  }
 }
 
 .game-title {

@@ -116,16 +116,17 @@ export const CharacterController = ({
         true
       );
       controls.current.azimuthAngle = angle;
-      character.current.rotation.y = angle + Math.PI;
     }
 
     // CAMERA ROTATE
     if (joystick.isPressed("rotateLeft") || rotateLeftKeyPressed) {
       setAngle(angle + 0.03);
+      character.current.rotation.y = angle + Math.PI;
     }
 
     if (joystick.isPressed("rotateRight") || rotateRightKeyPressed) {
       setAngle(angle - 0.03);
+      character.current.rotation.y = angle + Math.PI;
     }
 
     // CAMERA ZOOM IN

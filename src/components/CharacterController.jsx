@@ -121,20 +121,16 @@ export const CharacterController = ({
     // CAMERA ROTATE
     if (joystick.isPressed("rotateLeft") || rotateLeftKeyPressed) {
       setAngle(angle + 0.03);
-      character.current.rotation.y = angle + Math.PI;
+      character.current.rotation.y = controls.current.azimuthAngle + Math.PI;
     }
 
     if (joystick.isPressed("rotateRight") || rotateRightKeyPressed) {
       setAngle(angle - 0.03);
-      character.current.rotation.y = angle + Math.PI;
+      character.current.rotation.y = controls.current.azimuthAngle + Math.PI;
     }
 
     // CAMERA ZOOM IN
-    if (
-      joystick.isPressed("camZoomIn") ||
-      (joystick.isPressed("rotateLeft") && joystick.isPressed("rotateRight")) ||
-      zoomInKeyPressed
-    ) {
+    if (joystick.isPressed("camZoomIn") || zoomInKeyPressed) {
       setZoomPressed(!zoomPressed);
     }
 
@@ -307,7 +303,7 @@ export const CharacterController = ({
           <Character
             color={state.state.profile?.color}
             animation={animation}
-            scale={[2.5, 2, 2.9]}
+            scale={[2, 2, 2]}
             position={[0, -0.4, 0]}
           />
           {userPlayer && (

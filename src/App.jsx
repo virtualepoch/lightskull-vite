@@ -47,7 +47,7 @@ function App() {
 
   return (
     <>
-      <h1 className="version">v.0.0.11.<span className="test-edit">2</span></h1>
+      <h1 className="version">v.0.0.11.<span className="test-edit">3</span></h1>
       <Loader />
       <h1 className="game-title">
         Light<span className="cross-symbol">⁜</span>Skull

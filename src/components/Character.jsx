@@ -52,7 +52,11 @@ export function Character({
   useEffect(() => {
     // ASSIGNING CHARACTER COLOR
     nodes.Body.traverse((child) => {
-      if (child.isMesh && child.material.name === ("SciFi_Light" || "Grey")) {
+      if (
+        child.isMesh &&
+        child.name ===
+          ("SpaceSuit_Head_1" || "SpaceSuit_Head_2" || "SpaceSuit_Head_3")
+      ) {
         child.material = playerFaceAndOutline;
       } else {
         child.material = playerColorMaterial;
@@ -64,7 +68,11 @@ export function Character({
     });
 
     clone.traverse((child) => {
-      if (child.isMesh && child.material.name === ("SciFi_Light" || "Grey")) {
+      if (
+        child.isMesh &&
+        child.name ===
+          ("SpaceSuit_Head_1" || "SpaceSuit_Head_2" || "SpaceSuit_Head_3")
+      ) {
         child.material = playerFaceAndOutline;
       } else {
         child.material = playerColorMaterial;
@@ -102,7 +110,7 @@ export function Character({
             <skinnedMesh
               name="SpaceSuit_Feet_2"
               geometry={nodes.SpaceSuit_Feet_2.geometry}
-              material={playerFaceAndOutline}
+              material={playerColorMaterial}
               skeleton={nodes.SpaceSuit_Feet_2.skeleton}
               castShadow
             />
@@ -115,7 +123,7 @@ export function Character({
             <skinnedMesh
               name="SpaceSuit_Legs_1"
               geometry={nodes.SpaceSuit_Legs_1.geometry}
-              material={playerFaceAndOutline}
+              material={playerColorMaterial}
               skeleton={nodes.SpaceSuit_Legs_1.skeleton}
               castShadow
             />
@@ -149,7 +157,7 @@ export function Character({
             <skinnedMesh
               name="SpaceSuit_Body_1"
               geometry={nodes.SpaceSuit_Body_1.geometry}
-              material={playerFaceAndOutline}
+              material={playerColorMaterial}
               skeleton={nodes.SpaceSuit_Body_1.skeleton}
               castShadow
             />
@@ -183,14 +191,14 @@ export function Character({
             <skinnedMesh
               name="SpaceSuit_Head_1"
               geometry={nodes.SpaceSuit_Head_1.geometry}
-              material={playerColorMaterial}
+              material={playerFaceAndOutline}
               skeleton={nodes.SpaceSuit_Head_1.skeleton}
               castShadow
             />
             <skinnedMesh
               name="SpaceSuit_Head_2"
               geometry={nodes.SpaceSuit_Head_2.geometry}
-              material={playerColorMaterial}
+              material={playerFaceAndOutline}
               skeleton={nodes.SpaceSuit_Head_2.skeleton}
               castShadow
             />

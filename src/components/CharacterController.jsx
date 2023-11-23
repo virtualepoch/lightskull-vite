@@ -115,13 +115,10 @@ export const CharacterController = ({
         playerWorldPos.z,
         true
       );
-    }
-
-    if (controls.current) {
       controls.current.azimuthAngle = angle;
+      character.current.rotation.y = angle + Math.PI;
     }
 
-    character.current.rotation.y = angle + Math.PI;
     // CAMERA ROTATE
     if (joystick.isPressed("rotateLeft") || rotateLeftKeyPressed) {
       setAngle(angle + 0.03);
@@ -261,9 +258,7 @@ export const CharacterController = ({
         rigidbody.current.setTranslation(pos);
       }
       if (rot) {
-        if (character.current) {
-          character.current.rotation.y = rot;
-        }
+        character.current.rotation.y = rot;
       }
     }
   });

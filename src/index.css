@@ -53,7 +53,8 @@ button {
 
 .test-edit {
   color: red;
-  text-shadow: -4px -2px 2px cyan,-2px -1px 1px cyan, 2px 1px 1px red, 4px 2px 2px red;
+  text-shadow: -1px -0.5px 0.5px #ff00bf, -2px -1px 1px #8000ff,
+    -3px -1.5px 1.5px #003fff, -4px -2px 2px cyan;
   border-radius: 100%;
   padding: 0 10px;
   font: 25px sans-serif;
@@ -115,6 +116,7 @@ button {
   background: radial-gradient(circle at 50% 50%, white 10%, transparent 50%);
 }
 
+/* LEADERBOARD ///////////////////////////////////////////// */
 .leaderboard {
   position: fixed;
   top: 0;
@@ -148,6 +150,33 @@ button {
 .player-info h2,
 .player-info p {
   font-size: 25px;
+}
+
+.health-bar {
+  width: 100px;
+  height: 100%;
+  border: solid red;
+  position: relative;
+}
+
+.health-meter {
+  width: 100%;
+  height: 100%;
+  border: solid blue;
+  position: absolute;
+}
+
+.health-text {
+  width: 100%;
+  height: 100%;
+  color: white;
+  z-index: 99;
+  mix-blend-mode: difference;
+  position: absolute;
+  border: solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-fullscreen {
@@ -200,7 +229,8 @@ button {
   color: red;
   text-shadow: 0 0 3px cyan;
   box-shadow: 2px 3px 5px 1px var(--box-shadow-light),
-    inset 2px 2px 4px 2px var(--box-glare-med), inset -2px -2px 4px 2px var(--box-shadow-light);
+    inset 2px 2px 4px 2px var(--box-glare-med),
+    inset -2px -2px 4px 2px var(--box-shadow-light);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -218,7 +248,8 @@ button {
 .btn.rotate-left {
   transform: rotate(180deg);
   box-shadow: -2px -3px 5px 1px var(--box-shadow-light),
-    inset -2px -2px 4px 2px var(--box-glare-med), inset 2px 2px 4px 2px var(--box-shadow-light);
+    inset -2px -2px 4px 2px var(--box-glare-med),
+    inset 2px 2px 4px 2px var(--box-shadow-light);
 }
 
 .fire {

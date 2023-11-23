@@ -26,7 +26,18 @@ export const Leaderboard = () => {
 
             <p>※{player.state.kills}</p>
             <p>※{player.state.deaths}</p>
-            <p>※{player.state.health}</p>
+            <div className="health-bar">
+              <div
+                className="health-meter"
+                style={{
+                  transform: `scaleX(${player.state.health / 100}) translateX(${
+                    -1 + player.state.health / 100
+                  })`,
+                }}
+              >
+                <p className="health-text">※{player.state.health}</p>
+              </div>
+            </div>
           </div>
         ))}
       </div>

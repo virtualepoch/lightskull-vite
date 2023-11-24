@@ -9,7 +9,7 @@ import {
   Stars,
   Sparkles,
 } from "@react-three/drei";
-import { useMemo, Suspense, useState } from "react";
+import { useMemo, Suspense, useState, useEffect } from "react";
 import { Physics } from "@react-three/rapier";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { Leaderboard } from "./components/Leaderboard";
@@ -47,7 +47,13 @@ function App() {
 
   return (
     <>
-      <h1 className="version">v.0.1.11.<span className="test-edit">6</span></h1>
+      <h1 className="version">
+        v.0.1.11.<span className="test-edit">
+          {/* /////////////////////////////=VERSION=\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */}
+          7
+          {/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\=VERSION=///////////////////////////// */}
+          </span>
+      </h1>
       <h1 className="game-title">
         Light<span className="cross-symbol">⁜</span>Skull
       </h1>

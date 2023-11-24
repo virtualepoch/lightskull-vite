@@ -43,16 +43,25 @@ function App() {
     []
   );
 
+  // const [cameraDistanceY, setCameraDistanceY] = useState(10);
+  // const [cameraDistanceZ, setCameraDistanceZ] = useState(20);
+  const [zoomed, setZoomed] = useState(false);
   const [downgradedPerformance, setDowngradedPerformance] = useState(false);
+
+  const zoom = () => {
+    setZoomed(!zoomed);
+  };
 
   return (
     <>
+      <button className="btn-zoom" onClick={zoom}></button>
       <h1 className="version">
-        v.0.1.11.<span className="test-edit">
+        v.0.1.11.
+        <span className="test-edit">
           {/* /////////////////////////////=VERSION=\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */}
           7
           {/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\=VERSION=///////////////////////////// */}
-          </span>
+        </span>
       </h1>
       <h1 className="game-title">
         Light<span className="cross-symbol">⁜</span>Skull
@@ -74,7 +83,13 @@ function App() {
           <Suspense>
             <Physics>
               {/* NOTE: add 'debug' prop to '<Physics>' above to add a wireframe to the rigid bodies */}
-              <Experience />
+              <Experience
+              // cameraDistanceY={cameraDistanceY}
+              // cameraDistanceZ={cameraDistanceZ}
+              // setCameraDistanceY={setCameraDistanceY}
+              // setCameraDistanceZ={setCameraDistanceZ}
+              zoomed={zoomed}
+              />
             </Physics>
           </Suspense>
 

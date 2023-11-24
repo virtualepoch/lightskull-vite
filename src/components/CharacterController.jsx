@@ -26,6 +26,11 @@ export const CharacterController = ({
   userPlayer,
   onFire,
   onKilled,
+  // cameraDistanceY,
+  // setCameraDistanceY,
+  // cameraDistanceZ,
+  // setCameraDistanceZ,
+  zoomed,
   ...props
 }) => {
   const group = useRef();
@@ -92,8 +97,6 @@ export const CharacterController = ({
     }
   }, [state.state.dead]);
 
-  // const [cameraDistanceY, setCameraDistanceY] = useState(10);
-  // const [cameraDistanceZ, setCameraDistanceZ] = useState(20);
   const [angle, setAngle] = useState(null);
   const [zoomPressed, setZoomPressed] = useState(false);
 
@@ -102,8 +105,10 @@ export const CharacterController = ({
     if (controls.current) {
       // const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
       // const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;
-      const cameraDistanceY = zoomPressed ? 4 : 10;
-      const cameraDistanceZ = zoomPressed ? 4 : 20;
+      // const cameraDistanceY = zoomPressed ? 4 : 6;
+      // const cameraDistanceZ = zoomPressed ? 4 : 20;
+      const cameraDistanceY = zoomed || zoomPressed ? 4 : 6;
+      const cameraDistanceZ = zoomed || zoomPressed ? 4 : 20;
 
       const playerWorldPos = vec3(rigidbody.current.translation());
       controls.current.setLookAt(
@@ -262,7 +267,7 @@ export const CharacterController = ({
 
   return (
     <group ref={group} {...props}>
-      {userPlayer && <CameraControls ref={controls}/>}
+      {userPlayer && <CameraControls ref={controls} />}
 
       <RigidBody
         ref={rigidbody}

@@ -14,7 +14,13 @@ import { CharacterController } from "./CharacterController";
 import { Bullet } from "./Bullet";
 import { BulletHit } from "./BulletHit";
 
-export const Experience = () => {
+export const Experience = ({
+  //  cameraDistanceY,
+  // setCameraDistanceY,
+  // cameraDistanceZ,
+  // setCameraDistanceZ,
+  zoomed,
+}) => {
   const [players, setPlayers] = useState([]);
   const [bullets, setBullets] = useState([]);
   const [networkBullets, setNetworkBullets] = useMultiplayerState(
@@ -104,6 +110,11 @@ export const Experience = () => {
           userPlayer={state.id === myPlayer()?.id}
           onFire={onFire}
           onKilled={onKilled}
+          // cameraDistanceY={cameraDistanceY}
+          // cameraDistanceZ={cameraDistanceZ}
+          // setCameraDistanceY={setCameraDistanceY}
+          // setCameraDistanceZ={setCameraDistanceZ}
+          zoomed={zoomed}
         />
       ))}
 

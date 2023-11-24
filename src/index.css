@@ -119,17 +119,16 @@ button {
 /* LEADERBOARD ///////////////////////////////////////////// */
 .leaderboard {
   position: fixed;
-  top: 0;
+  top: 5px;
   left: 0;
   z-index: 11;
   display: flex;
   gap: 5px;
-  padding: 0 5px;
+  padding: 0 20px;
 }
 
 .player-info {
   font: 20px Ailerons, sans-serif;
-  text-shadow: -1px 1px 2px black;
   border-left: 2px solid;
   border-right: 1px solid;
   border-radius: 15px;
@@ -152,6 +151,10 @@ button {
   font-size: 25px;
 }
 
+.name {
+  text-shadow: -1px 0 3px rgba(0, 0, 0, 0.5);
+}
+
 .kills {
   color: white;
   text-shadow: 0 0 5px cyan;
@@ -169,27 +172,31 @@ button {
   height: 80%;
   background: rgba(0, 0, 0, 0.2);
   position: relative;
-  border-radius: 1111px;
+  border-radius: 5px;
   overflow: hidden;
 }
 
 .health-meter {
   height: 100%;
   position: absolute;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  filter: drop-shadow(0 0 1px white);
 }
 
-.health-text {
+p.health-text {
   width: 100%;
   height: 100%;
   color: white;
-  z-index: 99;
+  text-shadow: 0 0 5px white;
   position: absolute;
+  z-index: 99;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 1111px;
-  box-shadow: inset -2px 2px 2px 1px rgba(255, 255, 255, 0.6),
-    inset 1px -1px 2px 1px rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
+  box-shadow: inset -1px 1px 2px 1px rgba(0, 55, 0, 0.5);
+  font-size: 20px;
 }
 
 .btn-fullscreen {
@@ -197,7 +204,7 @@ button {
   right: 0;
   z-index: 1000;
   color: white;
-  padding: 7px 7px 20px 20px;
+  padding: 15px;
 }
 
 .svg-fullscreen {

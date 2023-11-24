@@ -9,7 +9,7 @@ import {
   Stars,
   Sparkles,
 } from "@react-three/drei";
-import { useMemo, Suspense, useState, useEffect } from "react";
+import { useMemo, Suspense, useState } from "react";
 import { Physics } from "@react-three/rapier";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { Leaderboard } from "./components/Leaderboard";
@@ -43,23 +43,21 @@ function App() {
     []
   );
 
-  // const [cameraDistanceY, setCameraDistanceY] = useState(10);
-  // const [cameraDistanceZ, setCameraDistanceZ] = useState(20);
-  const [zoomed, setZoomed] = useState(false);
+  const [zoom, setZoom] = useState(0);
   const [downgradedPerformance, setDowngradedPerformance] = useState(false);
 
-  const zoom = () => {
-    setZoomed(!zoomed);
+  const zoomIn = () => {
+    zoom < 2 ? setZoom(zoom + 1) : setZoom(0);
   };
 
   return (
     <>
-      <button className="btn-zoom" onClick={zoom}></button>
+      <button className="btn-zoom" onClick={zoomIn}></button>
       <h1 className="version">
         v.0.1.11.
         <span className="test-edit">
           {/* /////////////////////////////=VERSION=\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */}
-          7
+          8
           {/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\=VERSION=///////////////////////////// */}
         </span>
       </h1>
@@ -81,15 +79,9 @@ function App() {
           />
 
           <Suspense>
-            <Physics>
+            <Physics gravity={[0, -500, 0]} interpolation={false}>
               {/* NOTE: add 'debug' prop to '<Physics>' above to add a wireframe to the rigid bodies */}
-              <Experience
-              // cameraDistanceY={cameraDistanceY}
-              // cameraDistanceZ={cameraDistanceZ}
-              // setCameraDistanceY={setCameraDistanceY}
-              // setCameraDistanceZ={setCameraDistanceZ}
-              zoomed={zoomed}
-              />
+              <Experience zoom={zoom} />
             </Physics>
           </Suspense>
 

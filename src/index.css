@@ -265,7 +265,7 @@ p.health-text {
   position: fixed;
   right: 110px;
   bottom: 20px;
-  z-index: 11111;
+  z-index: 100;
   border-radius: 100%;
   box-shadow: 2px 3px 5px 1px var(--box-shadow-light),
     inset 2px 2px 4px 2px var(--box-glare-med),

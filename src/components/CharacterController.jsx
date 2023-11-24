@@ -11,7 +11,8 @@ import {
 import { Character } from "./Character";
 import { KeyControls } from "../App";
 
-const MOVEMENT_SPEED = 10;
+const MOVEMENT_SPEED = 35;
+const JUMP_VELOCITY = 50;
 const FIRE_RATE = 380;
 
 export const WEAPON_OFFSET = {
@@ -26,11 +27,7 @@ export const CharacterController = ({
   userPlayer,
   onFire,
   onKilled,
-  // cameraDistanceY,
-  // setCameraDistanceY,
-  // cameraDistanceZ,
-  // setCameraDistanceZ,
-  zoomed,
+  zoom,
   ...props
 }) => {
   const group = useRef();
@@ -98,17 +95,15 @@ export const CharacterController = ({
   }, [state.state.dead]);
 
   const [angle, setAngle] = useState(null);
-  const [zoomPressed, setZoomPressed] = useState(false);
 
   useFrame((_, delta) => {
     // CAMERA FOLLOW
     if (controls.current) {
       // const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
       // const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;
-      // const cameraDistanceY = zoomPressed ? 4 : 6;
-      // const cameraDistanceZ = zoomPressed ? 4 : 20;
-      const cameraDistanceY = zoomed || zoomPressed ? 4 : 6;
-      const cameraDistanceZ = zoomed || zoomPressed ? 4 : 20;
+
+      const cameraDistanceY = zoom === 0 ? 20 : zoom === 1 ? 10 : 4;
+      const cameraDistanceZ = zoom === 0 ? 40 : zoom === 1 ? 20 : 3;
 
       const playerWorldPos = vec3(rigidbody.current.translation());
       controls.current.setLookAt(
@@ -134,18 +129,16 @@ export const CharacterController = ({
       setAngle(angle - 0.03);
     }
 
-    // CAMERA ZOOM IN
-    if (joystick.isPressed("camZoomIn") || zoomInKeyPressed) {
-      setZoomPressed(!zoomPressed);
+    // JUMP
+    if (joystick.isPressed("jump")) {
+      const impulseUp = {
+        x: 0,
+        y: JUMP_VELOCITY * delta * 200,
+        z: 0,
+      };
+      if (rigidbody.current.translation().y < 5)
+        rigidbody.current.applyImpulse(impulseUp, true);
     }
-
-    // ZOOM OUT
-    // if (zoomOutKeyPressed && cameraDistanceY < 40) {
-    //   setCameraDistanceY(cameraDistanceY + 2);
-    //   setCameraDistanceZ(
-    //     cameraDistanceZ > 0 ? cameraDistanceZ + 1 : cameraDistanceZ - 1
-    //   );
-    // }
 
     if (state.state.dead) {
       setAnimation("CharacterArmature|Death");

@@ -14,13 +14,7 @@ import { CharacterController } from "./CharacterController";
 import { Bullet } from "./Bullet";
 import { BulletHit } from "./BulletHit";
 
-export const Experience = ({
-  //  cameraDistanceY,
-  // setCameraDistanceY,
-  // cameraDistanceZ,
-  // setCameraDistanceZ,
-  zoomed,
-}) => {
+export const Experience = ({ zoom }) => {
   const [players, setPlayers] = useState([]);
   const [bullets, setBullets] = useState([]);
   const [networkBullets, setNetworkBullets] = useMultiplayerState(
@@ -56,12 +50,12 @@ export const Experience = ({
     await insertCoin();
     const audio = new Audio("/audios/lucky-punk.mp3");
     audio.play();
-    // const audio2 = new Audio("/audios/bg-cyber.mp3");
-    // audio2.volume = 0.5;
-    // audio2.addEventListener("ended", () => {
-    //   audio2.currentTime = 0;
-    //   audio2.play();
-    // });
+    const audio2 = new Audio("/audios/bg-cyber.mp3");
+    audio2.volume = 0.5;
+    audio2.addEventListener("ended", () => {
+      audio2.currentTime = 0;
+      audio2.play();
+    });
   };
 
   useEffect(() => {
@@ -78,7 +72,7 @@ export const Experience = ({
           { id: "rotateLeft", label: "" },
           { id: "fire", label: "" },
           { id: "rotateRight", label: "" },
-          { id: "camZoomIn", label: "" },
+          { id: "jump", label: "" },
         ],
       });
       const newPlayer = { state, joystick };
@@ -110,11 +104,7 @@ export const Experience = ({
           userPlayer={state.id === myPlayer()?.id}
           onFire={onFire}
           onKilled={onKilled}
-          // cameraDistanceY={cameraDistanceY}
-          // cameraDistanceZ={cameraDistanceZ}
-          // setCameraDistanceY={setCameraDistanceY}
-          // setCameraDistanceZ={setCameraDistanceZ}
-          zoomed={zoomed}
+          zoom={zoom}
         />
       ))}
 

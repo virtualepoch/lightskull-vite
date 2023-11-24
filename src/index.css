@@ -53,13 +53,12 @@ button {
 
 .test-edit {
   color: red;
-  text-shadow: -1px -0.5px 0.5px #ff00bf, -2px -1px 1px #8000ff,
-    -3px -1.5px 1.5px #003fff, -4px -2px 2px cyan;
+  text-shadow: -1px 0 1px #ff00bf, -2px 0 1px #8000ff, -3px 0 1px #003fff,
+    -4px 0 1px cyan;
   border-radius: 100%;
-  padding: 0 10px;
+  padding: 0 5px 0 10px;
   font: 25px sans-serif;
-  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.4),
-    inset 0 2px 5px 1px rgba(255, 255, 255, 0.3);
+  box-shadow: inset 1px 2px 3px 1px rgba(255, 255, 255, 0.6);
 }
 
 @media (orientation: portrait) {
@@ -73,7 +72,8 @@ button {
     line-height: 1px;
   }
   .test-edit {
-    padding: 10px 0;
+    padding: 10px 0 10px 3px;
+    box-shadow: inset -1px 2px 3px 1px rgba(255, 255, 255, 0.6);
   }
 }
 
@@ -123,7 +123,7 @@ button {
   left: 0;
   z-index: 11;
   display: flex;
-  gap: 2px;
+  gap: 5px;
   padding: 0 5px;
 }
 
@@ -152,17 +152,29 @@ button {
   font-size: 25px;
 }
 
+.kills {
+  color: white;
+  text-shadow: 0 0 5px cyan;
+  filter: drop-shadow(0 0 5px cyan);
+}
+
+.deaths {
+  color: red;
+  text-shadow: 0 0 5px red;
+  filter: drop-shadow(0 0 5px red);
+}
+
 .health-bar {
   width: 100px;
-  height: 100%;
-  border: solid red;
+  height: 80%;
+  background: rgba(0, 0, 0, 0.2);
   position: relative;
+  border-radius: 1111px;
+  overflow: hidden;
 }
 
 .health-meter {
-  width: 100%;
   height: 100%;
-  border: solid blue;
   position: absolute;
 }
 
@@ -171,12 +183,13 @@ button {
   height: 100%;
   color: white;
   z-index: 99;
-  mix-blend-mode: difference;
   position: absolute;
-  border: solid red;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 1111px;
+  box-shadow: inset -2px 2px 2px 1px rgba(255, 255, 255, 0.6),
+    inset 1px -1px 2px 1px rgba(0, 0, 0, 0.4);
 }
 
 .btn-fullscreen {
@@ -234,24 +247,17 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.jump {
-  background: url(/images/chevron-up-solid.svg) center / 40% no-repeat;
-}
-
-.rotate-left,
-.rotate-right {
-  background: url(/images/video-solid.svg) center / 40% no-repeat;
+  background: url(/images/chevron-up-solid.svg) center / 60% no-repeat;
 }
 
 .btn.rotate-left {
-  transform: rotate(180deg);
-  box-shadow: -2px -3px 5px 1px var(--box-shadow-light),
-    inset -2px -2px 4px 2px var(--box-glare-med),
-    inset 2px 2px 4px 2px var(--box-shadow-light);
+  background: url(/images/chevron-left-solid.svg) center / 25% no-repeat;
 }
 
-.fire {
+.btn.rotate-right {
+  background: url(/images/chevron-right-solid.svg) center / 25% no-repeat;
+}
+
+.btn.fire {
   background: url(/images/bolt-solid.svg) center / 40% no-repeat;
 }

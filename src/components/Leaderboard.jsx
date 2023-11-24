@@ -21,23 +21,19 @@ export const Leaderboard = () => {
               src={"/images/leaderboard-logo.png"}
               style={{ background: player.state.profile?.color }}
             />
-
             <h2>{player.state.profile?.name}</h2>
-
-            <p>※{player.state.kills}</p>
-            <p>※{player.state.deaths}</p>
+            <p className="kills">+{player.state.kills}</p>
             <div className="health-bar">
               <div
                 className="health-meter"
                 style={{
-                  transform: `scaleX(${player.state.health / 100}) translateX(${
-                    -1 + player.state.health / 100
-                  })`,
+                  width: `${player.state.health}%`,
+                  background: player.state.health < 51 ? "#ff0000" : "#00ff00",
                 }}
-              >
-                <p className="health-text">※{player.state.health}</p>
-              </div>
+              ></div>
+              <p className="health-text">※{player.state.health}</p>
             </div>
+            <p className="deaths">-{player.state.deaths}</p>
           </div>
         ))}
       </div>

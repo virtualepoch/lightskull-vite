@@ -298,7 +298,7 @@ export const CharacterController = ({
           }
         }}
       >
-        <PlayerInfo state={state.state} />
+        {/* <PlayerInfo state={state.state} /> */}
         <group ref={character}>
           <Character
             color={state.state.profile?.color}
@@ -352,24 +352,24 @@ const Crosshair = (props) => {
   );
 };
 
-const PlayerInfo = ({ state }) => {
-  const health = state.health;
-  const name = state.profile.name;
+// const PlayerInfo = ({ state }) => {
+//   const health = state.health;
+//   const name = state.profile.name;
 
-  return (
-    <Billboard position-y={0}>
-      <Text position-y={0.36} fontSize={0.4}>
-        {name}
-        <meshBasicMaterial color={state.profile.color} />
-      </Text>
-      <mesh position-z={-0.1}>
-        <planeGeometry args={[1, 0.2]} />
-        <meshBasicMaterial color="black" transparent opacity={0.5} />
-      </mesh>
-      <mesh scale-x={health / 100} position-x={-0.5 * (1 - health / 100)}>
-        <planeGeometry args={[1, 0.2]} />
-        <meshBasicMaterial color={health < 51 ? "#ff0000" : "#00ff00"} />
-      </mesh>
-    </Billboard>
-  );
-};
+//   return (
+//     <Billboard position-y={0}>
+//       <Text position-y={0.36} fontSize={0.4}>
+//         {name}
+//         <meshBasicMaterial color={state.profile.color} />
+//       </Text>
+//       <mesh position-z={-0.1}>
+//         <planeGeometry args={[1, 0.2]} />
+//         <meshBasicMaterial color="black" transparent opacity={0.5} />
+//       </mesh>
+//       <mesh scale-x={health / 100} position-x={-0.5 * (1 - health / 100)}>
+//         <planeGeometry args={[1, 0.2]} />
+//         <meshBasicMaterial color={health < 51 ? "#ff0000" : "#00ff00"} />
+//       </mesh>
+//     </Billboard>
+//   );
+// };

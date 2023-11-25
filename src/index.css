@@ -38,16 +38,11 @@ button {
   cursor: pointer;
 }
 
-/* ////////////////////////////////////////////////////////////////////////////////////////////////////// */
-/* TESTING ////////////////////////////////////////////////////////////////////////// */
-
-/* ////////////////////////////////////////////////////////////////////////////////////////////////////// */
-
 .version {
   width: fit-content;
   height: fit-content;
   position: fixed;
-  bottom: 0;
+  bottom: 10px;
   left: -2px;
   z-index: 11111;
   font: 100 20px Ailerons;
@@ -55,16 +50,6 @@ button {
   text-orientation: upright;
   opacity: 0.4;
   pointer-events: none;
-}
-
-.test-edit {
-  color: red;
-  text-shadow: -1px 0 1px #ff00bf, -2px 0 1px #8000ff, -3px 0 1px #003fff,
-    -4px 0 1px cyan;
-  border-radius: 100%;
-  font: 25px sans-serif;
-  padding: 10px 0 0 3px;
-  box-shadow: inset -1px 2px 3px 1px rgba(255, 255, 255, 0.6);
 }
 
 .game-title {

@@ -53,14 +53,7 @@ function App() {
   return (
     <>
       <button className="btn-zoom" onClick={zoomIn}></button>
-      <h1 className="version">
-        v.0.1.12.
-        <span className="test-edit">
-          {/* /////////////////////////////=VERSION=\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */}
-          0
-          {/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\=VERSION=///////////////////////////// */}
-        </span>
-      </h1>
+      <h1 className="version">v.0.1.12.1</h1>
       <h1 className="game-title">
         Light<span className="cross-symbol">⁜</span>Skull
       </h1>

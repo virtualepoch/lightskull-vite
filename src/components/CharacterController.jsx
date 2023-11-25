@@ -103,8 +103,10 @@ export const CharacterController = ({
       // const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
       // const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;
 
-      const cameraDistanceY = zoom === 0 ? 20 : zoom === 1 ? 10 : 4;
-      const cameraDistanceZ = zoom === 0 ? 40 : zoom === 1 ? 20 : 3;
+      const cameraDistanceY =
+        zoom === 0 ? 30 : zoom === 1 ? 20 : zoom === 2 ? 10 : 4;
+      const cameraDistanceZ =
+        zoom === 0 ? 80 : zoom === 1 ? 40 : zoom === 2 ? 20 : 3;
 
       const playerWorldPos = vec3(rigidbody.current.translation());
       controls.current.setLookAt(
@@ -118,20 +120,23 @@ export const CharacterController = ({
       );
       controls.current.rotateAzimuthTo(character.current.rotation.y + Math.PI);
     }
-
+    setAnimation("CharacterArmature|Idle");
     character.current.rotation.y = angle + Math.PI;
 
     // CAMERA ROTATE
     if (joystick.isPressed("rotateLeft") || rotateLeftKeyPressed) {
       setAngle(angle + 0.03);
+      setAnimation("CharacterArmature|Walk");
     }
 
     if (joystick.isPressed("rotateRight") || rotateRightKeyPressed) {
       setAngle(angle - 0.03);
+      setAnimation("CharacterArmature|Walk");
     }
 
     // JUMP
     if (joystick.isPressed("jump") || zoomInKeyPressed) {
+      setAnimation("CharacterArmature|Walk");
       const impulseUp = {
         x: 0,
         y: JUMP_VELOCITY * delta * 700,
@@ -167,8 +172,10 @@ export const CharacterController = ({
       };
       // APPLY IMPULSE: LEFT (Strafe character left)
       rigidbody.current.applyImpulse(impulseLeft, true);
-    } else if (
-      // DETERMINE JOYSTICK POSITION: RIGHT
+    }
+
+    // DETERMINE JOYSTICK POSITION: RIGHT
+    if (
       (joystickPressed &&
         joystickAngle >= Math.PI * 0.25 &&
         joystickAngle <= Math.PI * 0.75) ||
@@ -186,8 +193,10 @@ export const CharacterController = ({
 
       // APPLY IMPULSE RIGHT(Strafe character right)
       rigidbody.current.applyImpulse(impulseRight, true);
-    } else if (
-      // DETERMINE JOYSTICK POSITION: FORWARD
+    }
+
+    // DETERMINE JOYSTICK POSITION: FORWARD
+    if (
       (joystickPressed &&
         joystickAngle >= Math.PI * 0.75 &&
         joystickAngle <= Math.PI * 1.25) ||
@@ -205,8 +214,10 @@ export const CharacterController = ({
 
       // APPLY IMPULSE FORWARD (Move character forward)
       rigidbody.current.applyImpulse(impulseForward, true);
-    } else if (
-      // DETERMINE JOYSTICK POSITION: BACKWARD
+    }
+
+    // DETERMINE JOYSTICK POSITION: BACKWARD
+    if (
       (joystickPressed &&
         joystickAngle >= Math.PI * -0.25 &&
         joystickAngle <= Math.PI * 0.25) ||
@@ -224,9 +235,6 @@ export const CharacterController = ({
 
       // APPLY IMPULSE BACKWARD (Move character backward)
       rigidbody.current.applyImpulse(impulseBack, true);
-    } else {
-      setAnimation("CharacterArmature|Idle");
-      character.current.rotation.y = angle + Math.PI;
     }
 
     // Check if fire button is pressed

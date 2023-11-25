@@ -47,13 +47,19 @@ function App() {
   const [downgradedPerformance, setDowngradedPerformance] = useState(false);
 
   const zoomIn = () => {
-    zoom < 2 ? setZoom(zoom + 1) : setZoom(0);
+    if (zoom < 3) setZoom(zoom + 1);
+  };
+  const zoomOut = () => {
+    if (zoom > 0) setZoom(zoom - 1);
   };
 
   return (
     <>
-      <button className="btn-zoom" onClick={zoomIn}></button>
-      <h1 className="version">v.0.1.12.1</h1>
+      <div className="zoom-btns">
+        <button className="btn-zoom-out" onClick={zoomOut}></button>
+        <button className="btn-zoom-in" onClick={zoomIn}></button>
+      </div>
+      <h1 className="version">v.0.1.12.2</h1>
       <h1 className="game-title">
         Light<span className="cross-symbol">⁜</span>Skull
       </h1>

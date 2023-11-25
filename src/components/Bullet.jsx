@@ -4,7 +4,7 @@ import { isHost } from "playroomkit";
 import { MeshBasicMaterial } from "three";
 import { WEAPON_OFFSET } from "./CharacterController";
 
-const BULLET_SPEED = 40;
+const BULLET_SPEED = 70;
 
 const bulletMaterial = new MeshBasicMaterial({
   color: "aqua",
@@ -27,6 +27,7 @@ export const Bullet = ({ player, angle, keyboardAngle, position, onHit }) => {
 
     const audio = new Audio("/audios/light-bolt.mp3");
     audio.play();
+    audio.volume = 0.5;
   }, []);
 
   return (

@@ -130,23 +130,18 @@ export const CharacterController = ({
     }
 
     // JUMP
-    if (joystick.isPressed("jump")) {
+    if (joystick.isPressed("jump") || zoomInKeyPressed) {
       const impulseUp = {
         x: 0,
-        y: JUMP_VELOCITY * delta * 200,
+        y: JUMP_VELOCITY * delta * 700,
         z: 0,
       };
-      if (rigidbody.current.translation().y < 5)
+      if (rigidbody.current.translation().y < 1) {
         rigidbody.current.applyImpulse(impulseUp, true);
-    }
-
-    if (state.state.dead) {
-      setAnimation("CharacterArmature|Death");
-      return;
+      }
     }
 
     // Update player position based on joystick state
-
     const joystickAngle = joystick.angle();
     const joystickPressed = joystick.isJoystickPressed();
 
@@ -255,6 +250,11 @@ export const CharacterController = ({
       if (rot) {
         character.current.rotation.y = rot;
       }
+    }
+
+    if (state.state.dead) {
+      setAnimation("CharacterArmature|Death");
+      return;
     }
   });
 

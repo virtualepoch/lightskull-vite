@@ -20,14 +20,12 @@ export function Character({
   ...props
 }) {
   const group = useRef();
-
   const { scene, materials, animations } = useGLTF("/models/Astronaut.glb");
 
   // Skinned meshes cannot be re-used in threejs without cloning them
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
   // useGraph creates two flat object collections for nodes and materials
   const { nodes } = useGraph(clone);
-
   const { actions } = useAnimations(animations, group);
 
   if (actions["CharacterArmature|Death"]) {

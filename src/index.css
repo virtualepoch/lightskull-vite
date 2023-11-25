@@ -270,6 +270,6 @@ p.health-text {
   box-shadow: 2px 3px 5px 1px var(--box-shadow-light),
     inset 2px 2px 4px 2px var(--box-glare-med),
     inset -2px -2px 4px 2px var(--box-shadow-light);
-  background: url(/public/images/chevron-left-solid.svg) 20% 50% / 10% no-repeat,
-    url(/public/images/chevron-right-solid.svg) 80% 50% / 10% no-repeat;
+  background: url(/images/chevron-left-solid.svg) 20% 50% / 10% no-repeat,
+    url(/images/chevron-right-solid.svg) 80% 50% / 10% no-repeat;
 }

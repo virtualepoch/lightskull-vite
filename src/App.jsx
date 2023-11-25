@@ -54,10 +54,10 @@ function App() {
     <>
       <button className="btn-zoom" onClick={zoomIn}></button>
       <h1 className="version">
-        v.0.1.11.
+        v.0.1.12.
         <span className="test-edit">
           {/* /////////////////////////////=VERSION=\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */}
-          8
+          0
           {/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\=VERSION=///////////////////////////// */}
         </span>
       </h1>
@@ -79,7 +79,7 @@ function App() {
           />
 
           <Suspense>
-            <Physics gravity={[0, -500, 0]} interpolation={false}>
+            <Physics gravity={[0, -200, 0]} interpolation={false}>
               {/* NOTE: add 'debug' prop to '<Physics>' above to add a wireframe to the rigid bodies */}
               <Experience zoom={zoom} />
             </Physics>

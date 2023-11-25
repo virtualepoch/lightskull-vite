@@ -2,17 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { CapsuleCollider, RigidBody, vec3 } from "@react-three/rapier";
 import { useFrame, useThree } from "@react-three/fiber";
 import { isHost } from "playroomkit";
-import {
-  Billboard,
-  CameraControls,
-  Text,
-  useKeyboardControls,
-} from "@react-three/drei";
+import { Billboard, CameraControls, Text, useKeyboardControls } from "@react-three/drei";
 import { Character } from "./Character";
 import { KeyControls } from "../App";
 
 const MOVEMENT_SPEED = 25;
-const JUMP_VELOCITY = 50;
+const JUMP_VELOCITY = 10;
 const FIRE_RATE = 380;
 
 export const WEAPON_OFFSET = {
@@ -21,15 +16,7 @@ export const WEAPON_OFFSET = {
   z: 0,
 };
 
-export const CharacterController = ({
-  state,
-  joystick,
-  userPlayer,
-  onFire,
-  onKilled,
-  zoom,
-  ...props
-}) => {
+export const CharacterController = ({ state, joystick, userPlayer, onFire, onKilled, zoom, ...props }) => {
   const group = useRef();
   const character = useRef();
   const rigidbody = useRef();
@@ -39,33 +26,15 @@ export const CharacterController = ({
   const scene = useThree((state) => state.scene);
 
   // KEYBOARD CONTROLS
-  const forwardKeyPressed = useKeyboardControls(
-    (state) => state[KeyControls.forward]
-  );
-  const backKeyPressed = useKeyboardControls(
-    (state) => state[KeyControls.back]
-  );
-  const leftKeyPressed = useKeyboardControls(
-    (state) => state[KeyControls.left]
-  );
-  const rightKeyPressed = useKeyboardControls(
-    (state) => state[KeyControls.right]
-  );
-  const fireKeyPressed = useKeyboardControls(
-    (state) => state[KeyControls.fire]
-  );
-  const zoomInKeyPressed = useKeyboardControls(
-    (state) => state[KeyControls.zoomIn]
-  );
-  const zoomOutKeyPressed = useKeyboardControls(
-    (state) => state[KeyControls.zoomOut]
-  );
-  const rotateLeftKeyPressed = useKeyboardControls(
-    (state) => state[KeyControls.rotateLeft]
-  );
-  const rotateRightKeyPressed = useKeyboardControls(
-    (state) => state[KeyControls.rotateRight]
-  );
+  const forwardKeyPressed = useKeyboardControls((state) => state[KeyControls.forward]);
+  const backKeyPressed = useKeyboardControls((state) => state[KeyControls.back]);
+  const leftKeyPressed = useKeyboardControls((state) => state[KeyControls.left]);
+  const rightKeyPressed = useKeyboardControls((state) => state[KeyControls.right]);
+  const fireKeyPressed = useKeyboardControls((state) => state[KeyControls.fire]);
+  const zoomInKeyPressed = useKeyboardControls((state) => state[KeyControls.zoomIn]);
+  const zoomOutKeyPressed = useKeyboardControls((state) => state[KeyControls.zoomOut]);
+  const rotateLeftKeyPressed = useKeyboardControls((state) => state[KeyControls.rotateLeft]);
+  const rotateRightKeyPressed = useKeyboardControls((state) => state[KeyControls.rotateRight]);
 
   const spawnRandomly = () => {
     const spawns = [];
@@ -103,21 +72,11 @@ export const CharacterController = ({
       // const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
       // const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;
 
-      const cameraDistanceY =
-        zoom === 0 ? 30 : zoom === 1 ? 20 : zoom === 2 ? 10 : 4;
-      const cameraDistanceZ =
-        zoom === 0 ? 80 : zoom === 1 ? 40 : zoom === 2 ? 20 : 3;
+      const cameraDistanceY = zoom === 0 ? 30 : zoom === 1 ? 20 : zoom === 2 ? 10 : 4;
+      const cameraDistanceZ = zoom === 0 ? 80 : zoom === 1 ? 40 : zoom === 2 ? 20 : 3;
 
       const playerWorldPos = vec3(rigidbody.current.translation());
-      controls.current.setLookAt(
-        playerWorldPos.x,
-        playerWorldPos.y + (state.state.dead ? 80 : cameraDistanceY),
-        playerWorldPos.z + (state.state.dead ? 0 : cameraDistanceZ),
-        playerWorldPos.x,
-        playerWorldPos.y + 3.5,
-        playerWorldPos.z,
-        true
-      );
+      controls.current.setLookAt(playerWorldPos.x, playerWorldPos.y + (state.state.dead ? 80 : cameraDistanceY), playerWorldPos.z + (state.state.dead ? 0 : cameraDistanceZ), playerWorldPos.x, playerWorldPos.y + 3.5, playerWorldPos.z, true);
       controls.current.rotateAzimuthTo(character.current.rotation.y + Math.PI);
     }
     setAnimation("CharacterArmature|Idle");
@@ -142,7 +101,7 @@ export const CharacterController = ({
         y: JUMP_VELOCITY * delta * 700,
         z: 0,
       };
-      if (rigidbody.current.translation().y < 1) {
+      if (rigidbody.current.translation().y < 100) {
         rigidbody.current.applyImpulse(impulseUp, true);
       }
     }
@@ -152,15 +111,7 @@ export const CharacterController = ({
     const joystickPressed = joystick.isJoystickPressed();
 
     // DETERMINE JOYSTICK POSITION: LEFT
-    if (
-      (joystickPressed &&
-        joystickAngle >= Math.PI * 1.25 &&
-        joystickAngle <= Math.PI * 1.5) ||
-      (joystickPressed &&
-        joystickAngle >= Math.PI * -0.5 &&
-        joystickAngle <= Math.PI * -0.25) ||
-      leftKeyPressed
-    ) {
+    if ((joystickPressed && joystickAngle >= Math.PI * 1.25 && joystickAngle <= Math.PI * 1.5) || (joystickPressed && joystickAngle >= Math.PI * -0.5 && joystickAngle <= Math.PI * -0.25) || leftKeyPressed) {
       // SET ANIMATION: RUN LEFT
       setAnimation("CharacterArmature|Run_Left");
 
@@ -175,12 +126,7 @@ export const CharacterController = ({
     }
 
     // DETERMINE JOYSTICK POSITION: RIGHT
-    if (
-      (joystickPressed &&
-        joystickAngle >= Math.PI * 0.25 &&
-        joystickAngle <= Math.PI * 0.75) ||
-      rightKeyPressed
-    ) {
+    if ((joystickPressed && joystickAngle >= Math.PI * 0.25 && joystickAngle <= Math.PI * 0.75) || rightKeyPressed) {
       // SET ANIMATION: RUN RIGHT
       setAnimation("CharacterArmature|Run_Right");
 
@@ -196,12 +142,7 @@ export const CharacterController = ({
     }
 
     // DETERMINE JOYSTICK POSITION: FORWARD
-    if (
-      (joystickPressed &&
-        joystickAngle >= Math.PI * 0.75 &&
-        joystickAngle <= Math.PI * 1.25) ||
-      forwardKeyPressed
-    ) {
+    if ((joystickPressed && joystickAngle >= Math.PI * 0.75 && joystickAngle <= Math.PI * 1.25) || forwardKeyPressed) {
       // SET ANIMATION: RUN FORWARD
       setAnimation("CharacterArmature|Run");
 
@@ -217,12 +158,7 @@ export const CharacterController = ({
     }
 
     // DETERMINE JOYSTICK POSITION: BACKWARD
-    if (
-      (joystickPressed &&
-        joystickAngle >= Math.PI * -0.25 &&
-        joystickAngle <= Math.PI * 0.25) ||
-      backKeyPressed
-    ) {
+    if ((joystickPressed && joystickAngle >= Math.PI * -0.25 && joystickAngle <= Math.PI * 0.25) || backKeyPressed) {
       // SET ANIMATION: RUN BACKWARD
       setAnimation("CharacterArmature|Run_Back");
 
@@ -289,13 +225,8 @@ export const CharacterController = ({
         lockRotations
         type={isHost() ? "dynamic" : "kinematicPosition"}
         onIntersectionEnter={({ other }) => {
-          if (
-            isHost() &&
-            other.rigidBody.userData.type === "bullet" &&
-            state.state.health > 0
-          ) {
-            const newHealth =
-              state.state.health - other.rigidBody.userData.damage;
+          if (isHost() && other.rigidBody.userData.type === "bullet" && state.state.health > 0) {
+            const newHealth = state.state.health - other.rigidBody.userData.damage;
             if (newHealth <= 0) {
               state.setState("deaths", state.state.deaths + 1);
               state.setState("dead", true);
@@ -318,18 +249,8 @@ export const CharacterController = ({
       >
         {/* <PlayerInfo state={state.state} /> */}
         <group ref={character}>
-          <Character
-            color={state.state.profile?.color}
-            animation={animation}
-            scale={[2, 2, 2]}
-            position={[0, -0.4, 0]}
-            health={state.state.health}
-          />
-          {userPlayer && (
-            <Crosshair
-              position={[WEAPON_OFFSET.x, WEAPON_OFFSET.y, WEAPON_OFFSET.z]}
-            />
-          )}
+          <Character color={state.state.profile?.color} animation={animation} scale={[2, 2, 2]} position={[0, -0.4, 0]} health={state.state.health} />
+          {userPlayer && <Crosshair position={[WEAPON_OFFSET.x, WEAPON_OFFSET.y, WEAPON_OFFSET.z]} />}
         </group>
         <CapsuleCollider args={[1.4, 0.8]} position={[0, 1.8, 0]} />
       </RigidBody>

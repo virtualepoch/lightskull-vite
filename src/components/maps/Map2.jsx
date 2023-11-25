@@ -4,9 +4,9 @@ import { useEffect } from "react";
 import { MeshStandardMaterial } from "three";
 
 export const Map2 = () => {
-  const map = useGLTF("models/map-lg.glb");
+  const map = useGLTF("models/map.glb");
 
-  const mapColor = new MeshStandardMaterial({ color: "#6d6058" });
+  const mapColor = new MeshStandardMaterial({ color: "#222" });
 
   useEffect(() => {
     map.scene.traverse((child) => {
@@ -24,4 +24,4 @@ export const Map2 = () => {
     </RigidBody>
   );
 };
-useGLTF.preload("models/map-lg.glb");
+useGLTF.preload("models/map.glb");

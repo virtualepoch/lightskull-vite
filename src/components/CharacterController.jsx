@@ -323,6 +323,7 @@ export const CharacterController = ({
             animation={animation}
             scale={[2, 2, 2]}
             position={[0, -0.4, 0]}
+            health={state.state.health}
           />
           {userPlayer && (
             <Crosshair

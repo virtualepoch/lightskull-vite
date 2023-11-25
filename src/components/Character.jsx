@@ -17,6 +17,7 @@ import { SkeletonUtils } from "three-stdlib";
 export function Character({
   color = "black",
   animation = "CharacterArmature|Idle",
+  health,
   ...props
 }) {
   const group = useRef();
@@ -43,9 +44,11 @@ export function Character({
     [color]
   );
 
-  const playerFaceAndOutline = new MeshBasicMaterial({ color: "#64ffff" });
+  const playerSkull = new MeshBasicMaterial({
+    color: health < 51 ? "#ff6464" : "#64ffff",
+  });
 
-  playerFaceAndOutline.color.multiplyScalar(2);
+  playerSkull.color.multiplyScalar(health < 51 ? 4 : 2);
 
   useEffect(() => {
     // ASSIGNING CHARACTER COLOR
@@ -55,7 +58,7 @@ export function Character({
         child.name ===
           ("SpaceSuit_Head_1" || "SpaceSuit_Head_2" || "SpaceSuit_Head_3")
       ) {
-        child.material = playerFaceAndOutline;
+        child.material = playerSkull;
       } else {
         child.material = playerColorMaterial;
       }
@@ -71,7 +74,7 @@ export function Character({
         child.name ===
           ("SpaceSuit_Head_1" || "SpaceSuit_Head_2" || "SpaceSuit_Head_3")
       ) {
-        child.material = playerFaceAndOutline;
+        child.material = playerSkull;
       } else {
         child.material = playerColorMaterial;
       }
@@ -189,21 +192,21 @@ export function Character({
             <skinnedMesh
               name="SpaceSuit_Head_1"
               geometry={nodes.SpaceSuit_Head_1.geometry}
-              material={playerFaceAndOutline}
+              material={playerSkull}
               skeleton={nodes.SpaceSuit_Head_1.skeleton}
               castShadow
             />
             <skinnedMesh
               name="SpaceSuit_Head_2"
               geometry={nodes.SpaceSuit_Head_2.geometry}
-              material={playerFaceAndOutline}
+              material={playerSkull}
               skeleton={nodes.SpaceSuit_Head_2.skeleton}
               castShadow
             />
             <skinnedMesh
               name="SpaceSuit_Head_3"
               geometry={nodes.SpaceSuit_Head_3.geometry}
-              material={playerFaceAndOutline}
+              material={playerSkull}
               skeleton={nodes.SpaceSuit_Head_3.skeleton}
               castShadow
             />

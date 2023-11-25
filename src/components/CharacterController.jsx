@@ -11,7 +11,7 @@ import {
 import { Character } from "./Character";
 import { KeyControls } from "../App";
 
-const MOVEMENT_SPEED = 30;
+const MOVEMENT_SPEED = 25;
 const JUMP_VELOCITY = 50;
 const FIRE_RATE = 380;
 

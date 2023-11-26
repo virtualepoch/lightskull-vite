@@ -14,7 +14,7 @@ import { CharacterController } from "./CharacterController";
 import { Bullet } from "./Bullet";
 import { BulletHit } from "./BulletHit";
 
-export const Experience = ({ zoom }) => {
+export const Experience = ({ zoom, setZoom }) => {
   const [players, setPlayers] = useState([]);
   const [bullets, setBullets] = useState([]);
   const [networkBullets, setNetworkBullets] = useMultiplayerState(
@@ -105,6 +105,7 @@ export const Experience = ({ zoom }) => {
           onFire={onFire}
           onKilled={onKilled}
           zoom={zoom}
+          setZoom={setZoom}
         />
       ))}
 

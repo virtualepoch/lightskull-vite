@@ -29,6 +29,7 @@ export const CharacterController = ({
   onFire,
   onKilled,
   zoom,
+  setZoom,
   ...props
 }) => {
   const group = useRef();
@@ -54,6 +55,9 @@ export const CharacterController = ({
   );
   const fireKeyPressed = useKeyboardControls(
     (state) => state[KeyControls.fire]
+  );
+  const jumpKeyPressed = useKeyboardControls(
+    (state) => state[KeyControls.jump]
   );
   const zoomInKeyPressed = useKeyboardControls(
     (state) => state[KeyControls.zoomIn]
@@ -104,6 +108,13 @@ export const CharacterController = ({
       // const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
       // const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;
 
+      if (zoomInKeyPressed) {
+        if (zoom < 3) setZoom(zoom + 1);
+      }
+      if (zoomOutKeyPressed) {
+        if (zoom > 0) setZoom(zoom - 1);
+      }
+
       const cameraDistanceY =
         zoom === 0 ? 30 : zoom === 1 ? 20 : zoom === 2 ? 10 : 4;
       const cameraDistanceZ =
@@ -126,18 +137,24 @@ export const CharacterController = ({
     character.current.rotation.y = angle + Math.PI;
 
     // CAMERA ROTATE
-    if (joystick.isPressed("rotateLeft") || rotateLeftKeyPressed) {
+    if (
+      joystick.isPressed("rotateLeft") ||
+      (rotateLeftKeyPressed && userPlayer)
+    ) {
       setAngle(angle + 0.03);
       setAnimation("CharacterArmature|Walk");
     }
 
-    if (joystick.isPressed("rotateRight") || rotateRightKeyPressed) {
+    if (
+      joystick.isPressed("rotateRight") ||
+      (rotateRightKeyPressed && userPlayer)
+    ) {
       setAngle(angle - 0.03);
       setAnimation("CharacterArmature|Walk");
     }
 
     // JUMP
-    if (joystick.isPressed("jump") || zoomInKeyPressed) {
+    if (joystick.isPressed("jump") || (jumpKeyPressed && userPlayer)) {
       setAnimation("CharacterArmature|Walk");
       const impulseUp = {
         x: 0,
@@ -186,6 +203,45 @@ export const CharacterController = ({
 
       // apply impulse (Move character in direction of joystick)
       rigidbody.current.applyImpulse(impulse, true);
+    }
+
+    // UPDATE PLAYER ANIMATION & POSITION BASED ON KEYBOARD INPUT
+    if (forwardKeyPressed && userPlayer) {
+      setAnimation("CharacterArmature|Run");
+      // NOTE: Movement speed is increased for forward momentum
+      const impulseForward = {
+        x: Math.sin(angle + pi) * MOVEMENT_FORWARD_SPEED * delta * 100,
+        y: 0,
+        z: Math.cos(angle + pi) * MOVEMENT_FORWARD_SPEED * delta * 100,
+      };
+      rigidbody.current.applyImpulse(impulseForward, true);
+    }
+    if (backKeyPressed && userPlayer) {
+      setAnimation("CharacterArmature|Run_Back");
+      const impulseBack = {
+        x: Math.sin(angle) * MOVEMENT_SPEED * delta * 100,
+        y: 0,
+        z: Math.cos(angle) * MOVEMENT_SPEED * delta * 100,
+      };
+      rigidbody.current.applyImpulse(impulseBack, true);
+    }
+    if (leftKeyPressed && userPlayer) {
+      setAnimation("CharacterArmature|Run_Left");
+      const impulseLeft = {
+        x: Math.sin(angle + pi * 1.5) * MOVEMENT_SPEED * delta * 100,
+        y: 0,
+        z: Math.cos(angle + pi * 1.5) * MOVEMENT_SPEED * delta * 100,
+      };
+      rigidbody.current.applyImpulse(impulseLeft, true);
+    }
+    if (rightKeyPressed && userPlayer) {
+      setAnimation("CharacterArmature|Run_Right");
+      const impulseRight = {
+        x: Math.sin(angle + pi / 2) * MOVEMENT_SPEED * delta * 100,
+        y: 0,
+        z: Math.cos(angle + pi / 2) * MOVEMENT_SPEED * delta * 100,
+      };
+      rigidbody.current.applyImpulse(impulseRight, true);
     }
 
     if (joystick.isPressed("fire") || fireKeyPressed) {

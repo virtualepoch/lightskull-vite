@@ -21,6 +21,7 @@ export const KeyControls = {
   left: "left",
   right: "right",
   fire: "fire",
+  jump: "jump",
   zoomIn: "zoom-in",
   zoomOut: "zoom-out",
   rotateLeft: "rotate-left",
@@ -34,8 +35,9 @@ function App() {
       { name: KeyControls.back, keys: ["KeyS"] },
       { name: KeyControls.left, keys: ["KeyA"] },
       { name: KeyControls.right, keys: ["KeyD"] },
-      { name: KeyControls.fire, keys: ["Space"] },
-      { name: KeyControls.zoomIn, keys: ["ArrowUp"] },
+      { name: KeyControls.fire, keys: ["ArrowUp"] },
+      { name: KeyControls.jump, keys: ["Space"] },
+      { name: KeyControls.zoomIn, keys: ["ControlRight"] },
       { name: KeyControls.zoomOut, keys: ["ArrowDown"] },
       { name: KeyControls.rotateLeft, keys: ["ArrowLeft"] },
       { name: KeyControls.rotateRight, keys: ["ArrowRight"] },
@@ -80,7 +82,7 @@ function App() {
           <Suspense>
             <Physics gravity={[0, -200, 0]} interpolation={false}>
               {/* NOTE: add 'debug' prop to '<Physics>' above to add a wireframe to the rigid bodies */}
-              <Experience zoom={zoom} />
+              <Experience zoom={zoom} setZoom={setZoom} />
             </Physics>
           </Suspense>
 

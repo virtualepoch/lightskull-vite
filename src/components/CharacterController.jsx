@@ -2,7 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { CapsuleCollider, RigidBody, vec3 } from "@react-three/rapier";
 import { useFrame, useThree } from "@react-three/fiber";
 import { isHost } from "playroomkit";
-import { Billboard, CameraControls, Text, useKeyboardControls } from "@react-three/drei";
+import {
+  Billboard,
+  CameraControls,
+  Text,
+  useKeyboardControls,
+} from "@react-three/drei";
 import { Character } from "./Character";
 import { KeyControls } from "../App";
 
@@ -16,7 +21,15 @@ export const WEAPON_OFFSET = {
   z: 0,
 };
 
-export const CharacterController = ({ state, joystick, userPlayer, onFire, onKilled, zoom, ...props }) => {
+export const CharacterController = ({
+  state,
+  joystick,
+  userPlayer,
+  onFire,
+  onKilled,
+  zoom,
+  ...props
+}) => {
   const group = useRef();
   const character = useRef();
   const rigidbody = useRef();
@@ -26,15 +39,33 @@ export const CharacterController = ({ state, joystick, userPlayer, onFire, onKil
   const scene = useThree((state) => state.scene);
 
   // KEYBOARD CONTROLS
-  const forwardKeyPressed = useKeyboardControls((state) => state[KeyControls.forward]);
-  const backKeyPressed = useKeyboardControls((state) => state[KeyControls.back]);
-  const leftKeyPressed = useKeyboardControls((state) => state[KeyControls.left]);
-  const rightKeyPressed = useKeyboardControls((state) => state[KeyControls.right]);
-  const fireKeyPressed = useKeyboardControls((state) => state[KeyControls.fire]);
-  const zoomInKeyPressed = useKeyboardControls((state) => state[KeyControls.zoomIn]);
-  const zoomOutKeyPressed = useKeyboardControls((state) => state[KeyControls.zoomOut]);
-  const rotateLeftKeyPressed = useKeyboardControls((state) => state[KeyControls.rotateLeft]);
-  const rotateRightKeyPressed = useKeyboardControls((state) => state[KeyControls.rotateRight]);
+  const forwardKeyPressed = useKeyboardControls(
+    (state) => state[KeyControls.forward]
+  );
+  const backKeyPressed = useKeyboardControls(
+    (state) => state[KeyControls.back]
+  );
+  const leftKeyPressed = useKeyboardControls(
+    (state) => state[KeyControls.left]
+  );
+  const rightKeyPressed = useKeyboardControls(
+    (state) => state[KeyControls.right]
+  );
+  const fireKeyPressed = useKeyboardControls(
+    (state) => state[KeyControls.fire]
+  );
+  const zoomInKeyPressed = useKeyboardControls(
+    (state) => state[KeyControls.zoomIn]
+  );
+  const zoomOutKeyPressed = useKeyboardControls(
+    (state) => state[KeyControls.zoomOut]
+  );
+  const rotateLeftKeyPressed = useKeyboardControls(
+    (state) => state[KeyControls.rotateLeft]
+  );
+  const rotateRightKeyPressed = useKeyboardControls(
+    (state) => state[KeyControls.rotateRight]
+  );
 
   const spawnRandomly = () => {
     const spawns = [];
@@ -72,11 +103,21 @@ export const CharacterController = ({ state, joystick, userPlayer, onFire, onKil
       // const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
       // const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;
 
-      const cameraDistanceY = zoom === 0 ? 30 : zoom === 1 ? 20 : zoom === 2 ? 10 : 4;
-      const cameraDistanceZ = zoom === 0 ? 80 : zoom === 1 ? 40 : zoom === 2 ? 20 : 3;
+      const cameraDistanceY =
+        zoom === 0 ? 30 : zoom === 1 ? 20 : zoom === 2 ? 10 : 4;
+      const cameraDistanceZ =
+        zoom === 0 ? 80 : zoom === 1 ? 40 : zoom === 2 ? 20 : 3;
 
       const playerWorldPos = vec3(rigidbody.current.translation());
-      controls.current.setLookAt(playerWorldPos.x, playerWorldPos.y + (state.state.dead ? 80 : cameraDistanceY), playerWorldPos.z + (state.state.dead ? 0 : cameraDistanceZ), playerWorldPos.x, playerWorldPos.y + 3.5, playerWorldPos.z, true);
+      controls.current.setLookAt(
+        playerWorldPos.x,
+        playerWorldPos.y + (state.state.dead ? 80 : cameraDistanceY),
+        playerWorldPos.z + (state.state.dead ? 0 : cameraDistanceZ),
+        playerWorldPos.x,
+        playerWorldPos.y + 3.5,
+        playerWorldPos.z,
+        true
+      );
       controls.current.rotateAzimuthTo(character.current.rotation.y + Math.PI);
     }
     setAnimation("CharacterArmature|Idle");
@@ -110,39 +151,13 @@ export const CharacterController = ({ state, joystick, userPlayer, onFire, onKil
     const joystickAngle = joystick.angle();
     const joystickPressed = joystick.isJoystickPressed();
 
-    // DETERMINE JOYSTICK POSITION: LEFT
-    if ((joystickPressed && joystickAngle >= Math.PI * 1.25 && joystickAngle <= Math.PI * 1.5) || (joystickPressed && joystickAngle >= Math.PI * -0.5 && joystickAngle <= Math.PI * -0.25) || leftKeyPressed) {
-      // SET ANIMATION: RUN LEFT
-      setAnimation("CharacterArmature|Run_Left");
-
-      // SET IMPULSE DIRECTION AND FORCE: LEFT
-      const impulseLeft = {
-        x: Math.sin(angle - Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
-        y: 0,
-        z: Math.cos(angle - Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
-      };
-      // APPLY IMPULSE: LEFT (Strafe character left)
-      rigidbody.current.applyImpulse(impulseLeft, true);
-    }
-
-    // DETERMINE JOYSTICK POSITION: RIGHT
-    if ((joystickPressed && joystickAngle >= Math.PI * 0.25 && joystickAngle <= Math.PI * 0.75) || rightKeyPressed) {
-      // SET ANIMATION: RUN RIGHT
-      setAnimation("CharacterArmature|Run_Right");
-
-      // SET IMPULSE DIRECTION AND FORCE: RIGHT
-      const impulseRight = {
-        x: Math.sin(angle + Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
-        y: 0,
-        z: Math.cos(angle + Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
-      };
-
-      // APPLY IMPULSE RIGHT(Strafe character right)
-      rigidbody.current.applyImpulse(impulseRight, true);
-    }
-
-    // DETERMINE JOYSTICK POSITION: FORWARD
-    if ((joystickPressed && joystickAngle >= Math.PI * 0.75 && joystickAngle <= Math.PI * 1.25) || forwardKeyPressed) {
+    // DETERMINE JOYSTICK POSITION: FORWARD ////////////////////////////////////////////////////////
+    if (
+      (joystickPressed &&
+        joystickAngle >= Math.PI * 0.875 &&
+        joystickAngle <= Math.PI * 1.125) ||
+      forwardKeyPressed
+    ) {
       // SET ANIMATION: RUN FORWARD
       setAnimation("CharacterArmature|Run");
 
@@ -157,8 +172,137 @@ export const CharacterController = ({ state, joystick, userPlayer, onFire, onKil
       rigidbody.current.applyImpulse(impulseForward, true);
     }
 
-    // DETERMINE JOYSTICK POSITION: BACKWARD
-    if ((joystickPressed && joystickAngle >= Math.PI * -0.25 && joystickAngle <= Math.PI * 0.25) || backKeyPressed) {
+    // DETERMINE JOYSTICK POSITION: FORWARD-LEFT ////////////////////////////////////////////////////////
+    if (
+      joystickPressed &&
+      joystickAngle > Math.PI * 1.125 &&
+      joystickAngle <= Math.PI * 1.375
+    ) {
+      // SET ANIMATION: RUN FORWARD-LEFT
+      setAnimation("CharacterArmature|Run");
+
+      // SET IMPULSE DIRECTION AND FORCE: FORWARD-LEFT
+      const impulseForwardLeft = {
+        x: Math.sin(angle + Math.PI * 1.25) * MOVEMENT_SPEED * delta * 100,
+        y: 0,
+        z: Math.cos(angle + Math.PI * 1.25) * MOVEMENT_SPEED * delta * 100,
+      };
+
+      // APPLY IMPULSE FORWARD-LEFT (Move character left)
+      rigidbody.current.applyImpulse(impulseForwardLeft, true);
+    }
+
+    // DETERMINE JOYSTICK POSITION: FORWARD-RIGHT ////////////////////////////////////////////////////////
+    if (
+      joystickPressed &&
+      joystickAngle >= Math.PI * 0.625 &&
+      joystickAngle < Math.PI * 0.875
+    ) {
+      // SET ANIMATION: RUN FORWARD-RIGHT
+      setAnimation("CharacterArmature|Run");
+
+      // SET IMPULSE DIRECTION AND FORCE: FORWARD-RIGHT
+      const impulseForwardRight = {
+        x: Math.sin(angle + Math.PI * 0.75) * MOVEMENT_SPEED * delta * 100,
+        y: 0,
+        z: Math.cos(angle + Math.PI * 0.75) * MOVEMENT_SPEED * delta * 100,
+      };
+
+      // APPLY IMPULSE FORWARD-RIGHT (Move character right)
+      rigidbody.current.applyImpulse(impulseForwardRight, true);
+    }
+
+    // DETERMINE JOYSTICK POSITION: LEFT ////////////////////////////////////////////////////////
+    if (
+      (joystickPressed &&
+        joystickAngle > Math.PI * 1.375 &&
+        joystickAngle <= Math.PI * 1.5) ||
+      (joystickPressed &&
+        joystickAngle >= Math.PI * -0.5 &&
+        joystickAngle <= Math.PI * -0.375) ||
+      leftKeyPressed
+    ) {
+      // SET ANIMATION: RUN LEFT
+      setAnimation("CharacterArmature|Run_Left");
+
+      // SET IMPULSE DIRECTION AND FORCE: LEFT
+      const impulseLeft = {
+        x: Math.sin(angle - Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
+        y: 0,
+        z: Math.cos(angle - Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
+      };
+      // APPLY IMPULSE: LEFT (Strafe character left)
+      rigidbody.current.applyImpulse(impulseLeft, true);
+    }
+
+    // DETERMINE JOYSTICK POSITION: RIGHT ////////////////////////////////////////////////////////
+    if (
+      (joystickPressed &&
+        joystickAngle >= Math.PI * 0.375 &&
+        joystickAngle < Math.PI * 0.625) ||
+      rightKeyPressed
+    ) {
+      // SET ANIMATION: RUN RIGHT
+      setAnimation("CharacterArmature|Run_Right");
+
+      // SET IMPULSE DIRECTION AND FORCE: RIGHT
+      const impulseRight = {
+        x: Math.sin(angle + Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
+        y: 0,
+        z: Math.cos(angle + Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
+      };
+
+      // APPLY IMPULSE RIGHT(Strafe character right)
+      rigidbody.current.applyImpulse(impulseRight, true);
+    }
+
+    // DETERMINE JOYSTICK POSITION: BACKWARD-RIGHT ////////////////////////////////////////////////////////
+    if (
+      joystickPressed &&
+      joystickAngle >= Math.PI * 0.125 &&
+      joystickAngle < Math.PI * 0.375
+    ) {
+      // SET ANIMATION: RUN BACKWARD-RIGHT
+      setAnimation("CharacterArmature|Run_Back");
+
+      // SET IMPULSE DIRECTION AND FORCE: BACKWARD-RIGHT
+      const impulseBackRight = {
+        x: Math.sin(angle + Math.PI * 0.25) * MOVEMENT_SPEED * delta * 100,
+        y: 0,
+        z: Math.cos(angle + Math.PI * 0.25) * MOVEMENT_SPEED * delta * 100,
+      };
+
+      // APPLY IMPULSE BACKWARD-RIGHT (Move character backward-right)
+      rigidbody.current.applyImpulse(impulseBackRight, true);
+    }
+
+    // DETERMINE JOYSTICK POSITION: BACKWARD-LEFT ////////////////////////////////////////////////////////
+    if (
+      joystickPressed &&
+      joystickAngle > Math.PI * -0.375 &&
+      joystickAngle <= Math.PI * -0.125
+    ) {
+      // SET ANIMATION: RUN BACKWARD-LEFT
+      setAnimation("CharacterArmature|Run_Back");
+
+      // SET IMPULSE DIRECTION AND FORCE: BACKWARD-LEFT
+      const impulseBackLeft = {
+        x: Math.sin(angle - Math.PI * 0.25) * MOVEMENT_SPEED * delta * 100,
+        y: 0,
+        z: Math.cos(angle - Math.PI * 0.25) * MOVEMENT_SPEED * delta * 100,
+      };
+
+      // APPLY IMPULSE BACKWARD-LEFT (Move character backward-left)
+      rigidbody.current.applyImpulse(impulseBackLeft, true);
+    }
+
+    // DETERMINE JOYSTICK POSITION: BACKWARD ////////////////////////////////////////////////////////
+    if (
+      (joystickPressed &&
+        joystickAngle > Math.PI * -0.125 &&
+        joystickAngle < Math.PI * 0.125) ||
+      backKeyPressed
+    ) {
       // SET ANIMATION: RUN BACKWARD
       setAnimation("CharacterArmature|Run_Back");
 
@@ -173,7 +317,7 @@ export const CharacterController = ({ state, joystick, userPlayer, onFire, onKil
       rigidbody.current.applyImpulse(impulseBack, true);
     }
 
-    // Check if fire button is pressed
+    // CHECK IF FIRE BUTTON IS PRESSED ////////////////////////////////////////////////////////
     if (joystick.isPressed("fire") || fireKeyPressed) {
       // fire
 
@@ -225,8 +369,13 @@ export const CharacterController = ({ state, joystick, userPlayer, onFire, onKil
         lockRotations
         type={isHost() ? "dynamic" : "kinematicPosition"}
         onIntersectionEnter={({ other }) => {
-          if (isHost() && other.rigidBody.userData.type === "bullet" && state.state.health > 0) {
-            const newHealth = state.state.health - other.rigidBody.userData.damage;
+          if (
+            isHost() &&
+            other.rigidBody.userData.type === "bullet" &&
+            state.state.health > 0
+          ) {
+            const newHealth =
+              state.state.health - other.rigidBody.userData.damage;
             if (newHealth <= 0) {
               state.setState("deaths", state.state.deaths + 1);
               state.setState("dead", true);
@@ -249,8 +398,18 @@ export const CharacterController = ({ state, joystick, userPlayer, onFire, onKil
       >
         {/* <PlayerInfo state={state.state} /> */}
         <group ref={character}>
-          <Character color={state.state.profile?.color} animation={animation} scale={[2, 2, 2]} position={[0, -0.4, 0]} health={state.state.health} />
-          {userPlayer && <Crosshair position={[WEAPON_OFFSET.x, WEAPON_OFFSET.y, WEAPON_OFFSET.z]} />}
+          <Character
+            color={state.state.profile?.color}
+            animation={animation}
+            scale={[2, 2, 2]}
+            position={[0, -0.4, 0]}
+            health={state.state.health}
+          />
+          {userPlayer && (
+            <Crosshair
+              position={[WEAPON_OFFSET.x, WEAPON_OFFSET.y, WEAPON_OFFSET.z]}
+            />
+          )}
         </group>
         <CapsuleCollider args={[1.4, 0.8]} position={[0, 1.8, 0]} />
       </RigidBody>

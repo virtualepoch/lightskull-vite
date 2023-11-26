@@ -11,7 +11,8 @@ import {
 import { Character } from "./Character";
 import { KeyControls } from "../App";
 
-const MOVEMENT_SPEED = 25;
+const MOVEMENT_FORWARD_SPEED = 25;
+const MOVEMENT_SPEED = 20;
 const JUMP_VELOCITY = 10;
 const FIRE_RATE = 380;
 
@@ -120,6 +121,7 @@ export const CharacterController = ({
       );
       controls.current.rotateAzimuthTo(character.current.rotation.y + Math.PI);
     }
+
     setAnimation("CharacterArmature|Idle");
     character.current.rotation.y = angle + Math.PI;
 
@@ -147,178 +149,47 @@ export const CharacterController = ({
       }
     }
 
-    // UPDATE PLAYER POSITION BASED ON JOYSTICK STATE //
+    // UPDATE PLAYER ANIMATION & POSITION BASED ON JOYSTICK STATE //
     const joystickAngle = joystick.angle();
-    const joystickPressed = joystick.isJoystickPressed();
+    const pi = Math.PI;
 
-    // DETERMINE JOYSTICK POSITION: FORWARD ////////////////////////////////////////////////////////
-    if (
-      (joystickPressed &&
-        joystickAngle >= Math.PI * 0.875 &&
-        joystickAngle <= Math.PI * 1.125) ||
-      forwardKeyPressed
-    ) {
-      // SET ANIMATION: RUN FORWARD
-      setAnimation("CharacterArmature|Run");
+    if (joystick.isJoystickPressed() && joystickAngle) {
+      setAnimation(
+        joystickAngle >= pi * 0.75 && joystickAngle <= pi * 1.25
+          ? "CharacterArmature|Run"
+          : joystickAngle > pi * -0.25 && joystickAngle < pi * 0.25
+          ? "CharacterArmature|Run_Back"
+          : joystickAngle >= pi * 0.25 && joystickAngle < pi * 0.75
+          ? "CharacterArmature|Run_Right"
+          : "CharacterArmature|Run_Left"
+      );
 
-      // SET IMPULSE DIRECTION AND FORCE: FORWARD
-      const impulseForward = {
-        x: Math.sin(angle + Math.PI) * MOVEMENT_SPEED * delta * 100,
+      // directional impulse for joystick
+      // NOTE: Movement speed is increased for forward momentum
+      const impulse = {
+        x:
+          Math.sin(angle + joystickAngle) *
+          (joystickAngle > pi * 0.7 && joystickAngle < pi * 1.3
+            ? MOVEMENT_FORWARD_SPEED
+            : MOVEMENT_SPEED) *
+          delta *
+          100,
         y: 0,
-        z: Math.cos(angle + Math.PI) * MOVEMENT_SPEED * delta * 100,
+        z:
+          Math.cos(angle + joystickAngle) *
+          (joystickAngle > pi * 0.7 && joystickAngle < pi * 1.3
+            ? MOVEMENT_FORWARD_SPEED
+            : MOVEMENT_SPEED) *
+          delta *
+          100,
       };
 
-      // APPLY IMPULSE FORWARD (Move character forward)
-      rigidbody.current.applyImpulse(impulseForward, true);
+      // apply impulse (Move character in direction of joystick)
+      rigidbody.current.applyImpulse(impulse, true);
     }
 
-    // DETERMINE JOYSTICK POSITION: FORWARD-LEFT ////////////////////////////////////////////////////////
-    if (
-      joystickPressed &&
-      joystickAngle > Math.PI * 1.125 &&
-      joystickAngle <= Math.PI * 1.375
-    ) {
-      // SET ANIMATION: RUN FORWARD-LEFT
-      setAnimation("CharacterArmature|Run");
-
-      // SET IMPULSE DIRECTION AND FORCE: FORWARD-LEFT
-      const impulseForwardLeft = {
-        x: Math.sin(angle + Math.PI * 1.25) * MOVEMENT_SPEED * delta * 100,
-        y: 0,
-        z: Math.cos(angle + Math.PI * 1.25) * MOVEMENT_SPEED * delta * 100,
-      };
-
-      // APPLY IMPULSE FORWARD-LEFT (Move character left)
-      rigidbody.current.applyImpulse(impulseForwardLeft, true);
-    }
-
-    // DETERMINE JOYSTICK POSITION: FORWARD-RIGHT ////////////////////////////////////////////////////////
-    if (
-      joystickPressed &&
-      joystickAngle >= Math.PI * 0.625 &&
-      joystickAngle < Math.PI * 0.875
-    ) {
-      // SET ANIMATION: RUN FORWARD-RIGHT
-      setAnimation("CharacterArmature|Run");
-
-      // SET IMPULSE DIRECTION AND FORCE: FORWARD-RIGHT
-      const impulseForwardRight = {
-        x: Math.sin(angle + Math.PI * 0.75) * MOVEMENT_SPEED * delta * 100,
-        y: 0,
-        z: Math.cos(angle + Math.PI * 0.75) * MOVEMENT_SPEED * delta * 100,
-      };
-
-      // APPLY IMPULSE FORWARD-RIGHT (Move character right)
-      rigidbody.current.applyImpulse(impulseForwardRight, true);
-    }
-
-    // DETERMINE JOYSTICK POSITION: LEFT ////////////////////////////////////////////////////////
-    if (
-      (joystickPressed &&
-        joystickAngle > Math.PI * 1.375 &&
-        joystickAngle <= Math.PI * 1.5) ||
-      (joystickPressed &&
-        joystickAngle >= Math.PI * -0.5 &&
-        joystickAngle <= Math.PI * -0.375) ||
-      leftKeyPressed
-    ) {
-      // SET ANIMATION: RUN LEFT
-      setAnimation("CharacterArmature|Run_Left");
-
-      // SET IMPULSE DIRECTION AND FORCE: LEFT
-      const impulseLeft = {
-        x: Math.sin(angle - Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
-        y: 0,
-        z: Math.cos(angle - Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
-      };
-      // APPLY IMPULSE: LEFT (Strafe character left)
-      rigidbody.current.applyImpulse(impulseLeft, true);
-    }
-
-    // DETERMINE JOYSTICK POSITION: RIGHT ////////////////////////////////////////////////////////
-    if (
-      (joystickPressed &&
-        joystickAngle >= Math.PI * 0.375 &&
-        joystickAngle < Math.PI * 0.625) ||
-      rightKeyPressed
-    ) {
-      // SET ANIMATION: RUN RIGHT
-      setAnimation("CharacterArmature|Run_Right");
-
-      // SET IMPULSE DIRECTION AND FORCE: RIGHT
-      const impulseRight = {
-        x: Math.sin(angle + Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
-        y: 0,
-        z: Math.cos(angle + Math.PI / 2) * MOVEMENT_SPEED * delta * 100,
-      };
-
-      // APPLY IMPULSE RIGHT(Strafe character right)
-      rigidbody.current.applyImpulse(impulseRight, true);
-    }
-
-    // DETERMINE JOYSTICK POSITION: BACKWARD-RIGHT ////////////////////////////////////////////////////////
-    if (
-      joystickPressed &&
-      joystickAngle >= Math.PI * 0.125 &&
-      joystickAngle < Math.PI * 0.375
-    ) {
-      // SET ANIMATION: RUN BACKWARD-RIGHT
-      setAnimation("CharacterArmature|Run_Back");
-
-      // SET IMPULSE DIRECTION AND FORCE: BACKWARD-RIGHT
-      const impulseBackRight = {
-        x: Math.sin(angle + Math.PI * 0.25) * MOVEMENT_SPEED * delta * 100,
-        y: 0,
-        z: Math.cos(angle + Math.PI * 0.25) * MOVEMENT_SPEED * delta * 100,
-      };
-
-      // APPLY IMPULSE BACKWARD-RIGHT (Move character backward-right)
-      rigidbody.current.applyImpulse(impulseBackRight, true);
-    }
-
-    // DETERMINE JOYSTICK POSITION: BACKWARD-LEFT ////////////////////////////////////////////////////////
-    if (
-      joystickPressed &&
-      joystickAngle > Math.PI * -0.375 &&
-      joystickAngle <= Math.PI * -0.125
-    ) {
-      // SET ANIMATION: RUN BACKWARD-LEFT
-      setAnimation("CharacterArmature|Run_Back");
-
-      // SET IMPULSE DIRECTION AND FORCE: BACKWARD-LEFT
-      const impulseBackLeft = {
-        x: Math.sin(angle - Math.PI * 0.25) * MOVEMENT_SPEED * delta * 100,
-        y: 0,
-        z: Math.cos(angle - Math.PI * 0.25) * MOVEMENT_SPEED * delta * 100,
-      };
-
-      // APPLY IMPULSE BACKWARD-LEFT (Move character backward-left)
-      rigidbody.current.applyImpulse(impulseBackLeft, true);
-    }
-
-    // DETERMINE JOYSTICK POSITION: BACKWARD ////////////////////////////////////////////////////////
-    if (
-      (joystickPressed &&
-        joystickAngle > Math.PI * -0.125 &&
-        joystickAngle < Math.PI * 0.125) ||
-      backKeyPressed
-    ) {
-      // SET ANIMATION: RUN BACKWARD
-      setAnimation("CharacterArmature|Run_Back");
-
-      // SET IMPULSE DIRECTION AND FORCE: BACKWARD
-      const impulseBack = {
-        x: Math.sin(angle) * MOVEMENT_SPEED * delta * 100,
-        y: 0,
-        z: Math.cos(angle) * MOVEMENT_SPEED * delta * 100,
-      };
-
-      // APPLY IMPULSE BACKWARD (Move character backward)
-      rigidbody.current.applyImpulse(impulseBack, true);
-    }
-
-    // CHECK IF FIRE BUTTON IS PRESSED ////////////////////////////////////////////////////////
     if (joystick.isPressed("fire") || fireKeyPressed) {
+      // CHECK IF FIRE BUTTON IS PRESSED ////////////////////////////////////////////////////////
       // fire
 
       if (isHost()) {

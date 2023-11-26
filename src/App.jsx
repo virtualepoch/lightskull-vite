@@ -61,7 +61,7 @@ function App() {
         <button className="btn-zoom-out" onClick={zoomOut}></button>
         <button className="btn-zoom-in" onClick={zoomIn}></button>
       </div>
-      <h1 className="version">v.0.1.12.2</h1>
+      <h1 className="version">v.0.1.12.3</h1>
       <h1 className="game-title">
         Light<span className="cross-symbol">⁜</span>Skull
       </h1>

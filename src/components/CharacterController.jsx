@@ -120,6 +120,10 @@ export const CharacterController = ({
       const cameraDistanceZ =
         zoom === 0 ? 80 : zoom === 1 ? 40 : zoom === 2 ? 20 : 3;
 
+      zoom === 3
+        ? (controls.current.smoothTime = 0)
+        : (controls.current.smoothTime = 0.25);
+
       const playerWorldPos = vec3(rigidbody.current.translation());
       controls.current.setLookAt(
         playerWorldPos.x,

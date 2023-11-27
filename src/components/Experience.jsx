@@ -1,6 +1,5 @@
 import { Environment } from "@react-three/drei";
-import { Map } from "./maps/Map";
-import { Map2 } from "./maps/Map2";
+import { Map1 } from "./maps/Map1";
 import { useEffect, useState } from "react";
 import {
   Joystick,
@@ -13,8 +12,11 @@ import {
 import { CharacterController } from "./CharacterController";
 import { Bullet } from "./Bullet";
 import { BulletHit } from "./BulletHit";
+import { Map2 } from "./maps/Map2";
+import { Map3 } from "./maps/Map3";
+import { Map4 } from "./maps/Map4";
 
-export const Experience = ({ zoom, setZoom }) => {
+export const Experience = ({ zoom, setZoom, gameMap }) => {
   const [players, setPlayers] = useState([]);
   const [bullets, setBullets] = useState([]);
   const [networkBullets, setNetworkBullets] = useMultiplayerState(
@@ -94,7 +96,15 @@ export const Experience = ({ zoom, setZoom }) => {
 
   return (
     <>
-      <Map2 />
+      {gameMap === "map-2" ? (
+        <Map2 />
+      ) : gameMap === "map-3" ? (
+        <Map3 />
+      ) : gameMap === "map-4" ? (
+        <Map4 />
+      ) : (
+        <Map1 />
+      )}
 
       {players.map(({ state, joystick }, idx) => (
         <CharacterController
@@ -106,6 +116,7 @@ export const Experience = ({ zoom, setZoom }) => {
           onKilled={onKilled}
           zoom={zoom}
           setZoom={setZoom}
+          gameMap={gameMap}
         />
       ))}
 

@@ -1,38 +1,28 @@
-import { BtnMenu } from "./BtnMenu";
-import { Menu } from "./Menu";
+import { BtnMenu } from "./ui-components/BtnMenu";
+import { CustomButtons } from "./ui-components/CustomButtons";
+import { Leaderboard } from "./ui-components/Leaderboard";
+import { Menu } from "./ui-components/Menu";
+import { PlayroomControlsOverlay } from "./ui-components/PlayroomControlsOverlay";
 
-export const UI = ({ menuOpen, setMenuOpen, zoom, setZoom }) => {
-  console.log(menuOpen);
+export const UI = ({
+  menuOpen,
+  setMenuOpen,
+  zoom,
+  setZoom,
+  gameMap,
+  setGameMap,
+}) => {
   return (
     <>
-      {/* OVERLAY FOR GAME INFO, TITLE, LOGO */}
       <h1 className="version">v.0.1.12.4</h1>
       <h1 className="game-title">
         Light<span className="cross-symbol">⁜</span>Skull
       </h1>
-      {/* BUTTONS */}
+      <Leaderboard />
       <BtnMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-      <Menu menuOpen={menuOpen} />
-      <div className="zoom-btns">
-        <button
-          className="btn-zoom-out"
-          onClick={() => {
-            if (zoom > 0) setZoom(zoom - 1);
-          }}
-        ></button>
-        <button
-          className="btn-zoom-in"
-          onClick={() => {
-            if (zoom < 3) setZoom(zoom + 1);
-          }}
-        ></button>
-      </div>
-      <div className="controls-overlay">
-        <div className="btn jump"></div>
-        <div className="btn rotate-right"></div>
-        <div className="btn fire"></div>
-        <div className="btn rotate-left"></div>
-      </div>
+      <Menu menuOpen={menuOpen} gameMap={gameMap} setGameMap={setGameMap} />
+      <CustomButtons zoom={zoom} setZoom={setZoom} />
+      <PlayroomControlsOverlay />
     </>
   );
 };

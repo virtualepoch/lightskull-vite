@@ -12,7 +12,7 @@ import {
 import { useMemo, Suspense, useState } from "react";
 import { Physics } from "@react-three/rapier";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
-import { Leaderboard } from "./components/Leaderboard";
+import { Leaderboard } from "./components/ui-components/Leaderboard";
 import { UI } from "./components/UI";
 
 export const KeyControls = {
@@ -46,6 +46,7 @@ function App() {
   );
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [gameMap, setGameMap] = useState("map-1");
   const [zoom, setZoom] = useState(0);
   const [downgradedPerformance, setDowngradedPerformance] = useState(false);
 
@@ -57,8 +58,9 @@ function App() {
         setMenuOpen={setMenuOpen}
         zoom={zoom}
         setZoom={setZoom}
+        gameMap={gameMap}
+        setGameMap={setGameMap}
       />
-      <Leaderboard />
       <KeyboardControls map={map}>
         <Canvas shadows camera={{ position: [0, 100, 0], fov: 30, near: 2 }}>
           {/* <OrbitControls /> */}
@@ -73,7 +75,7 @@ function App() {
           <Suspense>
             <Physics gravity={[0, -200, 0]} interpolation={false}>
               {/* NOTE: add 'debug' prop to '<Physics>' above to add a wireframe to the rigid bodies */}
-              <Experience zoom={zoom} setZoom={setZoom} />
+              <Experience zoom={zoom} setZoom={setZoom} gameMap={gameMap} />
             </Physics>
           </Suspense>
 

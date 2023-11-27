@@ -2,8 +2,8 @@ import { useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
 import { useEffect } from "react";
 
-export const Map2 = () => {
-  const map = useGLTF("models/map2.glb");
+export const Map3 = () => {
+  const map = useGLTF("models/map-og.glb");
 
   useEffect(() => {
     map.scene.traverse((child) => {
@@ -20,4 +20,4 @@ export const Map2 = () => {
     </RigidBody>
   );
 };
-useGLTF.preload("models/map2.glb");
+useGLTF.preload("models/map-og.glb");

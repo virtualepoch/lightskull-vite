@@ -1,13 +1,17 @@
 import { useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
 import { useEffect } from "react";
+import { MeshStandardMaterial } from "three";
 
-export const Map = () => {
-  const map = useGLTF("models/map.glb");
+export const Map1 = () => {
+  const map = useGLTF("models/map1.glb");
+
+  const mapColor = new MeshStandardMaterial({ color: "#00aaaa" });
 
   useEffect(() => {
     map.scene.traverse((child) => {
       if (child.isMesh) {
+        child.material = mapColor;
         child.castShadow = true;
         child.receiveShadow = true;
       }
@@ -20,4 +24,4 @@ export const Map = () => {
     </RigidBody>
   );
 };
-useGLTF.preload("models/map.glb");
+useGLTF.preload("models/map1.glb");

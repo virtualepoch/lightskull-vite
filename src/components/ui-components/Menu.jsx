@@ -47,7 +47,7 @@ export const Menu = ({ menuOpen, gameMap, setGameMap }) => {
             className={gameMap === "map-4" ? "map-btn active" : "map-btn"}
             onClick={() => setGameMap("map-4")}
           >
-            Map - 4
+            Map - 5
             <br />
             Tap / Click to Select
           </button>
@@ -55,7 +55,7 @@ export const Menu = ({ menuOpen, gameMap, setGameMap }) => {
             className={gameMap === "map-4" ? "map-btn active" : "map-btn"}
             onClick={() => setGameMap("map-4")}
           >
-            Map - 4
+            Map - 6
             <br />
             Tap / Click to Select
           </button>

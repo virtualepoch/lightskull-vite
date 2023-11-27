@@ -1,4 +1,5 @@
-import { Canvas } from "@react-three/fiber";
+import * as THREE from "three";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { Experience } from "./components/Experience";
 import {
   Loader,
@@ -14,6 +15,8 @@ import { Physics } from "@react-three/rapier";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { Leaderboard } from "./components/ui-components/Leaderboard";
 import { UI } from "./components/UI";
+import background from "./assets/images/bg-1.jpg";
+import { useRef } from "react";
 
 export const KeyControls = {
   forward: "forward",
@@ -45,6 +48,30 @@ function App() {
     []
   );
 
+  const Earth = () => {
+    // function textureChanger() {
+    //   if (window.innerWidth < 700) {
+    //     return earth500;
+    //   } else {
+    //     return earth8k;
+    //   }
+    // }
+
+    const texture = useLoader(THREE.TextureLoader, background);
+    const earthRef = useRef(null);
+
+    // useFrame(() => {
+    //   earthRef.current.rotation.y += 0.002;
+    // });
+
+    return (
+      <mesh ref={earthRef} position={[0, 0, 0]}>
+        <sphereGeometry args={[180, 10, 10]} />
+        <meshStandardMaterial map={texture} side={THREE.BackSide} />
+      </mesh>
+    );
+  };
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [gameMap, setGameMap] = useState("map-1");
   const [zoom, setZoom] = useState(0);
@@ -63,6 +90,8 @@ function App() {
       />
       <KeyboardControls map={map}>
         <Canvas shadows camera={{ position: [0, 100, 0], fov: 30, near: 2 }}>
+          {/* <ambientLight intensity={1} /> */}
+          <Earth />
           {/* <OrbitControls /> */}
           <color attach="background" args={["#000"]} />
           {/* <SoftShadows size={42} /> */}

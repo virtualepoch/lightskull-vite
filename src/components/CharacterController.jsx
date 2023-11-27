@@ -3,13 +3,13 @@ import { CapsuleCollider, RigidBody, vec3 } from "@react-three/rapier";
 import { useFrame, useThree } from "@react-three/fiber";
 import { isHost } from "playroomkit";
 import {
-  Billboard,
   CameraControls,
-  Text,
+  useHelper,
   useKeyboardControls,
 } from "@react-three/drei";
 import { Character } from "./Character";
 import { KeyControls } from "../App";
+import { DirectionalLightHelper } from "three";
 
 const MOVEMENT_FORWARD_SPEED = 25;
 const MOVEMENT_SPEED = 20;
@@ -289,6 +289,15 @@ export const CharacterController = ({
     }
   });
 
+  const directionalLight = useRef();
+  useHelper(directionalLight, DirectionalLightHelper, 1, "red");
+
+  useEffect(() => {
+    if (character.current && userPlayer) {
+      directionalLight.current.target = character.current;
+    }
+  }, [userPlayer]);
+
   return (
     <group ref={group} {...props}>
       {userPlayer && <CameraControls ref={controls} />}
@@ -342,6 +351,24 @@ export const CharacterController = ({
             />
           )}
         </group>
+        {userPlayer && (
+          <directionalLight
+            ref={directionalLight}
+            position={[25, 18, -25]}
+            intensity={1}
+            castShadow
+            shadow-camera-near={0}
+            shadow-camera-far={100}
+            shadow-camera-left={-20}
+            shadow-camera-right={20}
+            shadow-camera-top={20}
+            shadow-camera-bottom={-20}
+            shadow-mapSize-width={2048}
+            shadow-mapSize-height={2048}
+            shadow-bias={-0.0001}
+          />
+        )}
+
         <CapsuleCollider args={[1.4, 0.8]} position={[0, 1.8, 0]} />
       </RigidBody>
     </group>
@@ -381,25 +408,3 @@ const Crosshair = (props) => {
     </group>
   );
 };
-
-// const PlayerInfo = ({ state }) => {
-//   const health = state.health;
-//   const name = state.profile.name;
-
-//   return (
-//     <Billboard position-y={0}>
-//       <Text position-y={0.36} fontSize={0.4}>
-//         {name}
-//         <meshBasicMaterial color={state.profile.color} />
-//       </Text>
-//       <mesh position-z={-0.1}>
-//         <planeGeometry args={[1, 0.2]} />
-//         <meshBasicMaterial color="black" transparent opacity={0.5} />
-//       </mesh>
-//       <mesh scale-x={health / 100} position-x={-0.5 * (1 - health / 100)}>
-//         <planeGeometry args={[1, 0.2]} />
-//         <meshBasicMaterial color={health < 51 ? "#ff0000" : "#00ff00"} />
-//       </mesh>
-//     </Billboard>
-//   );
-// };

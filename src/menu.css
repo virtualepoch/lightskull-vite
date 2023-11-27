@@ -104,17 +104,16 @@
   width: 100%;
   height: calc(100% - 80px);
   max-width: 1200px;
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: 20px;
-  grid-template-columns: auto auto auto;
+  align-items: center;
   justify-content: space-around;
-  align-content: space-around;
   position: relative;
-  border: solid blue;
 }
 
 .map-btn {
-  width: 100%;
+  width: 30%;
   max-width: 300px;
   aspect-ratio: 1;
   background: radial-gradient(
@@ -133,27 +132,18 @@
   border-radius: 10px;
 }
 
-@media (orientation: portrait) {
-  .maps {
-    grid-template-columns: auto auto;
-    justify-content: center;
-  }
+@media (max-width: 650px) {
   .map-btn {
-    width: 95%;
-    height: 100%;
-    max-height: 200px;
-    aspect-ratio: 1;
+    width: 40%;
   }
 }
 
-.map-btn:hover {
-  border: solid red;
-}
-
+.map-btn:hover,
 .map-btn.active {
-  border: solid red;
+  filter: drop-shadow(0 0 5px cyan);
 }
 
+.map-btn:hover::after,
 .map-btn.active::after {
   content: "SELECTED";
   border-top: 1px solid;
@@ -161,6 +151,14 @@
   position: absolute;
   left: 20px;
   bottom: 20px;
-  transition: 1s ease;
+  padding: 0 5px;
   box-shadow: 4px -2px 8px 1px rgba(0, 0, 0, 0.4);
+}
+
+.map-btn:hover::after {
+  content: "SELECT?";
+}
+
+.map-btn.active:hover::after {
+  content: "ALREADY SELECTED";
 }

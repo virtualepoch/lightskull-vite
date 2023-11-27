@@ -13,7 +13,7 @@ import { useMemo, Suspense, useState } from "react";
 import { Physics } from "@react-three/rapier";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { Leaderboard } from "./components/Leaderboard";
-import { ControlsOverlay } from "./components/ControlsOverlay";
+import { UI } from "./components/UI";
 
 export const KeyControls = {
   forward: "forward",
@@ -45,28 +45,19 @@ function App() {
     []
   );
 
+  const [menuOpen, setMenuOpen] = useState(false);
   const [zoom, setZoom] = useState(0);
   const [downgradedPerformance, setDowngradedPerformance] = useState(false);
 
-  const zoomIn = () => {
-    if (zoom < 3) setZoom(zoom + 1);
-  };
-  const zoomOut = () => {
-    if (zoom > 0) setZoom(zoom - 1);
-  };
-
   return (
     <>
-      <div className="zoom-btns">
-        <button className="btn-zoom-out" onClick={zoomOut}></button>
-        <button className="btn-zoom-in" onClick={zoomIn}></button>
-      </div>
-      <h1 className="version">v.0.1.12.3</h1>
-      <h1 className="game-title">
-        Light<span className="cross-symbol">⁜</span>Skull
-      </h1>
       <Loader />
-      <ControlsOverlay />
+      <UI
+        menuOpen={menuOpen}
+        setMenuOpen={setMenuOpen}
+        zoom={zoom}
+        setZoom={setZoom}
+      />
       <Leaderboard />
       <KeyboardControls map={map}>
         <Canvas shadows camera={{ position: [0, 100, 0], fov: 30, near: 2 }}>

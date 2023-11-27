@@ -38,6 +38,8 @@ button {
   cursor: pointer;
 }
 
+/* ///////////////////////////////////////////////////////////////////// */
+/* UI == USER INTERFACE //////////////////////////////////////////////// */
 .version {
   width: fit-content;
   height: fit-content;
@@ -91,15 +93,87 @@ button {
   background: radial-gradient(circle at 50% 50%, white 10%, transparent 50%);
 }
 
+/* INTERACTIVE BUTTONS */
+
+.zoom-btns {
+  position: fixed;
+  right: 110px;
+  bottom: 20px;
+  z-index: 100;
+  display: flex;
+  gap: 10px;
+}
+
+.zoom-btns button {
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  box-shadow: 2px 3px 5px 1px var(--box-shadow-light),
+    inset 2px 2px 4px 2px var(--box-glare-med),
+    inset -2px -2px 4px 2px var(--box-shadow-light);
+}
+
+.btn-zoom-in {
+  background: url(/images/chevron-left-solid.svg) 20% 50% /20% no-repeat,
+    url(/images/chevron-right-solid.svg) 80% 50% /20% no-repeat;
+}
+
+.btn-zoom-out {
+  background: url(/images/chevron-left-solid.svg) 80% 50% /20% no-repeat,
+    url(/images/chevron-right-solid.svg) 20% 50% /20% no-repeat;
+}
+
+/* PLAYROOMKIT BUTTONS OVERLAY */
+
+.controls-overlay {
+  position: fixed;
+  bottom: 20px;
+  right: 18px;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.controls-overlay .btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  font-size: 15px;
+  color: red;
+  text-shadow: 0 0 3px cyan;
+  box-shadow: 2px 3px 5px 1px var(--box-shadow-light),
+    inset 2px 2px 4px 2px var(--box-glare-med),
+    inset -2px -2px 4px 2px var(--box-shadow-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url(/images/chevron-up-solid.svg) center / 60% no-repeat;
+}
+
+.btn.rotate-left {
+  background: url(/images/chevron-left-solid.svg) center / 25% no-repeat;
+}
+
+.btn.rotate-right {
+  background: url(/images/chevron-right-solid.svg) center / 25% no-repeat;
+}
+
+.btn.fire {
+  background: url(/images/bolt-solid.svg) center / 40% no-repeat;
+}
+
+/* ///////////////////////////////////////////////////////// */
 /* LEADERBOARD ///////////////////////////////////////////// */
 .leaderboard {
   position: fixed;
   top: 5px;
-  left: 0;
+  left: 40px;
   z-index: 11;
   display: flex;
-  gap: 5px;
-  padding: 0 20px;
+  gap: 10px;
+  padding: 0 10px;
 }
 
 .player-info {
@@ -178,7 +252,7 @@ p.health-text {
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 1111111;
   color: white;
   padding: 10px 10px 17px 20px;
 }
@@ -202,73 +276,4 @@ p.health-text {
     width: 20px;
     height: 20px;
   }
-}
-
-/* CONTROLS OVERLAY /////////////////////////////////////////////////////////// */
-
-.controls-overlay {
-  position: fixed;
-  bottom: 20px;
-  right: 18px;
-  z-index: 11;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  pointer-events: none;
-}
-
-.controls-overlay .btn {
-  width: 60px;
-  height: 60px;
-  border-radius: 10px;
-  font-size: 15px;
-  color: red;
-  text-shadow: 0 0 3px cyan;
-  box-shadow: 2px 3px 5px 1px var(--box-shadow-light),
-    inset 2px 2px 4px 2px var(--box-glare-med),
-    inset -2px -2px 4px 2px var(--box-shadow-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: url(/images/chevron-up-solid.svg) center / 60% no-repeat;
-}
-
-.btn.rotate-left {
-  background: url(/images/chevron-left-solid.svg) center / 25% no-repeat;
-}
-
-.btn.rotate-right {
-  background: url(/images/chevron-right-solid.svg) center / 25% no-repeat;
-}
-
-.btn.fire {
-  background: url(/images/bolt-solid.svg) center / 40% no-repeat;
-}
-
-.zoom-btns {
-  position: fixed;
-  right: 110px;
-  bottom: 20px;
-  z-index: 100;
-  display: flex;
-  gap: 10px;
-}
-
-.zoom-btns button {
-  width: 60px;
-  height: 60px;
-  border-radius: 100%;
-  box-shadow: 2px 3px 5px 1px var(--box-shadow-light),
-    inset 2px 2px 4px 2px var(--box-glare-med),
-    inset -2px -2px 4px 2px var(--box-shadow-light);
-}
-
-.btn-zoom-in {
-  background: url(/images/chevron-left-solid.svg) 20% 50% /20% no-repeat,
-    url(/images/chevron-right-solid.svg) 80% 50% /20% no-repeat;
-}
-
-.btn-zoom-out {
-  background: url(/images/chevron-left-solid.svg) 80% 50% /20% no-repeat,
-    url(/images/chevron-right-solid.svg) 20% 50% /20% no-repeat;
 }

@@ -121,7 +121,7 @@ export const CharacterController = ({
         zoom === 0 ? 80 : zoom === 1 ? 40 : zoom === 2 ? 20 : 3;
 
       zoom === 3
-        ? (controls.current.smoothTime = 0)
+        ? (controls.current.smoothTime = 0.1)
         : (controls.current.smoothTime = 0.25);
 
       const playerWorldPos = vec3(rigidbody.current.translation());
@@ -248,7 +248,7 @@ export const CharacterController = ({
       rigidbody.current.applyImpulse(impulseRight, true);
     }
 
-    if (joystick.isPressed("fire") || fireKeyPressed) {
+    if (joystick.isPressed("fire") || (fireKeyPressed && userPlayer)) {
       // CHECK IF FIRE BUTTON IS PRESSED ////////////////////////////////////////////////////////
       // fire
 

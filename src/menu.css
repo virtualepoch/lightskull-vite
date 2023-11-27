@@ -33,61 +33,107 @@
 
 .menu {
   width: calc(100% - 36px);
+  max-width: 1200px;
   height: calc(100% - 40px);
   position: fixed;
   top: 20px;
-  left: 18px;
+  left: 0;
+  right: 0;
   z-index: 110;
   padding: 20px;
+  padding-bottom: 100px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 30px;
   font-size: 25px;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(10px);
   overflow-y: auto;
   border-radius: 10px;
-  box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.4),
+  box-shadow: 0 5px 20px 1px rgba(0, 0, 0),
     inset 0 0 25px 1px rgba(255, 255, 255, 0.4);
+  font: 35px Ailerons;
 }
 
 /* Menu CSSTransition */
 .menu-enter {
+  opacity: 0;
   transform: translate(-100%, -100%);
 }
 
 .menu-enter-active {
+  opacity: 1;
   transform: translate(0%);
-  transition: transform 500ms ease;
+  transition: 500ms ease;
 }
 
 .menu-exit {
+  opacity: 1;
   transform: translate(0%);
 }
 
 .menu-exit-active {
+  opacity: 0;
   transform: translate(-100%, -100%);
-  transition: transform 500ms ease;
+  transition: 500ms ease;
+}
+
+.menu-header {
+  width: 100%;
+  border-left: solid;
+  border-bottom: solid;
+}
+
+.sub-menu-header {
+  font-size: 30px;
+  border: solid;
 }
 
 .maps {
   width: 100%;
-  border: solid red;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
   gap: 20px;
 }
-.row {
-  width: 100%;
-  border: solid blue;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
+
 .map-btn {
-  border: solid;
-  width: 50%;
-  max-width: 500px;
+  width: 100%;
+  max-width: 333px;
   aspect-ratio: 1;
+  background: radial-gradient(
+      circle at 50% 50%,
+      cyan 10%,
+      rgba(255, 0, 255, 0.5) 20%,
+      transparent 50%
+    ),
+    linear-gradient(white, black, white);
+  color: black;
+  font: 33px Ailerons;
+  text-shadow: 2px -1px 2px red;
+  margin-bottom: 20px;
+  box-shadow: 0 -5px 15px 1px rgba(255, 255, 255, 0.5);
+  position: relative;
+  border-radius: 10px;
+}
+
+.map-btn:hover {
+  border: solid red;
+}
+
+.map-btn.active {
+  border: solid red;
+}
+
+.map-btn.active::after {
+  content: "SELECTED";
+  border-top: 1px solid;
+  border-right: 1px solid;
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  transition: 1s ease;
+  box-shadow: 4px -2px 8px 1px rgba(0, 0, 0, 0.4);
 }

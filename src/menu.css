@@ -33,7 +33,6 @@
 
 .menu {
   width: calc(100% - 36px);
-  max-width: 1200px;
   height: calc(100% - 40px);
   position: fixed;
   top: 20px;
@@ -41,16 +40,13 @@
   right: 0;
   z-index: 110;
   padding: 20px;
-  padding-bottom: 100px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
-  font-size: 25px;
+  gap: 20px;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(10px);
-  overflow-y: auto;
   border-radius: 10px;
   box-shadow: 0 5px 20px 1px rgba(0, 0, 0),
     inset 0 0 25px 1px rgba(255, 255, 255, 0.4);
@@ -82,26 +78,44 @@
 
 .menu-header {
   width: 100%;
-  border-left: solid;
-  border-bottom: solid;
+  border-left: 1px solid;
+  border-bottom: 1px solid;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
-.sub-menu-header {
+.menu-header h1 {
+  font-size: 35px;
+}
+.menu-header h2 {
+  width: fit-content;
   font-size: 30px;
-  border: solid;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  padding: 0 10px;
 }
 
 .maps {
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  height: calc(100% - 80px);
+  max-width: 1200px;
+  display: grid;
   gap: 20px;
+  grid-template-columns: auto auto auto;
+  justify-content: space-around;
+  align-content: space-around;
+  position: relative;
+  border: solid blue;
 }
 
 .map-btn {
   width: 100%;
-  max-width: 333px;
+  max-width: 300px;
   aspect-ratio: 1;
   background: radial-gradient(
       circle at 50% 50%,
@@ -113,10 +127,23 @@
   color: black;
   font: 33px Ailerons;
   text-shadow: 2px -1px 2px red;
-  margin-bottom: 20px;
   box-shadow: 0 -5px 15px 1px rgba(255, 255, 255, 0.5);
   position: relative;
+  border: solid transparent;
   border-radius: 10px;
+}
+
+@media (orientation: portrait) {
+  .maps {
+    grid-template-columns: auto auto;
+    justify-content: center;
+  }
+  .map-btn {
+    width: 95%;
+    height: 100%;
+    max-height: 200px;
+    aspect-ratio: 1;
+  }
 }
 
 .map-btn:hover {

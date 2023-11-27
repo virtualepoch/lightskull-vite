@@ -15,8 +15,13 @@ import { Physics } from "@react-three/rapier";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { Leaderboard } from "./components/ui-components/Leaderboard";
 import { UI } from "./components/UI";
-import background from "./assets/images/bg-1.jpg";
 import { useRef } from "react";
+import { OmniControls } from "./components/OmniControls";
+import cyberSky192 from "./assets/images/cyber-sky-192.jpg";
+import cyberSky384 from "./assets/images/cyber-sky-384.jpg";
+import cyberSky768 from "./assets/images/cyber-sky-768.jpg";
+import cyberSky1536 from "./assets/images/cyber-sky-1536.jpg";
+import cyberSky3072 from "./assets/images/cyber-sky-3072.jpg";
 
 export const KeyControls = {
   forward: "forward",
@@ -48,6 +53,8 @@ function App() {
     []
   );
 
+  const [bgRes, setBgRes] = useState(4);
+
   const Earth = () => {
     // function textureChanger() {
     //   if (window.innerWidth < 700) {
@@ -57,7 +64,18 @@ function App() {
     //   }
     // }
 
-    const texture = useLoader(THREE.TextureLoader, background);
+    const texture = useLoader(
+      THREE.TextureLoader,
+      bgRes === 0
+        ? cyberSky192
+        : bgRes === 1
+        ? cyberSky384
+        : bgRes === 2
+        ? cyberSky768
+        : bgRes === 3
+        ? cyberSky1536
+        : cyberSky3072
+    );
     const earthRef = useRef(null);
 
     // useFrame(() => {
@@ -80,6 +98,12 @@ function App() {
   return (
     <>
       <Loader />
+      <OmniControls
+        downgradedPerformance={downgradedPerformance}
+        setDowngradedPerformance={setDowngradedPerformance}
+        bgRes={bgRes}
+        setBgRes={setBgRes}
+      />
       <UI
         menuOpen={menuOpen}
         setMenuOpen={setMenuOpen}
@@ -92,14 +116,14 @@ function App() {
         <Canvas shadows camera={{ position: [0, 100, 0], fov: 30, near: 2 }}>
           {/* <ambientLight intensity={1} /> */}
           <Earth />
-          {/* <OrbitControls /> */}
+          <OrbitControls />
           <color attach="background" args={["#000"]} />
           {/* <SoftShadows size={42} /> */}
-          <PerformanceMonitor
+          {/* <PerformanceMonitor
             onDecline={(fps) => {
               setDowngradedPerformance(true);
             }}
-          />
+          /> */}
 
           <Suspense>
             <Physics gravity={[0, -200, 0]} interpolation={false}>

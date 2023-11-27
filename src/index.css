@@ -143,9 +143,9 @@ button {
   font-size: 15px;
   color: red;
   text-shadow: 0 0 3px cyan;
-  box-shadow: 2px 3px 5px 1px var(--box-shadow-light),
-    inset 2px 2px 4px 2px var(--box-glare-med),
-    inset -2px -2px 4px 2px var(--box-shadow-light);
+  box-shadow: inset 2px 2px 4px 2px var(--box-glare-med),
+    inset -2px -2px 4px 2px var(--box-shadow-light),
+    2px 3px 5px 1px var(--box-shadow-light);
   display: flex;
   align-items: center;
   justify-content: center;

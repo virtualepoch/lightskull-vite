@@ -104,39 +104,39 @@ export const CharacterController = ({
 
   useFrame((_, delta) => {
     // CAMERA FOLLOW
-    if (controls.current) {
-      // const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
-      // const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;
+    // if (controls.current) {
+    //   // const cameraDistanceY = window.innerWidth < 1024 ? 32 : 28;
+    //   // const cameraDistanceZ = window.innerWidth < 1024 ? 28 : 24;
 
-      if (zoomInKeyPressed) {
-        if (zoom < 3) setZoom(zoom + 1);
-      }
-      if (zoomOutKeyPressed) {
-        if (zoom > 0) setZoom(zoom - 1);
-      }
+    //   if (zoomInKeyPressed) {
+    //     if (zoom < 3) setZoom(zoom + 1);
+    //   }
+    //   if (zoomOutKeyPressed) {
+    //     if (zoom > 0) setZoom(zoom - 1);
+    //   }
 
-      const cameraDistanceY =
-        zoom === 0 ? 30 : zoom === 1 ? 20 : zoom === 2 ? 10 : 4;
-      const cameraDistanceZ =
-        zoom === 0 ? 80 : zoom === 1 ? 40 : zoom === 2 ? 20 : 3;
+    //   const cameraDistanceY =
+    //     zoom === 0 ? 30 : zoom === 1 ? 20 : zoom === 2 ? 10 : 4;
+    //   const cameraDistanceZ =
+    //     zoom === 0 ? 80 : zoom === 1 ? 40 : zoom === 2 ? 20 : 3;
 
-      zoom === 3
-        ? (controls.current.smoothTime = 0.1)
-        : (controls.current.smoothTime = 0.25);
+    //   zoom === 3
+    //     ? (controls.current.smoothTime = 0.1)
+    //     : (controls.current.smoothTime = 0.25);
 
-      const playerWorldPos = vec3(rigidbody.current.translation());
-      controls.current.setLookAt(
-        playerWorldPos.x,
-        playerWorldPos.y + (state.state.dead ? 80 : cameraDistanceY),
-        playerWorldPos.z + (state.state.dead ? 0 : cameraDistanceZ),
-        playerWorldPos.x,
-        playerWorldPos.y + 3.5,
-        playerWorldPos.z,
-        true
-      );
-      controls.current.rotateAzimuthTo(character.current.rotation.y + Math.PI);
-    }
-
+    //   const playerWorldPos = vec3(rigidbody.current.translation());
+    //   controls.current.setLookAt(
+    //     playerWorldPos.x,
+    //     playerWorldPos.y + (state.state.dead ? 80 : cameraDistanceY),
+    //     playerWorldPos.z + (state.state.dead ? 0 : cameraDistanceZ),
+    //     playerWorldPos.x,
+    //     playerWorldPos.y + 3.5,
+    //     playerWorldPos.z,
+    //     true
+    //   );
+    //   controls.current.rotateAzimuthTo(character.current.rotation.y + Math.PI);
+    // }
+    console.log(useFrame);
     setAnimation("CharacterArmature|Idle");
     character.current.rotation.y = angle + Math.PI;
 

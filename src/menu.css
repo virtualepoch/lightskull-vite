@@ -1,10 +1,111 @@
+/* //////////////////////////////////////////////////// */
+/* TESTING */
+.btn-open-close-omni,
+.omni .btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  font-size: 15px;
+  color: red;
+  text-shadow: 0 0 3px cyan;
+  box-shadow: inset -1px 1px 4px 1px var(--box-glare-med),
+    inset 1px -1px 4px 1px var(--box-shadow-light),
+    -1px 2px 4px 1px var(--box-shadow-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-open-close-omni {
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  top: 50px;
+  left: 0;
+  z-index: 1111;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: 2px 1px 5px 1px black;
+}
+
+.omni-btn-icon {
+  width: 100%;
+  height: 100%;
+  background: url(/images/chevron-right-cyan.svg) center / 30% no-repeat;
+  transition: transform 300ms ease;
+  filter: drop-shadow(0 0 3px cyan);
+}
+
+.omni-btn-icon.open {
+  transform: rotateY(180deg);
+  filter: drop-shadow(0 0 3px red);
+}
+
+.omni {
+  position: fixed;
+  left: 0;
+  top: 100px;
+  z-index: 1111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 5px 70px 5px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+  box-shadow: 1px 2px 5px 1px black;
+}
+
+/* Menu CSSTransition */
+.omni-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.omni-enter-active {
+  opacity: 1;
+  transform: translateX(0%);
+  transition: 500ms ease;
+}
+
+.omni-exit {
+  opacity: 1;
+  transform: translateX(0%);
+}
+
+.omni-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: 500ms ease;
+}
+
+hr {
+  width: 100%;
+  height: 2px;
+  border: none;
+  border-radius: 100px;
+  background: cyan;
+  filter: drop-shadow(0 0 2px cyan);
+}
+
+.btn.res-up {
+  background: url(/images/chevron-up-solid.svg) center / 30% no-repeat;
+}
+.btn.res-down {
+  background: url(/images/chevron-down-solid.svg) center / 30% no-repeat;
+}
+
+/* ////////////////////// MENU STYLING ///////////////////////// */
+
 .btn-menu {
   width: 40px;
   height: 40px;
   position: fixed;
   left: 0;
-  z-index: 111;
-  border-bottom-right-radius: 10px;
+  z-index: 1111;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,6 +113,7 @@
   gap: 5px;
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(5px);
+  box-shadow: 2px 2px 8px 1px black;
 }
 
 .menu-bar {
@@ -110,11 +212,11 @@
   align-items: center;
   justify-content: space-around;
   position: relative;
+  overflow: hidden;
 }
 
 .map-btn {
   width: 30%;
-  max-width: 300px;
   aspect-ratio: 1;
   background: radial-gradient(
       circle at 50% 50%,
@@ -124,7 +226,7 @@
     ),
     linear-gradient(white, black, white);
   color: black;
-  font: 33px Ailerons;
+  font: 22px Ailerons;
   text-shadow: 2px -1px 2px red;
   box-shadow: 0 -5px 15px 1px rgba(255, 255, 255, 0.5);
   position: relative;
@@ -132,9 +234,10 @@
   border-radius: 10px;
 }
 
-@media (max-width: 650px) {
+@media (max-height: 550px) {
   .map-btn {
-    width: 40%;
+    width: auto;
+    height: 35%;
   }
 }
 

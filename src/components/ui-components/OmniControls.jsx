@@ -12,6 +12,10 @@ export const OmniControls = ({
   omniOpen,
   mapOpacity,
   setMapOpacity,
+  forwardVel,
+  setForwardVel,
+  velocity,
+  setVelocity,
 }) => {
   const [omniExpand, setOmniExpand] = useState(false);
 
@@ -45,9 +49,9 @@ export const OmniControls = ({
         </button>
 
         {/* OMNI-HEADER //////////////////////////////////////// */}
-        <div className={omniExpand ? "neon-divider expand" : "neon-divider"} />
-        <h2 className="omni-header">OMNI</h2>
-        <div className={omniExpand ? "neon-divider expand" : "neon-divider"} />
+        <h2 className={omniExpand ? "omni-header expand" : "omni-header"}>
+          OMNI
+        </h2>
 
         {/* EFFECTS ON/OFF BUTTON /////////////////////////////////////////////// */}
         <div
@@ -121,6 +125,56 @@ export const OmniControls = ({
               : "3072"}
           </p>
           <button className="btn res-down" onClick={resDown}></button>
+        </div>
+
+        {/* MOVEMENT FORWARD SPEED //////////////////////////// */}
+        <div
+          className={
+            omniExpand ? "omni-btn-container expand" : "omni-btn-container"
+          }
+        >
+          <button
+            className="btn res-up"
+            onClick={() => {
+              setForwardVel(forwardVel + 1);
+            }}
+          ></button>
+          <p className="btn-label">
+            forward <br />
+            speed: <br />
+            {forwardVel}
+          </p>
+          <button
+            className="btn res-down"
+            onClick={() => {
+              setForwardVel(forwardVel - 1);
+            }}
+          ></button>
+        </div>
+
+        {/* MOVEMENT SPEED //////////////////////////// */}
+        <div
+          className={
+            omniExpand ? "omni-btn-container expand" : "omni-btn-container"
+          }
+        >
+          <button
+            className="btn res-up"
+            onClick={() => {
+              setVelocity(velocity + 1);
+            }}
+          ></button>
+          <p className="btn-label">
+            directional<br/>
+            speed: <br />
+            {velocity}
+          </p>
+          <button
+            className="btn res-down"
+            onClick={() => {
+              setVelocity(velocity - 1);
+            }}
+          ></button>
         </div>
 
         {/* FPS METER ////////////////////////////////////////////// */}

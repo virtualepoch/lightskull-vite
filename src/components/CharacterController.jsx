@@ -11,8 +11,9 @@ import { Character } from "./Character";
 import { KeyControls } from "../App";
 import { DirectionalLightHelper } from "three";
 
-const MOVEMENT_FORWARD_SPEED = 25;
-const MOVEMENT_SPEED = 20;
+// const MOVEMENT_FORWARD_SPEED = 25;
+// const MOVEMENT_SPEED = 20;
+
 const JUMP_VELOCITY = 10;
 const FIRE_RATE = 380;
 
@@ -31,6 +32,8 @@ export const CharacterController = ({
   zoom,
   setZoom,
   orbitOn,
+  forwardVel,
+  velocity,
   ...props
 }) => {
   const group = useRef();
@@ -192,16 +195,16 @@ export const CharacterController = ({
         x:
           Math.sin(angle + joystickAngle) *
           (joystickAngle > pi * 0.7 && joystickAngle < pi * 1.3
-            ? MOVEMENT_FORWARD_SPEED
-            : MOVEMENT_SPEED) *
+            ? forwardVel
+            : velocity) *
           delta *
           100,
         y: 0,
         z:
           Math.cos(angle + joystickAngle) *
           (joystickAngle > pi * 0.7 && joystickAngle < pi * 1.3
-            ? MOVEMENT_FORWARD_SPEED
-            : MOVEMENT_SPEED) *
+            ? forwardVel
+            : velocity) *
           delta *
           100,
       };
@@ -215,36 +218,36 @@ export const CharacterController = ({
       setAnimation("CharacterArmature|Run");
       // NOTE: Movement speed is increased for forward momentum
       const impulseForward = {
-        x: Math.sin(angle + pi) * MOVEMENT_FORWARD_SPEED * delta * 100,
+        x: Math.sin(angle + pi) * forwardVel * delta * 100,
         y: 0,
-        z: Math.cos(angle + pi) * MOVEMENT_FORWARD_SPEED * delta * 100,
+        z: Math.cos(angle + pi) * forwardVel * delta * 100,
       };
       rigidbody.current.applyImpulse(impulseForward, true);
     }
     if (backKeyPressed && userPlayer) {
       setAnimation("CharacterArmature|Run_Back");
       const impulseBack = {
-        x: Math.sin(angle) * MOVEMENT_SPEED * delta * 100,
+        x: Math.sin(angle) * velocity * delta * 100,
         y: 0,
-        z: Math.cos(angle) * MOVEMENT_SPEED * delta * 100,
+        z: Math.cos(angle) * velocity * delta * 100,
       };
       rigidbody.current.applyImpulse(impulseBack, true);
     }
     if (leftKeyPressed && userPlayer) {
       setAnimation("CharacterArmature|Run_Left");
       const impulseLeft = {
-        x: Math.sin(angle + pi * 1.5) * MOVEMENT_SPEED * delta * 100,
+        x: Math.sin(angle + pi * 1.5) * velocity * delta * 100,
         y: 0,
-        z: Math.cos(angle + pi * 1.5) * MOVEMENT_SPEED * delta * 100,
+        z: Math.cos(angle + pi * 1.5) * velocity * delta * 100,
       };
       rigidbody.current.applyImpulse(impulseLeft, true);
     }
     if (rightKeyPressed && userPlayer) {
       setAnimation("CharacterArmature|Run_Right");
       const impulseRight = {
-        x: Math.sin(angle + pi / 2) * MOVEMENT_SPEED * delta * 100,
+        x: Math.sin(angle + pi / 2) * velocity * delta * 100,
         y: 0,
-        z: Math.cos(angle + pi / 2) * MOVEMENT_SPEED * delta * 100,
+        z: Math.cos(angle + pi / 2) * velocity * delta * 100,
       };
       rigidbody.current.applyImpulse(impulseRight, true);
     }
@@ -352,6 +355,7 @@ export const CharacterController = ({
             />
           )}
         </group>
+
         {userPlayer && (
           <directionalLight
             ref={directionalLight}

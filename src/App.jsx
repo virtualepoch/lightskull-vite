@@ -94,6 +94,10 @@ function App() {
   const [omniOpen, setOmniOpen] = useState(false);
   const [mapOpacity, setMapOpacity] = useState(1);
 
+  // CHARACTER STATES ///////////
+  const [forwardVel, setForwardVel] = useState(25);
+  const [velocity, setVelocity] = useState(20);
+
   return (
     <>
       <Loader />
@@ -108,6 +112,11 @@ function App() {
         omniOpen={omniOpen}
         mapOpacity={mapOpacity}
         setMapOpacity={setMapOpacity}
+        // CHARACTER STATE
+        forwardVel={forwardVel}
+        setForwardVel={setForwardVel}
+        velocity={velocity}
+        setVelocity={setVelocity}
       />
       <UI
         menuOpen={menuOpen}
@@ -138,6 +147,9 @@ function App() {
                 gameMap={gameMap}
                 orbitOn={orbitOn}
                 mapOpacity={mapOpacity}
+                // CHARACTER STATE
+                forwardVel={forwardVel}
+                velocity={velocity}
               />
             </Physics>
           </Suspense>

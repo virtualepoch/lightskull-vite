@@ -50,8 +50,8 @@ button {
   width: fit-content;
   height: fit-content;
   position: fixed;
-  bottom: 10px;
-  left: -2px;
+  bottom: 5px;
+  right: -4px;
   z-index: 11111;
   font: 100 20px Ailerons;
   writing-mode: vertical-lr;
@@ -99,18 +99,37 @@ button {
   background: radial-gradient(circle at 50% 50%, white 10%, transparent 50%);
 }
 
-/* INTERACTIVE BUTTONS */
+/* CUSTOM BTNS */
 
-.zoom-btns {
+.custom-btns {
   position: fixed;
-  right: 110px;
+  right: 100px;
   bottom: 20px;
   z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.custom-btns::after{
+  content: "";
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background: url(../public/images/video-solid.svg) center / 40% no-repeat;
+  transform: rotate(-90deg);
+}
+
+.custom-btns .container {
   display: flex;
   gap: 10px;
 }
 
-.zoom-btns button {
+.custom-btns .btn {
   width: 60px;
   height: 60px;
   border-radius: 100%;
@@ -119,12 +138,20 @@ button {
     inset -2px -2px 4px 2px var(--box-shadow-light);
 }
 
-.btn-zoom-in {
+.custom-btns .test-1 {
+  background: url(/images/chevron-up-solid.svg) center / 40% no-repeat;
+}
+
+.custom-btns .test-2 {
+  background: url(/images/chevron-up-solid.svg) center / 40% no-repeat;
+}
+
+.custom-btns .zoom-in {
   background: url(/images/chevron-left-solid.svg) 20% 50% /20% no-repeat,
     url(/images/chevron-right-solid.svg) 80% 50% /20% no-repeat;
 }
 
-.btn-zoom-out {
+.custom-btns .zoom-out {
   background: url(/images/chevron-left-solid.svg) 80% 50% /20% no-repeat,
     url(/images/chevron-right-solid.svg) 20% 50% /20% no-repeat;
 }
@@ -155,11 +182,11 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url(/images/chevron-up-solid.svg) center / 60% no-repeat;
 }
 
-.btn.rotate-left {
-  background: url(/images/chevron-left-solid.svg) center / 25% no-repeat;
+.btn.jump {
+  background: url(/images/chevron-up-solid.svg) 50% 35% / 40% no-repeat,
+    url(/images/chevron-up-solid.svg) 50% 65% / 40% no-repeat;
 }
 
 .btn.rotate-right {
@@ -168,6 +195,10 @@ button {
 
 .btn.fire {
   background: url(/images/bolt-solid.svg) center / 40% no-repeat;
+}
+
+.btn.rotate-left {
+  background: url(/images/chevron-left-solid.svg) center / 25% no-repeat;
 }
 
 /* ///////////////////////////////////////////////////////// */
@@ -255,13 +286,14 @@ p.health-text {
 }
 
 .btn-fullscreen {
-  width: 50px;
-  height: 50px;
+  width: 42px;
+  height: 42px;
   position: fixed;
   top: 0;
   right: 0;
   z-index: 1111111;
   background: url(../public/images/expand-cyan.svg) center / 40% no-repeat;
+  filter: drop-shadow(0 0 5px cyan);
 }
 
 .btn-fullscreen.clicked {

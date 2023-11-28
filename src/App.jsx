@@ -92,6 +92,7 @@ function App() {
   const [downgradedPerformance, setDowngradedPerformance] = useState(false);
   const [orbitOn, setOrbitOn] = useState(false);
   const [omniOpen, setOmniOpen] = useState(false);
+  const [mapOpacity, setMapOpacity] = useState(1);
 
   return (
     <>
@@ -105,6 +106,8 @@ function App() {
         orbitOn={orbitOn}
         setOrbitOn={setOrbitOn}
         omniOpen={omniOpen}
+        mapOpacity={mapOpacity}
+        setMapOpacity={setMapOpacity}
       />
       <UI
         menuOpen={menuOpen}
@@ -134,6 +137,7 @@ function App() {
                 setZoom={setZoom}
                 gameMap={gameMap}
                 orbitOn={orbitOn}
+                mapOpacity={mapOpacity}
               />
             </Physics>
           </Suspense>

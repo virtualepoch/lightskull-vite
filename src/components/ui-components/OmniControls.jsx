@@ -10,24 +10,31 @@ export const OmniControls = ({
   orbitOn,
   setOrbitOn,
   omniOpen,
+  mapOpacity,
+  setMapOpacity,
 }) => {
   const [omniExpand, setOmniExpand] = useState(false);
 
   const resUp = () => {
-    if (bgRes < 4) {
-      setBgRes(bgRes + 1);
-    }
+    if (bgRes < 4) setBgRes(bgRes + 1);
   };
   const resDown = () => {
-    if (bgRes > 0) {
-      setBgRes(bgRes - 1);
-    }
+    if (bgRes > 0) setBgRes(bgRes - 1);
+  };
+
+  const increaseOpacity = () => {
+    if (mapOpacity >= 0.1) setMapOpacity(mapOpacity - 0.1);
+  };
+
+  const decreaseOpacity = () => {
+    if (mapOpacity <= 0.9) setMapOpacity(mapOpacity + 0.1);
   };
 
   return (
     <CSSTransition in={omniOpen} unmountOnExit timeout={500} classNames="omni">
       <div className={omniExpand ? "omni expand" : "omni"}>
-        <h2 className="omni-header">OMNI</h2>
+        {/* EXPAND OMNI MENU BUTTON /////////////////////////// */}
+
         <button
           className={omniExpand ? "btn-expand open" : "btn-expand"}
           onClick={() => {
@@ -37,29 +44,12 @@ export const OmniControls = ({
           <div className={omniExpand ? "icon open" : "icon"}></div>
         </button>
 
-        {/* DIVIDER ////////////////////////////////////////////// */}
+        {/* OMNI-HEADER //////////////////////////////////////// */}
         <div className={omniExpand ? "neon-divider expand" : "neon-divider"} />
+        <h2 className="omni-header">OMNI</h2>
         <div className={omniExpand ? "neon-divider expand" : "neon-divider"} />
-        {/* DIVIDER ////////////////////////////////////////////// */}
 
-        {/* BACKGROUND RESOLUTION BUTTONS //////////////////////////// */}
-        <div
-          className={
-            omniExpand ? "omni-btn-container expand" : "omni-btn-container"
-          }
-        >
-          <button className="btn res-up" onClick={resUp}></button>
-          <p className="btn-label">
-            bg-res: {bgRes}
-            <br />
-          </p>
-          <button className="btn res-down" onClick={resDown}></button>
-        </div>
-
-        {/* DIVIDER ////////////////////////////////////////////// */}
-        <div className={omniExpand ? "neon-divider expand" : "neon-divider"} />
-        {/* DIVIDER ////////////////////////////////////////////// */}
-
+        {/* EFFECTS ON/OFF BUTTON /////////////////////////////////////////////// */}
         <div
           className={
             omniExpand ? "omni-btn-container expand" : "omni-btn-container"
@@ -80,10 +70,7 @@ export const OmniControls = ({
           </button>
         </div>
 
-        {/* DIVIDER ////////////////////////////////////////////// */}
-        <div className={omniExpand ? "neon-divider expand" : "neon-divider"} />
-        {/* DIVIDER ////////////////////////////////////////////// */}
-
+        {/* ORBIT CONTROL ON/OFF BUTTON ////////////////////////////////////////////// */}
         <div
           className={
             omniExpand ? "omni-btn-container expand" : "omni-btn-container"
@@ -100,10 +87,43 @@ export const OmniControls = ({
           </button>
         </div>
 
-        {/* DIVIDER ////////////////////////////////////////////// */}
-        <div className={omniExpand ? "neon-divider expand" : "neon-divider"} />
-        {/* DIVIDER ////////////////////////////////////////////// */}
+        {/* MAP OPACITY BUTTONS //////////////////////////// */}
+        <div
+          className={
+            omniExpand ? "omni-btn-container expand" : "omni-btn-container"
+          }
+        >
+          <button className="btn res-up" onClick={increaseOpacity}></button>
+          <p className="btn-label">
+            map-op:
+            <br /> {Math.round(mapOpacity * 10) / 10}
+          </p>
+          <button className="btn res-down" onClick={decreaseOpacity}></button>
+        </div>
 
+        {/* BACKGROUND RESOLUTION BUTTONS //////////////////////////// */}
+        <div
+          className={
+            omniExpand ? "omni-btn-container expand" : "omni-btn-container"
+          }
+        >
+          <button className="btn res-up" onClick={resUp}></button>
+          <p className="btn-label">
+            bg-res: <br />
+            {bgRes === 0
+              ? "192"
+              : bgRes === 1
+              ? "384"
+              : bgRes === 2
+              ? "768"
+              : bgRes === 3
+              ? "1536"
+              : "3072"}
+          </p>
+          <button className="btn res-down" onClick={resDown}></button>
+        </div>
+
+        {/* FPS METER ////////////////////////////////////////////// */}
         <FPSStats
           top={omniExpand ? "1px" : "calc(100% - 55px)"}
           left={omniExpand ? "auto" : "6px"}

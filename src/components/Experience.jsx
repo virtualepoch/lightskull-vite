@@ -16,7 +16,7 @@ import { Map2 } from "./maps/Map2";
 import { Map3 } from "./maps/Map3";
 import { Map4 } from "./maps/Map4";
 
-export const Experience = ({ zoom, setZoom, gameMap, orbitOn }) => {
+export const Experience = ({ zoom, setZoom, gameMap, orbitOn, mapOpacity }) => {
   const [players, setPlayers] = useState([]);
   const [bullets, setBullets] = useState([]);
   const [networkBullets, setNetworkBullets] = useMultiplayerState(
@@ -103,7 +103,7 @@ export const Experience = ({ zoom, setZoom, gameMap, orbitOn }) => {
       ) : gameMap === "map-4" ? (
         <Map4 />
       ) : (
-        <Map1 />
+        <Map1 mapOpacity={mapOpacity}/>
       )}
 
       {players.map(({ state, joystick }, idx) => (
@@ -132,7 +132,6 @@ export const Experience = ({ zoom, setZoom, gameMap, orbitOn }) => {
       {(isHost() ? hits : networkHits).map((hit) => (
         <BulletHit key={hit.id} {...hit} onEnded={() => onEnded(hit.id)} />
       ))}
-
 
       <Environment preset="sunset" />
     </>

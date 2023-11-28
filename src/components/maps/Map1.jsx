@@ -3,12 +3,12 @@ import { RigidBody } from "@react-three/rapier";
 import { useEffect } from "react";
 import { MeshPhongMaterial, MeshStandardMaterial } from "three";
 
-export const Map1 = () => {
+export const Map1 = ({ mapOpacity }) => {
   const map = useGLTF("models/map1.glb");
 
   const mapColor = new MeshPhongMaterial({ color: "#00aaaa" });
   mapColor.transparent = true;
-  mapColor.opacity = 0.7;
+  mapColor.opacity = mapOpacity;
 
   useEffect(() => {
     map.scene.traverse((child) => {

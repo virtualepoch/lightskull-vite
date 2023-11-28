@@ -14,7 +14,7 @@ export const UI = ({
 }) => {
   return (
     <>
-      <h1 className="version">v.0.1.12.5</h1>
+      <h1 className="version">v.0.1.12.7</h1>
       <h1 className="game-title">
         Light<span className="cross-symbol">⁜</span>Skull
       </h1>

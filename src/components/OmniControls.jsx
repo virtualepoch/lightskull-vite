@@ -7,6 +7,8 @@ export const OmniControls = ({
   setDowngradedPerformance,
   bgRes,
   setBgRes,
+  orbitOn,
+  setOrbitOn,
 }) => {
   const [omniOpen, setOmniOpen] = useState(false);
 
@@ -21,13 +23,27 @@ export const OmniControls = ({
     }
   };
 
+  const [pressed, setPressed] = useState(false);
+  const press = () => {
+    setPressed(true);
+  };
+  const unpress = () => {
+    setPressed(false);
+  };
+
   return (
     <>
       <button
-        className="btn-open-close-omni"
+        className={
+          pressed ? "btn-open-close-omni pressed" : "btn-open-close-omni"
+        }
         onClick={() => {
           setOmniOpen(!omniOpen);
         }}
+        onMouseDown={press}
+        onTouchStart={press}
+        onMouseUp={unpress}
+        onTouchEnd={unpress}
       >
         <div
           className={omniOpen ? "omni-btn-icon open" : "omni-btn-icon"}
@@ -40,23 +56,38 @@ export const OmniControls = ({
         classNames="omni"
       >
         <div className="omni">
+          <hr />
           <button className="btn res-up" onClick={resUp}></button>
           <p>
-            bg-res: {bgRes}<br />
+            bg-res: {bgRes}
+            <br />
           </p>
           <button className="btn res-down" onClick={resDown}></button>
           <hr />
-          <p>post:</p>
+          <p>EFFECTS</p>
           <button
-            className="btn post-process"
+            className={
+              downgradedPerformance
+                ? "btn post-process"
+                : "btn post-process btn-on"
+            }
             onClick={() => {
               setDowngradedPerformance(!downgradedPerformance);
             }}
           >
-            {downgradedPerformance ? "ON" : "OFF"}
+            {downgradedPerformance ? "OFF" : "ON"}
           </button>
           <hr />
-          <FPSStats top="calc(100% - 55px)" left={4} graphWidth={45} />
+          <p>ORBIT</p>
+          <button
+            className={orbitOn ? "btn orbit-on-off btn-on" : "btn orbit-on-off"}
+            onClick={() => {
+              setOrbitOn(!orbitOn);
+            }}
+          >
+            {orbitOn ? "ON" : "OFF"}
+          </button>
+          <FPSStats top="calc(100% - 55px)" left={6} graphWidth={45} />
         </div>
       </CSSTransition>
     </>

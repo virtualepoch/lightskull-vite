@@ -1,6 +1,25 @@
+import { useState } from "react";
+
 export const BtnMenu = ({ menuOpen, setMenuOpen }) => {
+  const [btnPressed, setBtnPressed] = useState(false);
+
   return (
-    <button className="btn-menu" onClick={() => setMenuOpen(!menuOpen)}>
+    <button
+      className={btnPressed ? "btn-menu pressed" : "btn-menu"}
+      onClick={() => setMenuOpen(!menuOpen)}
+      onMouseDown={() => {
+        setBtnPressed(true);
+      }}
+      onMouseUp={() => {
+        setBtnPressed(false);
+      }}
+      onTouchStart={()=>{
+        setBtnPressed(true)
+      }}
+      onTouchEnd={()=>{
+        setBtnPressed(false)
+      }}
+    >
       <div
         className="menu-bar open"
         style={{

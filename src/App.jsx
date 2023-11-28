@@ -78,10 +78,6 @@ function App() {
     );
     const earthRef = useRef(null);
 
-    // useFrame(() => {
-    //   earthRef.current.rotation.y += 0.002;
-    // });
-
     return (
       <mesh ref={earthRef} position={[0, 0, 0]}>
         <sphereGeometry args={[180, 10, 10]} />
@@ -94,6 +90,7 @@ function App() {
   const [gameMap, setGameMap] = useState("map-1");
   const [zoom, setZoom] = useState(0);
   const [downgradedPerformance, setDowngradedPerformance] = useState(false);
+  const [orbitOn, setOrbitOn] = useState(false);
 
   return (
     <>
@@ -103,6 +100,8 @@ function App() {
         setDowngradedPerformance={setDowngradedPerformance}
         bgRes={bgRes}
         setBgRes={setBgRes}
+        orbitOn={orbitOn}
+        setOrbitOn={setOrbitOn}
       />
       <UI
         menuOpen={menuOpen}
@@ -116,7 +115,7 @@ function App() {
         <Canvas shadows camera={{ position: [0, 100, 0], fov: 30, near: 2 }}>
           {/* <ambientLight intensity={1} /> */}
           <Earth />
-          <OrbitControls />
+          {orbitOn && <OrbitControls />}
           <color attach="background" args={["#000"]} />
           {/* <SoftShadows size={42} /> */}
           {/* <PerformanceMonitor
@@ -128,7 +127,7 @@ function App() {
           <Suspense>
             <Physics gravity={[0, -200, 0]} interpolation={false}>
               {/* NOTE: add 'debug' prop to '<Physics>' above to add a wireframe to the rigid bodies */}
-              <Experience zoom={zoom} setZoom={setZoom} gameMap={gameMap} />
+              <Experience zoom={zoom} setZoom={setZoom} gameMap={gameMap} orbitOn={orbitOn} />
             </Physics>
           </Suspense>
 

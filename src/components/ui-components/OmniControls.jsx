@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
-import FPSStats from "react-fps-stats";
 
 export const OmniControls = ({
   downgradedPerformance,
@@ -97,12 +96,12 @@ export const OmniControls = ({
             omniExpand ? "omni-btn-container expand" : "omni-btn-container"
           }
         >
-          <button className="btn res-up" onClick={increaseOpacity}></button>
+          <button className="btn up" onClick={increaseOpacity}></button>
           <p className="btn-label">
             map-op:
             <br /> {Math.round(mapOpacity * 10) / 10}
           </p>
-          <button className="btn res-down" onClick={decreaseOpacity}></button>
+          <button className="btn down" onClick={decreaseOpacity}></button>
         </div>
 
         {/* BACKGROUND RESOLUTION BUTTONS //////////////////////////// */}
@@ -111,7 +110,7 @@ export const OmniControls = ({
             omniExpand ? "omni-btn-container expand" : "omni-btn-container"
           }
         >
-          <button className="btn res-up" onClick={resUp}></button>
+          <button className="btn up" onClick={resUp}></button>
           <p className="btn-label">
             bg-res: <br />
             {bgRes === 0
@@ -124,7 +123,7 @@ export const OmniControls = ({
               ? "1536"
               : "3072"}
           </p>
-          <button className="btn res-down" onClick={resDown}></button>
+          <button className="btn down" onClick={resDown}></button>
         </div>
 
         {/* MOVEMENT FORWARD SPEED //////////////////////////// */}
@@ -134,7 +133,7 @@ export const OmniControls = ({
           }
         >
           <button
-            className="btn res-up"
+            className="btn up"
             onClick={() => {
               setForwardVel(forwardVel + 1);
             }}
@@ -145,7 +144,7 @@ export const OmniControls = ({
             {forwardVel}
           </p>
           <button
-            className="btn res-down"
+            className="btn down"
             onClick={() => {
               setForwardVel(forwardVel - 1);
             }}
@@ -159,31 +158,24 @@ export const OmniControls = ({
           }
         >
           <button
-            className="btn res-up"
+            className="btn up"
             onClick={() => {
               setVelocity(velocity + 1);
             }}
           ></button>
           <p className="btn-label">
-            directional<br/>
+            dir.
+            <br />
             speed: <br />
             {velocity}
           </p>
           <button
-            className="btn res-down"
+            className="btn down"
             onClick={() => {
               setVelocity(velocity - 1);
             }}
           ></button>
         </div>
-
-        {/* FPS METER ////////////////////////////////////////////// */}
-        <FPSStats
-          top={omniExpand ? "1px" : "calc(100% - 55px)"}
-          left={omniExpand ? "auto" : "6px"}
-          right={omniExpand ? "6px" : "auto"}
-          graphWidth={45}
-        />
       </div>
     </CSSTransition>
   );

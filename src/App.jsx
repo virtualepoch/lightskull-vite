@@ -22,6 +22,7 @@ import cyberSky1536 from "./assets/images/cyber-sky-1536.jpg";
 import cyberSky3072 from "./assets/images/cyber-sky-3072.jpg";
 import { BtnOmni } from "./components/ui-components/BtnOmni";
 import { OmniControls } from "./components/ui-components/OmniControls";
+import FPSStats from "react-fps-stats";
 
 export const KeyControls = {
   forward: "forward",
@@ -100,6 +101,14 @@ function App() {
 
   return (
     <>
+      {/* FPS METER ////////////////////////////////////////////// */}
+      <FPSStats
+        top="auto"
+        bottom="-32px"
+        left="auto"
+        right="25px"
+        graphWidth={35}
+      />
       <Loader />
       <BtnOmni omniOpen={omniOpen} setOmniOpen={setOmniOpen} />
       <OmniControls

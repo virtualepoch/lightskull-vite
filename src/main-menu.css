@@ -1,115 +1,3 @@
-/* //////////////////////////////////////////////////// */
-/* TESTING */
-.btn-open-close-omni,
-.omni .btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  font: 20px Ailerons;
-  color: red;
-  text-shadow: 0 0 3px cyan;
-  box-shadow: inset -1px 1px 4px 1px var(--box-glare-med),
-    inset 1px -1px 4px 1px var(--box-shadow-light),
-    -1px 2px 4px 1px var(--box-shadow-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-on{
-  background: cyan;
-  filter: drop-shadow(0 0 2px cyan);
-}
-
-.btn-open-close-omni {
-  width: 40px;
-  height: 40px;
-  position: fixed;
-  top: 50px;
-  left: 0;
-  z-index: 1111;
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-  background: rgba(0, 0, 0, 0.4);
-  box-shadow: 2px 1px 5px 1px black;
-}
-
-.btn-open-close-omni.pressed {
-  box-shadow: none;
-}
-
-.omni-btn-icon {
-  width: 100%;
-  height: 100%;
-  background: url(/images/chevron-right-cyan.svg) center / 30% no-repeat;
-  transition: transform 300ms ease;
-  filter: drop-shadow(0 0 3px cyan);
-}
-
-.omni-btn-icon.open {
-  transform: rotateY(180deg);
-  filter: drop-shadow(0 0 3px red);
-}
-
-.omni {
-  position: fixed;
-  left: 0;
-  top: 100px;
-  z-index: 1111;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 5px 70px 5px;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(5px);
-  box-shadow: 1px 2px 5px 1px black;
-  font: 15px Ailerons;
-}
-
-/* Menu CSSTransition */
-.omni-enter {
-  opacity: 0;
-  transform: translateX(-100%);
-}
-
-.omni-enter-active {
-  opacity: 1;
-  transform: translateX(0%);
-  transition: 500ms ease;
-}
-
-.omni-exit {
-  opacity: 1;
-  transform: translateX(0%);
-}
-
-.omni-exit-active {
-  opacity: 0;
-  transform: translateX(-100%);
-  transition: 500ms ease;
-}
-
-hr {
-  width: 100%;
-  height: 2px;
-  border: none;
-  border-radius: 100px;
-  background: cyan;
-  filter: drop-shadow(0 0 2px cyan);
-}
-
-.btn.res-up {
-  background: url(/images/chevron-up-solid.svg) center / 30% no-repeat;
-}
-.btn.res-down {
-  background: url(/images/chevron-down-solid.svg) center / 30% no-repeat;
-}
-
-/* ////////////////////// MENU STYLING ///////////////////////// */
-
 .btn-menu {
   width: 40px;
   height: 40px;
@@ -169,7 +57,7 @@ hr {
   font: 35px Ailerons;
 }
 
-/* Menu CSSTransition */
+/* \\\\\\\\\\\\\\\ CSSTransition ///////////// */
 .menu-enter {
   opacity: 0;
   transform: translate(-100%, -100%);
@@ -191,6 +79,7 @@ hr {
   transform: translate(-100%, -100%);
   transition: 500ms ease;
 }
+/* /////////////// CSSTransition \\\\\\\\\\\\\\ */
 
 .menu-header {
   width: 100%;

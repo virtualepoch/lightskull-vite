@@ -13,15 +13,15 @@ import {
 import { useMemo, Suspense, useState } from "react";
 import { Physics } from "@react-three/rapier";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
-import { Leaderboard } from "./components/ui-components/Leaderboard";
 import { UI } from "./components/UI";
 import { useRef } from "react";
-import { OmniControls } from "./components/OmniControls";
 import cyberSky192 from "./assets/images/cyber-sky-192.jpg";
 import cyberSky384 from "./assets/images/cyber-sky-384.jpg";
 import cyberSky768 from "./assets/images/cyber-sky-768.jpg";
 import cyberSky1536 from "./assets/images/cyber-sky-1536.jpg";
 import cyberSky3072 from "./assets/images/cyber-sky-3072.jpg";
+import { BtnOmni } from "./components/ui-components/BtnOmni";
+import { OmniControls } from "./components/ui-components/OmniControls";
 
 export const KeyControls = {
   forward: "forward",
@@ -91,10 +91,12 @@ function App() {
   const [zoom, setZoom] = useState(0);
   const [downgradedPerformance, setDowngradedPerformance] = useState(false);
   const [orbitOn, setOrbitOn] = useState(false);
+  const [omniOpen, setOmniOpen] = useState(false);
 
   return (
     <>
       <Loader />
+      <BtnOmni omniOpen={omniOpen} setOmniOpen={setOmniOpen} />
       <OmniControls
         downgradedPerformance={downgradedPerformance}
         setDowngradedPerformance={setDowngradedPerformance}
@@ -102,6 +104,7 @@ function App() {
         setBgRes={setBgRes}
         orbitOn={orbitOn}
         setOrbitOn={setOrbitOn}
+        omniOpen={omniOpen}
       />
       <UI
         menuOpen={menuOpen}
@@ -113,7 +116,6 @@ function App() {
       />
       <KeyboardControls map={map}>
         <Canvas shadows camera={{ position: [0, 100, 0], fov: 30, near: 2 }}>
-          {/* <ambientLight intensity={1} /> */}
           <Earth />
           {orbitOn && <OrbitControls />}
           <color attach="background" args={["#000"]} />
@@ -127,27 +129,20 @@ function App() {
           <Suspense>
             <Physics gravity={[0, -200, 0]} interpolation={false}>
               {/* NOTE: add 'debug' prop to '<Physics>' above to add a wireframe to the rigid bodies */}
-              <Experience zoom={zoom} setZoom={setZoom} gameMap={gameMap} orbitOn={orbitOn} />
+              <Experience
+                zoom={zoom}
+                setZoom={setZoom}
+                gameMap={gameMap}
+                orbitOn={orbitOn}
+              />
             </Physics>
           </Suspense>
 
           {!downgradedPerformance && (
-            // disable the postprocessing and stars on low-end devices
-            <>
-              <EffectComposer disableNormalPass>
-                <Bloom luminanceThreshold={1} intensity={1.5} mipmapBlur />
-              </EffectComposer>
-              {/* <Sparkles
-                count={5000}
-                speed={0.5}
-                opacity={1.5}
-                color={50}
-                size={5}
-                scale={[34, 10, 100]}
-                noise={0.5}
-                position={[1.6, 6, -20]}
-              /> */}
-            </>
+            // disable the postprocessing on low-end devices
+            <EffectComposer disableNormalPass>
+              <Bloom luminanceThreshold={1} intensity={1.5} mipmapBlur />
+            </EffectComposer>
           )}
         </Canvas>
       </KeyboardControls>

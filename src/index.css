@@ -255,17 +255,17 @@ p.health-text {
 }
 
 .btn-fullscreen {
+  width: 50px;
+  height: 50px;
   position: fixed;
   top: 0;
   right: 0;
   z-index: 1111111;
-  color: white;
-  padding: 10px 10px 17px 20px;
+  background: url(../public/images/expand-cyan.svg) center / 40% no-repeat;
 }
 
-.svg-fullscreen {
-  width: 30px;
-  height: 30px;
+.btn-fullscreen.clicked {
+  background: url(../public/images/compress-cyan.svg) center / 40% no-repeat;
 }
 
 @media (max-width: 1000px) {
@@ -278,8 +278,8 @@ p.health-text {
   .player-info p {
     font-size: 17px;
   }
-  .svg-fullscreen {
-    width: 20px;
-    height: 20px;
+  .btn-fullscreen,
+  .btn-fullscreen.clicked {
+    background-size: 30%;
   }
 }

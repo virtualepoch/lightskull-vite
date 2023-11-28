@@ -1,7 +1,9 @@
 import { usePlayersList } from "playroomkit";
+import { useState } from "react";
 
 export const Leaderboard = () => {
   const players = usePlayersList(true);
+  const [fullscreen, setFullscreen] = useState(false);
 
   return (
     <>
@@ -41,7 +43,7 @@ export const Leaderboard = () => {
         ))}
       </div>
       <button
-        className="btn-fullscreen"
+        className={fullscreen ? "btn-fullscreen clicked" : "btn-fullscreen"}
         onClick={() => {
           // toggle fullscreen
           if (document.fullscreenElement) {
@@ -49,23 +51,9 @@ export const Leaderboard = () => {
           } else {
             document.documentElement.requestFullscreen();
           }
+          setFullscreen(!fullscreen);
         }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1}
-          stroke="currentColor"
-          className="svg-fullscreen"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
-          />
-        </svg>
-      </button>
+      />
     </>
   );
 };
